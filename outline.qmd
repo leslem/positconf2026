@@ -1,0 +1,80 @@
+---
+title: "Configurable clinical data harmonization with help from LLMs"
+author: "Leslie Emery"
+institute: "Bristol-Myers Squibb"
+format: html
+---
+
+## Talk pitch
+
+Hello, my name is Leslie Emery and I’ve spent the last 10 years of my career harmonizing data from inconsistent sources. Different subject ID formats, measurement units, date formats, inconsistent categorical values, synonyms for the same laboratory test – if there’s a way for a clinical data set to be messy, I’ve seen it and I want to prevent my colleagues from having to work through the same problems.
+
+My talk is about developing a way to automate the repetitive task of data harmonization with help from LLMs, and how to put this automation process into a reproducible pipeline that allows space for human review. While my talk is focused on data from clinical trials, the approaches I describe will be useful to anyone harmonizing data from disparate sources or wrangling data frames generally. I’ll share my workflow for capturing LLM output into version-controlled files and how to design and define abstracted data transformations into configurable steps. I’d love  
+to share this talk so that the audience won’t have to spend their time renaming columns for the rest of their careers.
+
+## Talk proposal
+
+Clinical trial data formats differ across studies and over time, even within an organization. After years of writing bespoke R code to harmonize data for cross-study analysis, my team is developing LLM-assisted automation. First, we use an LLM to develop a data model for the output, describing a format and content that accommodates all input studies. Then an LLM evaluates each study’s data files and documentation to determine how to wrangle each input file to fit the data model. The LLM generates yaml configuration files for programmatically transforming each study into an interoperable format for combined analysis. Our LLM prompts, data model, configuration files, and pipeline code are all version controlled and reproducible.
+
+## 5 lines for my talk
+
+1. Situation
+2. Desire
+3. Conflict
+4. Change
+5. Result
+
+## Rhetoric for my talk
+
+1. Logos: include use cases outside of pharma, e.g. ecommerce companies merging, academic research studies combining data, general purpose data cleaning, ???
+2. Ethos: I've spent >10 years specializaing in data cleaning and harmonization, both at UW and at BMS
+3. Pathos: many in audience will have experienced code breaking with data changes, or spending great amounts of time on data cleaning and reformatting
+
+## Talk outline
+
+1. Big picture description of a data harmonization project (e.g. 10 studies) and how much work goes into it
+    - Diagram here of the many files from many studies, custom code for each input file to output transformation, lots of variation in the code, lots of repeating the same kinds of things over an over again
+1. Big picture description of a data harmonization project using config files made by LLM with human review
+    - Simpler diagram here of agent workflow
+    - "I'm going to tell you about how I went from this [complicated diagram] to this [simple diagram]"
+1. This is what it would look like to use Posit Assistant (or Claude Code, etc.) to do the data harmonization itself:
+    - Summarize how many tokens, how long it took, what kind of code, how many files, etc.
+    - Data gets updated and you try to run the code again
+    - It doesn't work!
+    - Give PA the updated data and the same prompt and you'll get slightly different code (because it's stochastic)
+    - Have PA update the code and you'll have a big, messy diff 
+1. So I built out this workflow based on my deep expertise in data harmonization
+    - match input columns to desired output columns
+    - figure out what format it's in
+    - convert it to the format you want it to be
+1. Data model (output)
+    - Show prompt to get Posit Assistant to make the data model based on a group of studies
+    - Show example data model
+        - Structure:
+            - _structure.yaml file; domain.yaml for each domain included
+        - Domains: adverse_events, exposure, subjects, lab_tests, time_to_event, response
+1. Harmonization config (input)
+    - Show example from subjects domain for 3 different studies
+    - For each desired output column:
+        - Which dataset & column to get it from
+        - What data type is it
+        - What units is it already in 
+        - What categorical values exist
+    - Mention relation to data dictionary? (of recent interest in field)
+1. Config-based harmonization code
+    - Show code snippet from subjects domain
+    - Fully working for simple case of just renaming columns
+    - Still to handle:
+        - Converting units
+        - Harmonizing categorical values
+1. Use the harmonization configs + data model to produce a data dictionary for your harmonized data set
+    - Clear definition of final output data
+    - Links back to the input dataset + columns that were used
+1. We've done this in a pilot project and it gets us pretty close to final state so we can focus our time on the hard parts
+    - Internship, mention Eslam
+1. We are building out a Claude Code plugin using our daapr framework
+    - Mention Jason for plugin
+    - Show plugin workflow design
+1. You can use this same approach for other use cases
+    - Use data model .yaml to instruct LLM to make the output format you want
+    - 
