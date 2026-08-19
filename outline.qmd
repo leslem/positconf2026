@@ -14,6 +14,9 @@ format: html
 
 ## Talk outline
 
+1. Clinical data harmonization project description
+    - Patients, often at most difficult time in their lives, undergo extensive sometimes painful procedures, spend precious hours having data collected
+    - Important to find as many insights from data as possible, beyond just the original clinical trial objective
 1. Big picture description of a data harmonization project (e.g. 10 studies) and how much work goes into it
     - Diagram here of the many files from many studies, custom code for each input file to output transformation, lots of variation in the code, lots of repeating the same kinds of things over an over again
 1. Big picture description of a data harmonization project using config files made by LLM with human review
@@ -23,6 +26,7 @@ format: html
     - match input columns to desired output columns
     - figure out what format it's in
     - convert it to the format you want it to be
+    - Overview of some example data from 3 studies (real column names, but not real data)
 1. Data model (output)
     - Show prompt to get Posit Assistant to make the data model based on a group of studies
     - Show example data model
@@ -37,6 +41,7 @@ format: html
         - What units is it already in 
         - What categorical values exist
     - Mention relation to data dictionary? (of recent interest in field)
+    - Side story here about me telling Eslam to start with dm file, but it turned out to be most difficult
 1. Config-based harmonization code
     - Show code snippets from subjects domain
     - Fully working for simple case of just renaming columns and converting data types
