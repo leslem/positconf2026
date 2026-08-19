@@ -1,0 +1,127 @@
+---
+title: "Configurable clinical data harmonization with help from LLMs"
+author: "Leslie Emery"
+institute: "Bristol-Myers Squibb"
+format: revealjs
+---
+
+## Clinical data harmonization project description
+
+::: {.notes}
+Clinical data harmonization project description
+
+- Patients, often at most difficult time in their lives, undergo extensive sometimes painful procedures, spend precious hours having data collected
+- Important to find as many insights from data as possible, beyond just the original clinical trial objective
+:::
+
+## Big picture description of a data harmonization project (e.g. 10 studies) and how much work goes into it
+
+::: {.notes}
+Big picture description of a data harmonization project (e.g. 10 studies) and how much work goes into it
+
+- Diagram here of the many files from many studies, custom code for each input file to output transformation, lots of variation in the code, lots of repeating the same kinds of things over an over again
+:::
+
+## Big picture description of a data harmonization project using config files made by LLM with human review
+
+::: {.notes}
+Big picture description of a data harmonization project using config files made by LLM with human review
+
+- Simpler diagram here of agent workflow
+- "I'm going to tell you about how I went from this [complicated diagram] to this [simple diagram]"
+:::
+
+## I built out this workflow based on my deep expertise in data harmonization
+
+::: {.notes}
+I built out this workflow based on my deep expertise in data harmonization
+
+- match input columns to desired output columns
+- figure out what format it's in
+- convert it to the format you want it to be
+- Overview of some example data from 3 studies (real column names, but not real data)
+:::
+
+## Data model (output)
+
+::: {.notes}
+Data model (output)
+
+- Show prompt to get Posit Assistant to make the data model based on a group of studies
+- Show example data model
+    - Structure:
+        - _structure.yaml file; domain.yaml for each domain included
+    - Domains: adverse_events, exposure, subjects, lab_tests, time_to_event, response
+:::
+
+## Harmonization configs (input)
+
+::: {.notes}
+Harmonization configs (input)
+
+- Show example from subjects domain for 3 different studies
+- For each desired output column:
+    - Which dataset & column to get it from
+    - What data type is it
+    - What units is it already in
+    - What categorical values exist
+- Mention relation to data dictionary? (of recent interest in field)
+- Side story here about me telling Eslam to start with dm file, but it turned out to be most difficult
+:::
+
+## Config-based harmonization code
+
+::: {.notes}
+Config-based harmonization code
+
+- Show code snippets from subjects domain
+- Fully working for simple case of just renaming columns and converting data types
+- Still to handle (should I mention this or not?):
+    - Converting units
+    - Harmonizing categorical values
+:::
+
+## The harmonization config files maximize human attention/time spent reviewing LLM output
+
+::: {.notes}
+The harmonization config files maximize human attention/time spent reviewing LLM output
+
+- The configs capture the most important parts of the harmonization decisions -- which inputs map to which outputs, and what data transformations happen
+- Screenshot of the review app Burak has built
+:::
+
+## You get a great data dictionary for your output basically for free with the harmonization configs + data model
+
+::: {.notes}
+You get a great data dictionary for your output basically for free with the harmonization configs + data model
+
+- Clear definition of final output data
+- Links back to the input dataset + columns that were used
+:::
+
+## We've done this in a pilot project and it gets us pretty close to final state so we can focus our time on the hard parts
+
+::: {.notes}
+We've done this in a pilot project and it gets us pretty close to final state so we can focus our time on the hard parts
+
+- Internship, mention Eslam
+:::
+
+## We are building out a Claude Code plugin using our daapr framework
+
+::: {.notes}
+We are building out a Claude Code plugin using our daapr framework
+
+- Mention Jason for plugin
+- Show plugin workflow design
+:::
+
+## You can use these approaches for other use cases
+
+::: {.notes}
+You can use these approaches for other use cases
+
+- Any project where you're combining data from multiple sources (e.g. COVID data from different health authorities, published datasets from different reserach groups, eCommerce data from acquired companies, etc.)
+- Use data model .yaml to instruct LLM to make the output format you want
+- Use a config file that describes all of your inputs (makes it easier for LLM to reason about your data)
+:::
