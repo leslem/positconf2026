@@ -1,0 +1,8 @@
+<style>
+  /* Swap the dark logo for the white BMS logo while the title slide is showing.
+     Kept in the head (not the theme SCSS) so url() resolves relative to the
+     document, matching how the reveal `logo:` option loads assets/. */
+  .reveal:has(section#title-slide.present) .slide-logo {
+    content: url("assets/bms-logo-wht.png");
+  }
+</style>

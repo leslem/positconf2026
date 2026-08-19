@@ -6,8 +6,8 @@
 <script src="configurable-harmonization-LLMs_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="configurable-harmonization-LLMs_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="configurable-harmonization-LLMs_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="configurable-harmonization-LLMs_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.18">
+<link href="configurable-harmonization-LLMs_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.6.42">
 
   <meta name="author" content="Leslie Emery">
   <title>Configurable clinical data harmonization with help from LLMs</title>
@@ -17,16 +17,10 @@
   <link rel="stylesheet" href="configurable-harmonization-LLMs_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="configurable-harmonization-LLMs_files/libs/revealjs/dist/reveal.css">
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
+    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: 1.5em;}
-    div.column{flex: auto;}
-    @media screen {
-    div.columns{gap: min(4vw, 1.5em);}
-    div.column{overflow-x: auto;}
-    }
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -34,8 +28,73 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="configurable-harmonization-LLMs_files/libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
+  <link rel="stylesheet" href="configurable-harmonization-LLMs_files/libs/revealjs/dist/theme/quarto-0a1abf3168423d3b68dbf27dab1a4ec2.css">
   <link href="configurable-harmonization-LLMs_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="configurable-harmonization-LLMs_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="configurable-harmonization-LLMs_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -127,21 +186,29 @@
       margin-right: 0; 
     }
   </style>
+  <style>
+    /* Swap the dark logo for the white BMS logo while the title slide is showing.
+       Kept in the head (not the theme SCSS) so url() resolves relative to the
+       document, matching how the reveal `logo:` option loads assets/. */
+    .reveal:has(section#title-slide.present) .slide-logo {
+      content: url("assets/bms-logo-wht.png");
+    }
+  </style>
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
+<section id="title-slide" data-background-gradient="linear-gradient(135deg, #BE2BBB 0%, #8f1f8d 100%)" class="quarto-title-block center">
   <h1 class="title">Configurable clinical data harmonization with help from LLMs</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Leslie Emery
+Leslie Emery 
 </div>
         <p class="quarto-title-affiliation">
-            Bristol-Myers Squibb
+            Informatics &amp; Predictive Sciences | Bristol Myers Squibb
           </p>
     </div>
 </div>
@@ -149,6 +216,18 @@ Leslie Emery
 </section>
 <section id="clinical-data-harmonization-project-description" class="slide level2">
 <h2>Clinical data harmonization project description</h2>
+<ul>
+<li>bullet 1
+<ul>
+<li>sub 1</li>
+<li>sub 2
+<ul>
+<li>sub sub 1</li>
+</ul></li>
+</ul></li>
+<li>bullet 2</li>
+<li><a href="bms.com">Link text</a></li>
+</ul>
 <aside class="notes">
 <p>Clinical data harmonization project description</p>
 <ul>
@@ -230,6 +309,24 @@ Leslie Emery
 </section>
 <section id="data-model-output" class="slide level2">
 <h2>Data model (output)</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href=""></a><span class="fu">unique_subject_id</span><span class="kw">:</span></span>
+<span id="cb1-2"><a href=""></a><span class="at">  </span><span class="fu">key</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb1-3"><a href=""></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span></span>
+<span id="cb1-4"><a href=""></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
+<span id="cb1-5"><a href=""></a><span class="at">      USUBJID</span></span>
+<span id="cb1-6"><a href=""></a><span class="at">  </span><span class="fu">terms</span><span class="kw">:</span></span>
+<span id="cb1-7"><a href=""></a><span class="at">    </span><span class="fu">loinc</span><span class="kw">:</span><span class="at"> 97851-0</span></span>
+<span id="cb1-8"><a href=""></a><span class="at">    </span><span class="fu">CDISC</span><span class="kw">:</span><span class="at"> </span><span class="dv">555555555</span></span>
+<span id="cb1-9"><a href=""></a><span class="at">    </span><span class="fu">whodrug</span><span class="kw">:</span><span class="at"> </span><span class="dv">44444444</span></span>
+<span id="cb1-10"><a href=""></a><span class="at">    </span><span class="fu">rxnorm</span><span class="kw">:</span><span class="at"> </span><span class="dv">33333333</span></span>
+<span id="cb1-11"><a href=""></a><span class="at">    </span><span class="fu">snomed</span><span class="kw">:</span><span class="at"> xxxxxxxx</span></span>
+<span id="cb1-12"><a href=""></a><span class="at">    </span><span class="fu">icd10</span><span class="kw">:</span><span class="at"> </span><span class="dv">8888888</span></span>
+<span id="cb1-13"><a href=""></a><span class="at">    </span><span class="fu">MedDRA</span><span class="kw">:</span><span class="at"> xxxxxxxx</span></span>
+<span id="cb1-14"><a href=""></a><span class="fu">subject_id</span><span class="kw">:</span></span>
+<span id="cb1-15"><a href=""></a><span class="at">  </span><span class="fu">key</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span><span class="co">  # assume false by default</span></span>
+<span id="cb1-16"><a href=""></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span></span>
+<span id="cb1-17"><a href=""></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
+<span id="cb1-18"><a href=""></a><span class="at">    SUBJID</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
 <p>Data model (output)</p>
 <ul>
@@ -285,6 +382,53 @@ Leslie Emery
 </section>
 <section id="config-based-harmonization-code" class="slide level2">
 <h2>Config-based harmonization code</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>derive_subject_level <span class="ot">&lt;-</span> <span class="cf">function</span>(data_files_read){</span>
+<span id="cb2-2"><a href=""></a>  </span>
+<span id="cb2-3"><a href=""></a>  <span class="co"># Get the set of columns to be included in the output</span></span>
+<span id="cb2-4"><a href=""></a>  domain_spec <span class="ot">&lt;-</span> <span class="fu">read_daap_specification</span>(<span class="st">"subject_level"</span>)</span>
+<span id="cb2-5"><a href=""></a>  </span>
+<span id="cb2-6"><a href=""></a>  <span class="co"># Get the harmonization config</span></span>
+<span id="cb2-7"><a href=""></a>  domain_config <span class="ot">&lt;-</span> <span class="fu">read_harmonization_config</span>(<span class="st">"subject_level"</span>)</span>
+<span id="cb2-8"><a href=""></a>  domain_config_df <span class="ot">&lt;-</span> <span class="fu">harmonization_config_to_tibble</span>(domain_config)</span>
+<span id="cb2-9"><a href=""></a>  </span>
+<span id="cb2-10"><a href=""></a>  <span class="co"># Which columns need to be in the output?</span></span>
+<span id="cb2-11"><a href=""></a>  expected_keys <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_chr</span>(domain_spec<span class="sc">$</span>keys, <span class="at">.f=</span>names)</span>
+<span id="cb2-12"><a href=""></a>  expected_keys_and_columns <span class="ot">&lt;-</span> <span class="fu">c</span>(expected_keys,</span>
+<span id="cb2-13"><a href=""></a>                                 purrr<span class="sc">::</span><span class="fu">map_chr</span>(domain_spec<span class="sc">$</span>columns, <span class="at">.f=</span>names))</span>
+<span id="cb2-14"><a href=""></a>  </span>
+<span id="cb2-15"><a href=""></a>  <span class="co"># Use the harmonization config to find the source data for each column</span></span>
+<span id="cb2-16"><a href=""></a>  domain_config_df <span class="ot">&lt;-</span> domain_config_df <span class="sc">%&gt;%</span> </span>
+<span id="cb2-17"><a href=""></a>    <span class="fu">mutate</span>(</span>
+<span id="cb2-18"><a href=""></a>      <span class="co"># </span><span class="al">TODO</span><span class="co">: make this more general in case there are &gt;2 files that map to the domain</span></span>
+<span id="cb2-19"><a href=""></a>      <span class="at">preferred_file =</span> <span class="fu">case_when</span>(</span>
+<span id="cb2-20"><a href=""></a>        <span class="st">"adsl"</span> <span class="sc">%in%</span> file <span class="sc">~</span> <span class="st">"adsl"</span>,</span>
+<span id="cb2-21"><a href=""></a>        <span class="cn">TRUE</span> <span class="sc">~</span> <span class="fu">first</span>(file)</span>
+<span id="cb2-22"><a href=""></a>        ),</span>
+<span id="cb2-23"><a href=""></a>        <span class="at">.by=</span>output_column</span>
+<span id="cb2-24"><a href=""></a>    )</span>
+<span id="cb2-25"><a href=""></a>  </span>
+<span id="cb2-26"><a href=""></a>  <span class="co"># Get the mapped columns from each source file</span></span>
+<span id="cb2-27"><a href=""></a>  get_mapped_data <span class="ot">&lt;-</span> <span class="cf">function</span>(source_file){  <span class="co"># source_file &lt;- "dm"</span></span>
+<span id="cb2-28"><a href=""></a>    <span class="co"># </span><span class="al">TODO</span><span class="co">: make this more general for more than just adam/sdtm input types</span></span>
+<span id="cb2-29"><a href=""></a>    input_type <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(source_file <span class="sc">%in%</span> <span class="fu">names</span>(data_files_read<span class="sc">$</span>adam), <span class="st">"adam"</span>, <span class="st">"sdtm"</span>)</span>
+<span id="cb2-30"><a href=""></a>    source <span class="ot">&lt;-</span> data_files_read[[input_type]][[source_file]](<span class="at">config=</span>config)</span>
+<span id="cb2-31"><a href=""></a>    source_map <span class="ot">&lt;-</span> domain_config_df <span class="sc">%&gt;%</span></span>
+<span id="cb2-32"><a href=""></a>      <span class="fu">filter</span>((preferred_file <span class="sc">==</span> source_file <span class="sc">|</span> output_column <span class="sc">%in%</span> expected_keys ) <span class="sc">&amp;</span></span>
+<span id="cb2-33"><a href=""></a>               file <span class="sc">==</span> source_file)</span>
+<span id="cb2-34"><a href=""></a>    rename_map <span class="ot">&lt;-</span> source_map<span class="sc">$</span>column</span>
+<span id="cb2-35"><a href=""></a>    <span class="fu">names</span>(rename_map) <span class="ot">&lt;-</span> source_map<span class="sc">$</span>output_column</span>
+<span id="cb2-36"><a href=""></a>    mapped_data <span class="ot">&lt;-</span> source <span class="sc">%&gt;%</span> </span>
+<span id="cb2-37"><a href=""></a>      <span class="fu">select</span>(<span class="fu">all_of</span>(source_map<span class="sc">$</span>column)) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-38"><a href=""></a>      <span class="fu">rename</span>(<span class="fu">all_of</span>(rename_map))</span>
+<span id="cb2-39"><a href=""></a>  }</span>
+<span id="cb2-40"><a href=""></a>  subject_level <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(<span class="fu">unique</span>(domain_config_df<span class="sc">$</span>preferred_file), <span class="at">.f=</span>get_mapped_data)</span>
+<span id="cb2-41"><a href=""></a>  subject_level <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">reduce</span>(subject_level, <span class="at">.f=</span>full_join)   <span class="co"># running this for each split of response</span></span>
+<span id="cb2-42"><a href=""></a></span>
+<span id="cb2-43"><a href=""></a>  <span class="co"># </span><span class="al">TODO</span><span class="co">: add a check that every col from expected_keys_and_columns is in output</span></span>
+<span id="cb2-44"><a href=""></a>  <span class="co"># and no unexpected columns</span></span>
+<span id="cb2-45"><a href=""></a></span>
+<span id="cb2-46"><a href=""></a>  <span class="fu">return</span>(subject_level)</span>
+<span id="cb2-47"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
 <p>Config-based harmonization code</p>
 <ul>
@@ -411,6 +555,7 @@ Leslie Emery
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="assets/bms-logo.png" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>
@@ -465,7 +610,7 @@ Leslie Emery
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: false,
+        slideNumber: 'c/t',
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
@@ -590,15 +735,15 @@ Leslie Emery
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1050,
+        width: 1280,
 
-        height: 700,
+        height: 720,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -625,173 +770,190 @@ Leslie Emery
       });
     </script>
     <script id="quarto-html-after-body" type="application/javascript">
-      window.document.addEventListener("DOMContentLoaded", function (event) {
-        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-        tabsets.forEach(function(tabset) {
-          const tabby = new Tabby('#' + tabset.id);
-        });
-        const isCodeAnnotation = (el) => {
-          for (const clz of el.classList) {
-            if (clz.startsWith('code-annotation-')) {                     
-              return true;
-            }
-          }
-          return false;
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
         }
-        const onCopySuccess = function(e) {
-          // button target
-          const button = e.trigger;
-          // don't keep focus
-          button.blur();
-          // flash "checked"
-          button.classList.add('code-copy-button-checked');
-          var currentTitle = button.getAttribute("title");
-          button.setAttribute("title", "Copied!");
-          let tooltip;
-          if (window.bootstrap) {
-            button.setAttribute("data-bs-toggle", "tooltip");
-            button.setAttribute("data-bs-placement", "left");
-            button.setAttribute("data-bs-title", "Copied!");
-            tooltip = new bootstrap.Tooltip(button, 
-              { trigger: "manual", 
-                customClass: "code-copy-button-tooltip",
-                offset: [0, -8]});
-            tooltip.show();    
-          }
-          setTimeout(function() {
-            if (tooltip) {
-              tooltip.hide();
-              button.removeAttribute("data-bs-title");
-              button.removeAttribute("data-bs-toggle");
-              button.removeAttribute("data-bs-placement");
-            }
-            button.setAttribute("title", currentTitle);
-            button.classList.remove('code-copy-button-checked');
-          }, 1000);
-          // clear code selection
-          e.clearSelection();
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
         }
-        const getTextToCopy = function(trigger) {
-          const outerScaffold = trigger.parentElement.cloneNode(true);
-          const codeEl = outerScaffold.querySelector('code');
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
           for (const childEl of codeEl.children) {
             if (isCodeAnnotation(childEl)) {
               childEl.remove();
             }
           }
           return codeEl.innerText;
-        }
-        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-          text: getTextToCopy
-        });
-        clipboard.on('success', onCopySuccess);
-        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-            text: getTextToCopy,
-            container: window.document.getElementById('quarto-embedded-source-code-modal')
-          });
-          clipboardModal.on('success', onCopySuccess);
-        }
-          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-          var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp('/' + window.location.host + '/');
-          var isInternal = (href) => {
-              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-          }
-          // Inspect non-navigation links and adorn them if external
-         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-          for (var i=0; i<links.length; i++) {
-            const link = links[i];
-            if (!isInternal(link.href)) {
-              // undo the damage that might have been done by quarto-nav.js in the case of
-              // links that we want to consider external
-              if (link.dataset.originalHref !== undefined) {
-                link.href = link.dataset.originalHref;
-              }
-            }
-          }
-        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-          const config = {
-            allowHTML: true,
-            maxWidth: 500,
-            delay: 100,
-            arrow: false,
-            appendTo: function(el) {
-                return el.closest('section.slide') || el.parentElement;
-            },
-            interactive: true,
-            interactiveBorder: 10,
-            theme: 'light-border',
-            placement: 'bottom-start',
-          };
-          if (contentFn) {
-            config.content = contentFn;
-          }
-          if (onTriggerFn) {
-            config.onTrigger = onTriggerFn;
-          }
-          if (onUntriggerFn) {
-            config.onUntrigger = onUntriggerFn;
-          }
-            config['offset'] = [0,0];
-            config['maxWidth'] = 700;
-          window.tippy(el, config); 
-        }
-        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-        for (var i=0; i<noterefs.length; i++) {
-          const ref = noterefs[i];
-          tippyHover(ref, function() {
-            // use id or data attribute instead here
-            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-            try { href = new URL(href).hash; } catch {}
-            const id = href.replace(/^#\/?/, "");
-            const note = window.document.getElementById(id);
-            if (note) {
-              return note.innerHTML;
-            } else {
-              return "";
-            }
-          });
-        }
-        const findCites = (el) => {
-          const parentEl = el.parentElement;
-          if (parentEl) {
-            const cites = parentEl.dataset.cites;
-            if (cites) {
-              return {
-                el,
-                cites: cites.split(' ')
-              };
-            } else {
-              return findCites(el.parentElement)
-            }
-          } else {
-            return undefined;
-          }
-        };
-        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-        for (var i=0; i<bibliorefs.length; i++) {
-          const ref = bibliorefs[i];
-          const citeInfo = findCites(ref);
-          if (citeInfo) {
-            tippyHover(citeInfo.el, function() {
-              var popup = window.document.createElement('div');
-              citeInfo.cites.forEach(function(cite) {
-                var citeDiv = window.document.createElement('div');
-                citeDiv.classList.add('hanging-indent');
-                citeDiv.classList.add('csl-entry');
-                var biblioDiv = window.document.getElementById('ref-' + cite);
-                if (biblioDiv) {
-                  citeDiv.innerHTML = biblioDiv.innerHTML;
-                }
-                popup.appendChild(citeDiv);
-              });
-              return popup.innerHTML;
-            });
-          }
-        }
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
-      </script>
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
     
 
 </body></html>

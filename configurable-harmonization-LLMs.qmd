@@ -1,11 +1,28 @@
 ---
 title: "Configurable clinical data harmonization with help from LLMs"
 author: "Leslie Emery"
-institute: "Bristol-Myers Squibb"
-format: revealjs
+institute: "Informatics & Predictive Sciences | Bristol Myers Squibb"
+format:
+  revealjs:
+    theme: [simple, bms-reveal.scss]
+    logo: assets/bms-logo.png
+    slide-number: true
+    width: 1280
+    height: 720
+    incremental: false
+    include-in-header: title-logo.html
+    title-slide-attributes:
+      data-background-gradient: "linear-gradient(135deg, #BE2BBB 0%, #8f1f8d 100%)"
 ---
 
 ## Clinical data harmonization project description
+
+- bullet 1
+    - sub 1
+    - sub 2
+        - sub sub 1
+- bullet 2
+- [Link text](bms.com)
 
 ::: {.notes}
 Clinical data harmonization project description
@@ -44,6 +61,28 @@ I built out this workflow based on my deep expertise in data harmonization
 
 ## Data model (output)
 
+
+```yaml
+unique_subject_id:
+  key: true
+  data_type: character
+  inputs:
+      USUBJID
+  terms:
+    loinc: 97851-0
+    CDISC: 555555555
+    whodrug: 44444444
+    rxnorm: 33333333
+    snomed: xxxxxxxx
+    icd10: 8888888
+    MedDRA: xxxxxxxx
+subject_id:
+  key: false  # assume false by default
+  data_type: character
+  inputs:
+    SUBJID
+```
+
 ::: {.notes}
 Data model (output)
 
@@ -70,6 +109,56 @@ Harmonization configs (input)
 :::
 
 ## Config-based harmonization code
+
+```r
+derive_subject_level <- function(data_files_read){
+  
+  # Get the set of columns to be included in the output
+  domain_spec <- read_daap_specification("subject_level")
+  
+  # Get the harmonization config
+  domain_config <- read_harmonization_config("subject_level")
+  domain_config_df <- harmonization_config_to_tibble(domain_config)
+  
+  # Which columns need to be in the output?
+  expected_keys <- purrr::map_chr(domain_spec$keys, .f=names)
+  expected_keys_and_columns <- c(expected_keys,
+                                 purrr::map_chr(domain_spec$columns, .f=names))
+  
+  # Use the harmonization config to find the source data for each column
+  domain_config_df <- domain_config_df %>% 
+    mutate(
+      # TODO: make this more general in case there are >2 files that map to the domain
+      preferred_file = case_when(
+        "adsl" %in% file ~ "adsl",
+        TRUE ~ first(file)
+        ),
+        .by=output_column
+    )
+  
+  # Get the mapped columns from each source file
+  get_mapped_data <- function(source_file){  # source_file <- "dm"
+    # TODO: make this more general for more than just adam/sdtm input types
+    input_type <- ifelse(source_file %in% names(data_files_read$adam), "adam", "sdtm")
+    source <- data_files_read[[input_type]][[source_file]](config=config)
+    source_map <- domain_config_df %>%
+      filter((preferred_file == source_file | output_column %in% expected_keys ) &
+               file == source_file)
+    rename_map <- source_map$column
+    names(rename_map) <- source_map$output_column
+    mapped_data <- source %>% 
+      select(all_of(source_map$column)) %>% 
+      rename(all_of(rename_map))
+  }
+  subject_level <- purrr::map(unique(domain_config_df$preferred_file), .f=get_mapped_data)
+  subject_level <- purrr::reduce(subject_level, .f=full_join)   # running this for each split of response
+
+  # TODO: add a check that every col from expected_keys_and_columns is in output
+  # and no unexpected columns
+
+  return(subject_level)
+}
+```
 
 ::: {.notes}
 Config-based harmonization code

@@ -1,0 +1,182 @@
+/*-- scss:defaults --*/
+
+// BMS 2025 PowerPoint template palette (theme1.xml + brand palette slide)
+$bms-purple:       #BE2BBB;
+$bms-purple-dark:  #8f1f8d;
+$bms-dark-gray:    #4F4A4A;
+$bms-medium-gray:  #ADA599;
+$bms-light-gray:   #F0EFEA;
+$bms-lime:         #A9FA17;
+$bms-light-indigo: #496FE3;
+$bms-dark-indigo:  #3312AF;
+$bms-hypermint:    #2CF1B1;
+
+// Typography — the template uses Trebuchet MS for headings and body
+$font-family-sans-serif: "Trebuchet MS", "Segoe UI", Verdana, sans-serif !default;
+
+// Base colors
+$body-color: $bms-dark-gray;
+$body-bg:    #FFFFFF;
+$link-color: $bms-purple;
+
+// reveal.js presentation tokens
+$presentation-heading-font:   $font-family-sans-serif;
+$presentation-heading-color:  $bms-dark-gray;   // titles are dark gray, not purple
+$presentation-font-size-root: 32px;
+
+// Map Bootstrap semantic colors onto the BMS palette
+$primary:   $bms-purple;
+$secondary: $bms-medium-gray;
+$success:   $bms-hypermint;
+$info:      $bms-light-indigo;
+$warning:   $bms-lime;
+$danger:    $bms-dark-indigo;
+
+/*-- scss:rules --*/
+
+// --- Purple hero: title slide ---------------------------------------------
+// The purple background itself is a full-bleed reveal background layer, set via
+// `title-slide-attributes: {data-background-gradient: ...}` in the YAML header.
+// Here we only make the title-block text readable on that purple.
+#title-slide .title,
+#title-slide .subtitle,
+#title-slide .quarto-title-authors,
+#title-slide .quarto-title-author-name,
+#title-slide .quarto-title-affiliation,
+#title-slide .date {
+  color: #FFFFFF;
+}
+
+#title-slide .subtitle {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+// The team/company lives in `institute:` but should read like a second author
+// line: same size, weight and full-white color as the name (not Quarto's
+// smaller, dimmer default affiliation).
+#title-slide .quarto-title-affiliation {
+  font-size: 1em;
+  font-weight: inherit;
+  margin: 0;
+}
+
+// Title-slide layout: title anchored top-left, author left-aligned at mid-slide.
+// Override Quarto's `.center` (which centers the whole block).
+#title-slide {
+  display: block !important;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 60px;
+  text-align: left !important;
+  top: 0 !important;
+  font-size: 1.2em;   // scale up all title-slide text (title, author, affiliation)
+}
+
+#title-slide .title {
+  margin: 0;
+  text-align: left;
+}
+
+#title-slide .quarto-title-authors {
+  display: block;
+  position: absolute;
+  left: 60px;
+  top: 75%;
+  margin: 0;
+  text-align: left;
+}
+
+#title-slide .quarto-title-author,
+#title-slide .quarto-title-author-name {
+  text-align: left;
+  padding-left: 0;   // remove Quarto's default .5em indent so it aligns with the title
+}
+
+// --- Purple hero: section dividers ----------------------------------------
+// Author a divider with a full-bleed purple background attribute, e.g.
+//   ## The pilot project {background-color="#BE2BBB"}
+// or a gradient:
+//   ## The pilot project {background-gradient="linear-gradient(135deg,#BE2BBB,#8f1f8d)"}
+// Any slide with a colored background gets large, centered, white headings.
+.reveal section[data-background-color] h1,
+.reveal section[data-background-color] h2,
+.reveal section[data-background-color] h3,
+.reveal section[data-background-gradient] h1,
+.reveal section[data-background-gradient] h2,
+.reveal section[data-background-gradient] h3 {
+  color: #FFFFFF;
+  text-align: center;
+  border: none;
+}
+
+// --- Content slide titles: dark gray with a thin purple accent rule --------
+.reveal h2 {
+  border-bottom: 3px solid $bms-purple;
+  padding-bottom: 0.2em;
+}
+
+// --- Purple bullet markers (template level-1 bullets are purple) -----------
+.reveal .slides ul li::marker,
+.reveal .slides ol li::marker {
+  color: $bms-purple;
+}
+
+// --- Logo bottom-left (template hand-logo placement) -----------------------
+.reveal .slide-logo {
+  position: fixed;
+  top: auto !important;
+  right: auto !important;
+  bottom: 12px !important;
+  left: 60px !important;   // clear the reveal.js slide-menu button (bottom-left)
+  max-height: 44px;
+  height: 44px;
+  width: auto;
+}
+
+// On the title slide's purple hero we show the white BMS logo instead of the
+// dark one. The image swap lives in an inline <style> in the HTML head (see the
+// `include-in-header` file) so its url() resolves relative to the document.
+
+// On purple section-divider slides, hide the dark logo so it doesn't disappear
+// into the background (the title slide swaps to the white logo instead).
+.reveal:has(section[data-background-color]:not(#title-slide).present) .slide-logo,
+.reveal:has(section[data-background-gradient]:not(#title-slide).present) .slide-logo {
+  display: none;
+}
+
+// --- Slide number bottom-right (template page-number placement) ------------
+// Quarto pushes the number to the top-right when a logo is present (to dodge
+// its default bottom-right logo); our logo is bottom-left, so restore it.
+.reveal.has-logo .slide-number,
+.reveal .slide-number {
+  top: auto !important;
+  bottom: 8px !important;
+  right: 12px !important;
+}
+
+// On purple hero/divider slides, keep the footer and page number legible.
+.reveal:has(section#title-slide.present) .footer,
+.reveal:has(section#title-slide.present) .slide-number,
+.reveal:has(section[data-background-color].present) .footer,
+.reveal:has(section[data-background-color].present) .slide-number,
+.reveal:has(section[data-background-gradient].present) .footer,
+.reveal:has(section[data-background-gradient].present) .slide-number {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+// --- Code on a light-gray surface for contrast -----------------------------
+.reveal code,
+.reveal pre {
+  background-color: $bms-light-gray;
+}
+
+.reveal code {
+  color: $bms-dark-indigo;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+
+// --- Slide number in dark gray (matching body text) ------------------------
+.reveal .slide-number {
+  color: $bms-dark-gray;
+}
