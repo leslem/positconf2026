@@ -1,7 +1,4 @@
 ---
-title: "Configurable clinical data harmonization with help from LLMs"
-author: "Leslie Emery"
-institute: "Informatics & Predictive Sciences | Bristol Myers Squibb"
 format:
   revealjs:
     theme: [simple, bms-reveal.scss]
@@ -11,33 +8,55 @@ format:
     height: 720
     incremental: false
     include-in-header: title-logo.html
-    title-slide-attributes:
-      data-background-gradient: "linear-gradient(135deg, #BE2BBB 0%, #8f1f8d 100%)"
 ---
 
-## Clinical data harmonization project description
 
-- bullet 1
-    - sub 1
-    - sub 2
-        - sub sub 1
-- bullet 2
-- [Link text](bms.com)
+## Configurable clinical data harmonization with help from LLMs {.title-hero background-gradient="linear-gradient(135deg, #BE2BBB 0%, #8f1f8d 100%)"}
 
-::: {.notes}
-Clinical data harmonization project description
-
-- Patients, often at most difficult time in their lives, undergo extensive sometimes painful procedures, spend precious hours having data collected
-- Important to find as many insights from data as possible, beyond just the original clinical trial objective
+::: {.title-byline}
+Leslie Emery\
+Informatics & Predictive Sciences | Bristol Myers Squibb
 :::
 
-## Big picture description of a data harmonization project (e.g. 10 studies) and how much work goes into it
+<!-- Change background to image of BMS Seattle office -->
 
 ::: {.notes}
-Big picture description of a data harmonization project (e.g. 10 studies) and how much work goes into it
-
-- Diagram here of the many files from many studies, custom code for each input file to output transformation, lots of variation in the code, lots of repeating the same kinds of things over an over again
+- I'm a data scientist at BMS in Seattle
 :::
+
+
+## 
+
+* Patient outcomes (overall survival, progression-free survival)
+* Biomarkers
+* Adverse events
+* Monthly or biweekly treatment visits
+* Multiple years of long-term follow up visits
+
+<!-- https://contentcentral.bms.com/content/bms/en-us/search/asset-details-page.html/content/dam/bms/ca/bms-stock-image-library/adobe-stock/life/AdobeStock_158958915.jpeg -->
+
+::: {.notes}
+- The data I work with comes from clinical trials for cancer treatments, so this is very precious data, that these patients contributed at great personal cost when their time was at its most valuable
+    - photo of patient visit
+:::
+
+
+## 
+
+::: {.notes}
+- To get every last insight we can from the data, we need to harmonize it
+    - timeline of clinical trials (different years, different COMPANIES)
+:::
+
+
+## 
+
+::: {.notes}
+- And historically this has been a very complicated and involved process, with lots of manual QC
+    - big, complicated diagram
+- Many files from many studies, custom code for each input file to output transformation, lots of variation in the code, lots of repeating the same kinds of things over an over again
+:::
+
 
 ## Big picture description of a data harmonization project using config files made by LLM with human review
 

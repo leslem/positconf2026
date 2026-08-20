@@ -34,62 +34,39 @@ $danger:    $bms-dark-indigo;
 
 /*-- scss:rules --*/
 
-// --- Purple hero: title slide ---------------------------------------------
-// The purple background itself is a full-bleed reveal background layer, set via
-// `title-slide-attributes: {data-background-gradient: ...}` in the YAML header.
-// Here we only make the title-block text readable on that purple.
-#title-slide .title,
-#title-slide .subtitle,
-#title-slide .quarto-title-authors,
-#title-slide .quarto-title-author-name,
-#title-slide .quarto-title-affiliation,
-#title-slide .date {
-  color: #FFFFFF;
-}
-
-#title-slide .subtitle {
-  color: rgba(255, 255, 255, 0.85);
-}
-
-// The team/company lives in `institute:` but should read like a second author
-// line: same size, weight and full-white color as the name (not Quarto's
-// smaller, dimmer default affiliation).
-#title-slide .quarto-title-affiliation {
-  font-size: 1em;
-  font-weight: inherit;
-  margin: 0;
-}
-
-// Title-slide layout: title anchored top-left, author left-aligned at mid-slide.
-// Override Quarto's `.center` (which centers the whole block).
-#title-slide {
-  display: block !important;
+// --- Manual title slide (purple hero) --------------------------------------
+// The first slide is a normal reveal slide authored as:
+//   ## <title text> {.title-hero background-gradient="linear-gradient(...)"}
+//   ::: {.title-byline} <author> \ <affiliation> :::
+// The full-bleed purple comes from the slide's own `background-gradient`
+// attribute; these rules lay out and colour the text on top of it.
+.reveal section.title-hero {
+  display: block;
   height: 100%;
   box-sizing: border-box;
   padding: 60px;
-  text-align: left !important;
-  top: 0 !important;
-  font-size: 1.2em;   // scale up all title-slide text (title, author, affiliation)
-}
-
-#title-slide .title {
-  margin: 0;
   text-align: left;
+  font-size: 1.2em;   // scale up all title-slide text
 }
 
-#title-slide .quarto-title-authors {
-  display: block;
+// Title (the ## heading): top-left, white, large, no content-slide underline.
+.reveal section.title-hero h2 {
+  color: #FFFFFF;
+  text-align: left;
+  border: none;
+  margin: 0;
+  padding: 0;
+  font-size: 1.9em;
+}
+
+// Byline (author + affiliation): white, left-aligned, anchored mid-slide.
+.reveal section.title-hero .title-byline {
   position: absolute;
   left: 60px;
-  top: 75%;
+  top: 70%;
   margin: 0;
+  color: #FFFFFF;
   text-align: left;
-}
-
-#title-slide .quarto-title-author,
-#title-slide .quarto-title-author-name {
-  text-align: left;
-  padding-left: 0;   // remove Quarto's default .5em indent so it aligns with the title
 }
 
 // --- Purple hero: section dividers ----------------------------------------
@@ -98,12 +75,12 @@ $danger:    $bms-dark-indigo;
 // or a gradient:
 //   ## The pilot project {background-gradient="linear-gradient(135deg,#BE2BBB,#8f1f8d)"}
 // Any slide with a colored background gets large, centered, white headings.
-.reveal section[data-background-color] h1,
-.reveal section[data-background-color] h2,
-.reveal section[data-background-color] h3,
-.reveal section[data-background-gradient] h1,
-.reveal section[data-background-gradient] h2,
-.reveal section[data-background-gradient] h3 {
+.reveal section[data-background-color]:not(.title-hero) h1,
+.reveal section[data-background-color]:not(.title-hero) h2,
+.reveal section[data-background-color]:not(.title-hero) h3,
+.reveal section[data-background-gradient]:not(.title-hero) h1,
+.reveal section[data-background-gradient]:not(.title-hero) h2,
+.reveal section[data-background-gradient]:not(.title-hero) h3 {
   color: #FFFFFF;
   text-align: center;
   border: none;
@@ -139,8 +116,8 @@ $danger:    $bms-dark-indigo;
 
 // On purple section-divider slides, hide the dark logo so it doesn't disappear
 // into the background (the title slide swaps to the white logo instead).
-.reveal:has(section[data-background-color]:not(#title-slide).present) .slide-logo,
-.reveal:has(section[data-background-gradient]:not(#title-slide).present) .slide-logo {
+.reveal:has(section[data-background-color]:not(.title-hero).present) .slide-logo,
+.reveal:has(section[data-background-gradient]:not(.title-hero).present) .slide-logo {
   display: none;
 }
 
@@ -155,8 +132,8 @@ $danger:    $bms-dark-indigo;
 }
 
 // On purple hero/divider slides, keep the footer and page number legible.
-.reveal:has(section#title-slide.present) .footer,
-.reveal:has(section#title-slide.present) .slide-number,
+.reveal:has(section.title-hero.present) .footer,
+.reveal:has(section.title-hero.present) .slide-number,
 .reveal:has(section[data-background-color].present) .footer,
 .reveal:has(section[data-background-color].present) .slide-number,
 .reveal:has(section[data-background-gradient].present) .footer,

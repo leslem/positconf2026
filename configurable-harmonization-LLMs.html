@@ -6,11 +6,10 @@
 <script src="configurable-harmonization-LLMs_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="configurable-harmonization-LLMs_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="configurable-harmonization-LLMs_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="configurable-harmonization-LLMs_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<link href="configurable-harmonization-LLMs_files/libs/quarto-html/quarto-syntax-highlighting-a696728df169e363e4859ca3ec1ae01c.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.6.42">
 
-  <meta name="author" content="Leslie Emery">
-  <title>Configurable clinical data harmonization with help from LLMs</title>
+  <title>configurable-harmonization-llms</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -94,7 +93,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="configurable-harmonization-LLMs_files/libs/revealjs/dist/theme/quarto-0a1abf3168423d3b68dbf27dab1a4ec2.css">
+  <link rel="stylesheet" href="configurable-harmonization-LLMs_files/libs/revealjs/dist/theme/quarto-af10ba76e34a59b4406b3c287e050ddd.css">
   <link href="configurable-harmonization-LLMs_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="configurable-harmonization-LLMs_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="configurable-harmonization-LLMs_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -187,10 +186,11 @@
     }
   </style>
   <style>
-    /* Swap the dark logo for the white BMS logo while the title slide is showing.
-       Kept in the head (not the theme SCSS) so url() resolves relative to the
-       document, matching how the reveal `logo:` option loads assets/. */
-    .reveal:has(section#title-slide.present) .slide-logo {
+    /* Swap the dark logo for the white BMS logo while the title slide (the
+       .title-hero slide) is showing. Kept in the head (not the theme SCSS) so
+       url() resolves relative to the document, matching how the reveal `logo:`
+       option loads assets/. */
+    .reveal:has(section.title-hero.present) .slide-logo {
       content: url("assets/bms-logo-wht.png");
     }
   </style>
@@ -199,40 +199,17 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-gradient="linear-gradient(135deg, #BE2BBB 0%, #8f1f8d 100%)" class="quarto-title-block center">
-  <h1 class="title">Configurable clinical data harmonization with help from LLMs</h1>
 
-<div class="quarto-title-authors">
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Leslie Emery 
+<section id="configurable-clinical-data-harmonization-with-help-from-llms" class="slide level2 title-hero" data-background-gradient="linear-gradient(135deg, #BE2BBB 0%, #8f1f8d 100%)">
+<h2>Configurable clinical data harmonization with help from LLMs</h2>
+<div class="title-byline">
+<p>Leslie Emery<br>
+Informatics &amp; Predictive Sciences | Bristol Myers Squibb</p>
 </div>
-        <p class="quarto-title-affiliation">
-            Informatics &amp; Predictive Sciences | Bristol Myers Squibb
-          </p>
-    </div>
-</div>
-
-</section>
-<section id="clinical-data-harmonization-project-description" class="slide level2">
-<h2>Clinical data harmonization project description</h2>
-<ul>
-<li>bullet 1
-<ul>
-<li>sub 1</li>
-<li>sub 2
-<ul>
-<li>sub sub 1</li>
-</ul></li>
-</ul></li>
-<li>bullet 2</li>
-<li><a href="bms.com">Link text</a></li>
-</ul>
+<!-- Change background to image of BMS Seattle office -->
 <aside class="notes">
-<p>Clinical data harmonization project description</p>
 <ul>
-<li>Patients, often at most difficult time in their lives, undergo extensive sometimes painful procedures, spend precious hours having data collected</li>
-<li>Important to find as many insights from data as possible, beyond just the original clinical trial objective</li>
+<li>I’m a data scientist at BMS in Seattle</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -246,12 +223,65 @@ Leslie Emery
           display:block!important;
       }</style></aside>
 </section>
-<section id="big-picture-description-of-a-data-harmonization-project-e.g.-10-studies-and-how-much-work-goes-into-it" class="slide level2">
-<h2>Big picture description of a data harmonization project (e.g.&nbsp;10 studies) and how much work goes into it</h2>
-<aside class="notes">
-<p>Big picture description of a data harmonization project (e.g.&nbsp;10 studies) and how much work goes into it</p>
+<section id="section" class="slide level2">
+<h2></h2>
 <ul>
-<li>Diagram here of the many files from many studies, custom code for each input file to output transformation, lots of variation in the code, lots of repeating the same kinds of things over an over again</li>
+<li>Patient outcomes (overall survival, progression-free survival)</li>
+<li>Biomarkers</li>
+<li>Adverse events</li>
+<li>Monthly or biweekly treatment visits</li>
+<li>Multiple years of long-term follow up visits</li>
+</ul>
+<!-- https://contentcentral.bms.com/content/bms/en-us/search/asset-details-page.html/content/dam/bms/ca/bms-stock-image-library/adobe-stock/life/AdobeStock_158958915.jpeg -->
+<aside class="notes">
+<ul>
+<li>The data I work with comes from clinical trials for cancer treatments, so this is very precious data, that these patients contributed at great personal cost when their time was at its most valuable
+<ul>
+<li>photo of patient visit</li>
+</ul></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<aside class="notes">
+<ul>
+<li>To get every last insight we can from the data, we need to harmonize it
+<ul>
+<li>timeline of clinical trials (different years, different COMPANIES)</li>
+</ul></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+<aside class="notes">
+<ul>
+<li>And historically this has been a very complicated and involved process, with lots of manual QC
+<ul>
+<li>big, complicated diagram</li>
+</ul></li>
+<li>Many files from many studies, custom code for each input file to output transformation, lots of variation in the code, lots of repeating the same kinds of things over an over again</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
