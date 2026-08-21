@@ -35,10 +35,16 @@ Requires Quarto (developed against 1.6.42).
 ```sh
 quarto render outline.qmd                       # → outline.html
 quarto render configurable-harmonization-LLMs.qmd   # → slides
-quarto preview configurable-harmonization-LLMs.qmd  # live-reloading preview while editing
 ```
 
 After editing a `.qmd`, re-render it so the committed `.html` stays current.
+
+`preview.sh` is the user's own live-preview workflow — they run it in a terminal
+while editing. It wraps `quarto preview` but also polls the files Quarto won't
+watch on its own (`bms-reveal.scss` and the `_*.qmd` partials) and `touch`es the
+deck when any change, forcing a rebuild + browser reload. It is meant to be run
+by the user, not by Claude. Do NOT suggest or offer to run `quarto preview` (or
+`preview.sh`) — assume the user already has it running.
 
 ## Conventions
 

@@ -11,37 +11,66 @@ Edit the stage titles and bullets below; add/remove .stage blocks as needed.
 Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs them).
 -->
 
-::::: {.workflow}
+:::::: {.workflow}
 
-:::: {.workflow-group}
-[Understand the data]{.workflow-group-title}
+::::: {.workflow-group}
+[One time setup]{.workflow-group-title}
+
+[🔃 update as needed]{.workflow-note}
+
+:::: {.stage-row}
 
 ::: {.stage}
-[🔎 Match]{.stage-title}
+[Data model]{.stage-title}
 
-- Map input columns to desired output columns
+- 📄 .yaml format
+- 🗂️ One per output dataset
+    - 🏛️ Columns to include
+    - 🔑 Primary key(s)
+    - 📖 Data definition
+    - 🔢 Data type
+    - 🏷️ Categorical values
+    - ❓ Missing value codes
+    - 📏 Unit of measure
 :::
 
 ::: {.arrow}
-→
+\+
 :::
 
 ::: {.stage}
-[🧭 Identify format]{.stage-title}
+[Pipeline code]{.stage-title}
 
-- Figure out what format the source is in
+- 🌳 Read data model
+- 📚 Read study harmonization configs
+- ⚙️ Generalized harmonization code
+    - 🏛️ Select and rename columns
+    - 🔄 Convert to desired data type
+    - 🔁 Convert to desired units of measure
 :::
-::::
 
-:::: {.workflow-group}
-[Transform]{.workflow-group-title}
-
-::: {.stage}
-[🔧 Convert]{.stage-title}
-
-- Convert to the target format
-- Apply recoding rules
-:::
 ::::
 
 :::::
+
+::: {.arrow}
+\+
+:::
+
+::::: {.workflow-group}
+[For each study]{.workflow-group-title}
+
+::: {.stage}
+[Harmonization configs]{.stage-title}
+
+- 📄 .yaml format
+- 📚 One per output dataset per study
+    - 🔗 Map input column to output column
+    - 🔢 Observed data type
+    - 🏷️ Observed categorical values
+    - 📏 Observed units of measure
+:::
+
+:::::
+
+::::::

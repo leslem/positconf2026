@@ -8,18 +8,27 @@ Headings inside a slide become nested <section> elements, which reveal.js
 treats as vertical slides and which break linear navigation.
 
 Edit the stage titles and bullets below; add/remove .stage blocks as needed.
-Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs them).
+Colon counts decrease as you nest (outer > inner) so Pandoc pairs them:
+::::::  .workflow
+ :::::  .workflow-group
+  ::::  .stage-row   (keeps a group's stages on one row under its title)
+   :::  .stage / .arrow
 -->
 
-::::: {.workflow}
+:::::: {.workflow}
 
-:::: {.workflow-group}
-[Understand the data]{.workflow-group-title}
+::::: {.workflow-group}
+[Code to harmonize each dataset]{.workflow-group-title}
+
+[👩🏻‍💻 *(Don't) plan output format*]{.workflow-note}
+
+:::: {.stage-row}
 
 ::: {.stage}
-[🔎 Match]{.stage-title}
+[Data shape]{.stage-title}
 
-- Map input columns to desired output columns
+- ↔️ Widen
+- 🔑 Primary keys
 :::
 
 ::: {.arrow}
@@ -27,21 +36,52 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
 :::
 
 ::: {.stage}
-[🧭 Identify format]{.stage-title}
+[Columns]{.stage-title}
 
-- Figure out what format the source is in
+- 🔍 Identify columns
+- 🏷️ Rename
 :::
-::::
 
-:::: {.workflow-group}
-[Transform]{.workflow-group-title}
+::: {.arrow}
+→
+:::
 
 ::: {.stage}
-[🔧 Convert]{.stage-title}
+[Column content]{.stage-title}
 
-- Convert to the target format
-- Apply recoding rules
+- 🔢 Data type
+- 🗂️ Categorical values
+- ❓ Missing value codes
+- 📏 Unit of measure
 :::
+
 ::::
 
 :::::
+
+::: {.arrow}
+x
+:::
+
+:::: {.stage}
+[Datasets (domains)]{.stage-title}
+
+- ⚠️ Adverse events
+- 👥 Demographics
+- 💉 Exposure
+- 🏥 Hospitalization
+- 🧪 Lab tests
+- 💊 Medications
+- 🩺 Patient visits
+- ⏱️ Time to event
+::::
+
+::: {.arrow}
+x
+:::
+
+:::: {.stage}
+[Every study]{.stage-title}
+::::
+
+::::::
