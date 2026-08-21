@@ -6,8 +6,7 @@
 
 Hello, my name is Leslie Emery and I’ve spent the last 10 years of my career harmonizing data from inconsistent sources. Different subject ID formats, measurement units, date formats, inconsistent categorical values, synonyms for the same laboratory test – if there’s a way for a clinical data set to be messy, I’ve seen it and I want to prevent my colleagues from having to work through the same problems.
 
-My talk is about developing a way to automate the repetitive task of data harmonization with help from LLMs, and how to put this automation process into a reproducible pipeline that allows space for human review. While my talk is focused on data from clinical trials, the approaches I describe will be useful to anyone harmonizing data from disparate sources or wrangling data frames generally. I’ll share my workflow for capturing LLM output into version-controlled files and how to design and define abstracted data transformations into configurable steps. I’d love  
-to share this talk so that the audience won’t have to spend their time renaming columns for the rest of their careers.
+My talk is about developing a way to automate the repetitive task of data harmonization with help from LLMs, and how to put this automation process into a reproducible pipeline that allows space for human review. While my talk is focused on data from clinical trials, the approaches I describe will be useful to anyone harmonizing data from disparate sources or wrangling data frames generally. I’ll share my workflow for capturing LLM output into version-controlled files and how to design and define abstracted data transformations into configurable steps. I’d love to share this talk so that the audience won’t have to spend their time renaming columns for the rest of their careers.
 
 ## Abstract
 

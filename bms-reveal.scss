@@ -34,39 +34,63 @@ $danger:    $bms-dark-indigo;
 
 /*-- scss:rules --*/
 
-// --- Manual title slide (purple hero) --------------------------------------
+// --- Manual title slide -----------------------------------------------------
 // The first slide is a normal reveal slide authored as:
-//   ## <title text> {.title-hero background-gradient="linear-gradient(...)"}
-//   ::: {.title-byline} <author> \ <affiliation> :::
-// The full-bleed purple comes from the slide's own `background-gradient`
-// attribute; these rules lay out and colour the text on top of it.
+//   ## <title text> {.title-hero background-image="..." background-size="cover" ...}
+//   ::: {.title-author} <author> :::
+//   ::: {.title-affiliation} <org> :::
+// The full-bleed background comes from the slide's own background-* attributes;
+// these rules lay out and colour the text on top of it.
 .reveal section.title-hero {
-  display: block;
+  display: flex !important;   // beat reveal's inline `display: block` on the present slide
+  flex-direction: column;    // title at the top, byline pushed to the bottom
   height: 100%;
   box-sizing: border-box;
-  padding: 60px;
+  padding: 0 0px 0px;   // title hugs the top (reveal's deck margin gives the breathing room)
   text-align: left;
   font-size: 1.2em;   // scale up all title-slide text
 }
 
-// Title (the ## heading): top-left, white, large, no content-slide underline.
+// Title (the ## heading): top-left, dark gray, large, no content-slide underline.
 .reveal section.title-hero h2 {
-  color: #FFFFFF;
+  color: $bms-dark-gray;
   text-align: left;
   border: none;
   margin: 0;
   padding: 0;
+  line-height: 1.1;   // tighten leading so the title sits snug at the top
   font-size: 1.9em;
 }
 
-// Byline (author + affiliation): white, left-aligned, anchored mid-slide.
+// Author + affiliation grouped in .title-byline, pushed to the bottom of the
+// slide (just above the logo) via the flex column's `margin-top: auto`. The two
+// lines stay independently styleable below.
 .reveal section.title-hero .title-byline {
-  position: absolute;
-  left: 60px;
-  top: 70%;
-  margin: 0;
-  color: #FFFFFF;
+  margin-top: auto;      // push the block to the bottom of the flex column
+  margin-bottom: 60px;   // sit just above the bottom-left BMS logo
+}
+
+.reveal section.title-hero .title-author {
+  margin: 0.4em 0 0 0;
+  color: $bms-dark-gray;
+  font-size: 1em;
   text-align: left;
+}
+
+.reveal section.title-hero .title-affiliation {
+  margin: 0.15em 0 0 0;
+  color: $bms-dark-gray;
+  font-size: 0.9em;
+  text-align: left;
+}
+
+// Fade the title background photo left-to-right: 25% opaque on the left (behind
+// the title text), fully opaque on the right. reveal copies the section's
+// classes onto the generated .slide-background, so `.title-hero` is our hook.
+// The mask's alpha channel sets the image opacity.
+.reveal .slide-background.title-hero .slide-background-content {
+  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 1) 100%);
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 1) 100%);
 }
 
 // --- Purple hero: section dividers ----------------------------------------
@@ -110,12 +134,9 @@ $danger:    $bms-dark-indigo;
   width: auto;
 }
 
-// On the title slide's purple hero we show the white BMS logo instead of the
-// dark one. The image swap lives in an inline <style> in the HTML head (see the
-// `include-in-header` file) so its url() resolves relative to the document.
-
 // On purple section-divider slides, hide the dark logo so it doesn't disappear
-// into the background (the title slide swaps to the white logo instead).
+// into the background. (The title slide is a light photo and keeps the standard
+// dark logo, so it's excluded here.)
 .reveal:has(section[data-background-color]:not(.title-hero).present) .slide-logo,
 .reveal:has(section[data-background-gradient]:not(.title-hero).present) .slide-logo {
   display: none;
@@ -131,9 +152,7 @@ $danger:    $bms-dark-indigo;
   right: 12px !important;
 }
 
-// On purple hero/divider slides, keep the footer and page number legible.
-.reveal:has(section.title-hero.present) .footer,
-.reveal:has(section.title-hero.present) .slide-number,
+// On purple divider slides, keep the footer and page number legible.
 .reveal:has(section[data-background-color].present) .footer,
 .reveal:has(section[data-background-color].present) .slide-number,
 .reveal:has(section[data-background-gradient].present) .footer,
@@ -156,4 +175,87 @@ $danger:    $bms-dark-indigo;
 // --- Slide number in dark gray (matching body text) ------------------------
 .reveal .slide-number {
   color: $bms-dark-gray;
+}
+
+// --- Workflow diagram (fenced-div layout) ----------------------------------
+// Authored in _workflow-diagram.qmd and pulled in with {{< include >}}.
+// Structure:
+//   .workflow  > .workflow-group (optional titled group) > .stage / .arrow
+// Stages are cards with a heading and a bullet list; arrows sit between them.
+.reveal .workflow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 0.5em;
+}
+
+// A titled group of stages (the "titles for groups of steps").
+// Row layout that wraps; the title spans the full width above its stages.
+.reveal .workflow-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 12px;
+  padding: 16px;
+  border: 2px solid rgba($bms-purple, 0.35);
+  border-radius: 12px;
+}
+
+// Group title: small, uppercase, purple, full-width above the group's stages.
+.reveal .workflow-group-title {
+  display: block;
+  flex-basis: 100%;
+  margin: 0;
+  color: $bms-purple;
+  font-size: 0.6em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+// Stages/arrows within a group flow left-to-right.
+.reveal .workflow-group > .stage,
+.reveal .workflow-group > .arrow {
+  align-self: stretch;
+}
+
+// A single step card.
+.reveal .stage {
+  flex-direction: column;
+  min-width: 200px;
+  max-width: 260px;
+  padding: 14px 18px;
+  background: $bms-light-gray;
+  border-top: 4px solid $bms-purple;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.reveal .stage-title {
+  display: block;
+  margin: 0 0 0.3em 0;
+  font-size: 0.7em;
+  font-weight: bold;
+  color: $bms-dark-gray;
+}
+
+.reveal .stage ul {
+  margin: 0;
+  padding-left: 1.1em;
+  font-size: 0.55em;
+}
+
+// Arrow connector between stages.
+.reveal .arrow {
+  align-items: center;
+  justify-content: center;
+  color: $bms-purple;
+  font-size: 1.6em;
+  line-height: 1;
+}
+
+// Lay the groups themselves out in a row with arrows between, if desired.
+.reveal .workflow-group + .workflow-group {
+  align-self: center;
 }

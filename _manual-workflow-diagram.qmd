@@ -1,0 +1,47 @@
+<!--
+Reusable workflow diagram, written with Pandoc fenced divs (markdown content).
+Included on a slide with:  {{< include _workflow-diagram.qmd >}}
+Styling lives in bms-reveal.scss under the "workflow diagram" section.
+
+NOTE: titles here use bracketed spans ([text]{.class}), NOT ### headings.
+Headings inside a slide become nested <section> elements, which reveal.js
+treats as vertical slides and which break linear navigation.
+
+Edit the stage titles and bullets below; add/remove .stage blocks as needed.
+Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs them).
+-->
+
+::::: {.workflow}
+
+:::: {.workflow-group}
+[Understand the data]{.workflow-group-title}
+
+::: {.stage}
+[🔎 Match]{.stage-title}
+
+- Map input columns to desired output columns
+:::
+
+::: {.arrow}
+→
+:::
+
+::: {.stage}
+[🧭 Identify format]{.stage-title}
+
+- Figure out what format the source is in
+:::
+::::
+
+:::: {.workflow-group}
+[Transform]{.workflow-group-title}
+
+::: {.stage}
+[🔧 Convert]{.stage-title}
+
+- Convert to the target format
+- Apply recoding rules
+:::
+::::
+
+:::::
