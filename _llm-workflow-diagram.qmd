@@ -25,13 +25,6 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
 
 - 📄 .yaml format
 - 🗂️ One per output dataset
-    - 🏛️ Columns to include
-    - 🔑 Primary key(s)
-    - 📖 Data definition
-    - 🔢 Data type
-    - 🏷️ Categorical values
-    - ❓ Missing value codes
-    - 📏 Unit of measure
 :::
 
 ::: {.arrow}
@@ -43,10 +36,7 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
 
 - 🌳 Read data model
 - 📚 Read study harmonization configs
-- ⚙️ Generalized harmonization code
-    - 🏛️ Select and rename columns
-    - 🔄 Convert to desired data type
-    - 🔁 Convert to desired units of measure
+- ⚙️ Config-based harmonization code
 :::
 
 ::::
@@ -65,10 +55,6 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
 
 - 📄 .yaml format
 - 📚 One per output dataset per study
-    - 🔗 Map input column to output column
-    - 🔢 Observed data type
-    - 🏷️ Observed categorical values
-    - 📏 Observed units of measure
 :::
 
 :::::

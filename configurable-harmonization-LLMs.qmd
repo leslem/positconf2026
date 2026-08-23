@@ -34,42 +34,126 @@ exiftool -gps:all= -overwrite_original assets/IMG_6706_5704.jpg
 :::
 
 
-## Clinical trial data is precious {background-image="assets/content-central/AdobeStock_158958915.jpeg" background-size="cover" background-opacity="0.85"}
-
-* Patient outcomes (overall survival, progression-free survival)
-* Biomarkers
-* Adverse events
-* Monthly or biweekly treatment visits
-* Multiple years of long-term follow up visits
+## Clinical trial data is precious {.flip-bg background-image="assets/content-central/AdobeStock_158958915.jpeg" background-size="cover" background-opacity="0.75"}
 
 ::: footer
 Stock image
 :::
 
-
 ::: {.notes}
-- The data I work with comes from clinical trials for cancer treatments, so this is very precious data, that these patients contributed at great personal cost when their time was at its most valuable
-    - photo of patient visit
+- I work with clinical trial data, mostly for cancer treatments
+- Patients undergo extra procedures, visits that can be hours long, and sometimes years of follow up visits
+- When their time was precious
+- So it's important to use this data for as many scientific insights as possible to 
+
+- Patient outcomes (overall survival, PFS)
+- Adverse events
+- Biomarkers
 :::
 
 
-## Data harmonization is needed
+## Cross-study analysis requires data harmonization
 
-> Data harmonization: the complicated, tedious, time-consuming, and extremely important task of "combining different datasets to maximize their comparability and compatibility^[A general primer for data harmonization. Cheng et al. 2024. Sci Data.]"
+```{r}
+#| echo: false
+#| fig-width: 11
+#| fig-height: 4.0
+#| fig-align: center
+# Clinical-trial timeline. Milestone dates extracted from
+# bms-resources/study_milestone_dates_from_copilot.xlsx (gitignored), hardcoded
+# here so the slide renders without that file. Ongoing studies (end date in the
+# future) are drawn as arrows; completed studies get an end-date milestone.
+library(ggplot2)
+library(grid)
 
+# karmma3: https://clinicaltrials.gov/study/NCT03651128    https://www.nejm.org/doi/pdf/10.1056/NEJMoa2213614
+# pilot: https://clinicaltrials.gov/study/NCT03483103    https://www.thelancet.com/journals/lanonc/article/PIIS1470-2045%2822%2900339-4/fulltext
+# breakfree: https://clinicaltrials.gov/study/NCT05869955
+studies <- data.frame(
+  study     = c("KarMMa-3", "PILOT", "Breakfree-1"),
+  company   = c("Celgene", "Juno Therapeutics", "Bristol Myers Squibb"),
+  disease   = c("Multiple myeloma", "B-cell lymphoma", "Autoimmune diseases"),
+  treatment = c("Abecma®", "Breyanzi®", "CC-97540 (BMS-986353)"),
+  start     = as.Date(c("2019-04-16", "2018-07-27", "2023-09-13")),
+  end       = as.Date(c("2026-04-13", "2022-12-01", NA)),
+  published = as.Date(c("2023-02-10", "2022-08-01", NA)),
+  stringsAsFactors = FALSE
+)
+studies$ongoing <- is.na(studies$end) | studies$end > Sys.Date()  # no end = ongoing
+studies$y <- max(rank(studies$start)) - rank(studies$start) + 1  # earliest on top
 
-<!-- 
-timeline of clinical trials (different years, different COMPANIES) 
+company_cols <- c("Celgene" = "#009FBA",
+                  "Juno Therapeutics" = "#DF603A",
+                  "Bristol Myers Squibb" = "#BE2BBB")
+
+arrow_x <- as.Date("2029-03-01")
+xlim <- c(as.Date("2018-01-01"), as.Date("2029-06-01"))  # must extend past arrow_x
+ongoing   <- studies[studies$ongoing, ]
+completed <- studies[!studies$ongoing, ]
+published_df <- studies[!is.na(studies$published), ]
+
+ggplot() +
+  geom_segment(data = completed,
+               aes(x = start, xend = end, y = y, yend = y, colour = company),
+               linewidth = 1.6) +
+  geom_segment(data = ongoing,
+               aes(x = start, xend = arrow_x, y = y, yend = y, colour = company),
+               linewidth = 1.6, lineend = "round", linejoin = "mitre",
+               arrow = arrow(length = unit(0.5, "cm"), type = "open", angle = 20)) +
+  # publication milestone: a diamond on the line + a label below it
+  geom_point(data = published_df,
+             aes(x = published, y = y - 0.1, colour = company),
+             shape = "|", size = 4.5) +
+  geom_text(data = published_df,
+            aes(x = published, y = y - 0.3,
+                label = paste0("Published ", format(published, "%b %Y")),
+                colour = company),
+            size = 2.9, vjust = 1) +
+  geom_text(data = studies,
+            aes(x = start, y = y + 0.4, label = paste0(study, "  —  ", treatment),
+                colour = company),
+            hjust = 0, fontface = "bold", size = 4.4) +
+  geom_text(data = studies,
+            aes(x = start, y = y + 0.2, label = paste0(disease, "  ·  ", company)),
+            hjust = 0, colour = "grey35", size = 3.5) +
+  geom_label(data = studies,
+             aes(x = start, y = y, label = format(start, "%b %Y"), colour = company),
+             fill = "white", size = 3.5, fontface = "bold",
+             linewidth = 0.6, label.r = unit(0.45, "lines")) +
+  geom_label(data = completed,
+             aes(x = end, y = y, label = format(end, "%b %Y"), colour = company),
+             fill = "white", size = 3.5, fontface = "bold",
+             linewidth = 0.6, label.r = unit(0.45, "lines")) +
+  scale_colour_manual(values = company_cols) +
+  scale_x_date(date_breaks = "1 year", date_labels = "%Y",
+               limits = xlim, expand = expansion(mult = c(0.01, 0.01))) +
+  coord_cartesian(ylim = c(0.55, 3.85), clip = "off") +
+  theme_minimal(base_size = 15) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_line(colour = "grey95"),
+    axis.title = element_blank(),
+    axis.text.y = element_blank(),
+    axis.text.x = element_text(colour = "grey30"),
+    axis.ticks = element_blank(),
+    legend.position = "none",
+    plot.margin = margin(12, 24, 8, 12)
+  )
+```
+
+<!--
 Can I make this music/harmony related somehow?
 -->
 
 ::: {.notes}
 - To get every last insight we can from the data, we need to harmonize it
 - Different subject ID formats, measurement units, date formats, inconsistent categorical values, synonyms for the same laboratory test
+- "combining different datasets to maximize their comparability and compatibility" -- A general primer for data harmonization. Cheng et al. 2024. Sci Data.
 :::
 
 
-## Complicated data harmonization diagram
+## Data harmonization is tedious and repetitive
 
 {{< include _manual-workflow-diagram.qmd >}}
 
@@ -80,23 +164,13 @@ Can I make this music/harmony related somehow?
     - big, complicated diagram
 - Many files from many studies, custom code for each input file to output transformation, lots of variation in the code, lots of repeating the same kinds of things over and over again
 - Choices of common format might not be the same from harmonization project to harmonization project
+- "I'm going to tell you about how I went from this [complicated diagram] to this [simple diagram]"
 :::
 
 
 ## My configurable workflow with LLM assistance is better, faster
 
 <!-- Like a string quartet? -->
-
-::: {.notes}
-Big picture description of a data harmonization project using config files made by LLM with human review
-
-- Simpler diagram here of agent workflow
-- "I'm going to tell you about how I went from this [complicated diagram] to this [simple diagram]"
-:::
-
-## My configurable workflow with LLM assistance is better, faster
-
-<!-- Same diagram, but add highlight boxes with key steps -->
 
 {{< include _llm-workflow-diagram.qmd >}}
 
@@ -107,9 +181,23 @@ I built out this workflow based on my deep expertise in data harmonization
 - figure out what format it's in
 - convert it to the format you want it to be
 - Overview of some example data from 3 studies (real column names, but not real data)
+
+Data model:
+
+- 🏛️ Columns to include
+- 🔑 Primary key(s)
+- 📖 Data definition
+- 🔢 Data type
+- 🏷️ Categorical values
+- ❓ Missing value codes
+- 📏 Unit of measure
+
+Harmonization configs:
+
+- observed data type, categorical values, missing value codes, units of measure
 :::
 
-## Data model (output)
+## The data model specifies the output format in detail
 
 :::: {.columns}
 
@@ -126,10 +214,10 @@ system("mmdc -i data-model-directory-treeView.mmd -o assets/data-model-directory
 
 ![](assets/data-model-directory-treeView.svg){width=100%}
 
-<!-- Highlight boxes overlaid on mermaid -->
-<div style="position: absolute; top: 45%; left: 4%; width: 90%; height: 12%; border: 2px solid #BE2BBB; border-radius: 4px; background: rgba(190, 43, 187, 0.12);"></div>
-<div style="position: absolute; top: 58%; left: 4%; width: 90%; height: 12%; border: 2px solid #BE2BBB; border-radius: 4px; background: rgba(190, 43, 187, 0.12);"></div>
-<div style="position: absolute; top: 83%; left: 4%; width: 90%; height: 12%; border: 2px solid #BE2BBB; border-radius: 4px; background: rgba(190, 43, 187, 0.12);"></div>
+<!-- Highlight boxes overlaid on mermaid (BMS theme colors, not purple) -->
+<div style="position: absolute; top: 45%; left: 4%; width: 90%; height: 12%; border: 2px solid #496FE3; border-radius: 4px; background: rgba(73, 111, 227, 0.12);"></div>
+<div style="position: absolute; top: 58%; left: 4%; width: 90%; height: 12%; border: 2px solid #2CF1B1; border-radius: 4px; background: rgba(44, 241, 177, 0.15);"></div>
+<div style="position: absolute; top: 83%; left: 4%; width: 90%; height: 12%; border: 2px solid #A9FA17; border-radius: 4px; background: rgba(169, 250, 23, 0.15);"></div>
 
 </div>
 
@@ -172,40 +260,65 @@ data_structure:
 :::
 
 
-## Data model (output)
+## Bootstrap the initial data model with Posit Assistant
 
-:::: {.columns}
+::::: {.columns}
 
-::: {.column width="50%"}
+:::: {.column width="50%"}
+::: {.small-quote}
 > The subject_level_labels object contains a data dictionary for each data frame in subject_level_sources. The project goal is to harmonize the data across all of these studies, whether the data comes from the sdtm dm file or the adam adsl file. Reviewing all of the variables described in the data dictionaries, come up with a list of the variables that should be in the harmonized dataset. Substantially similar variables should be combined into just one variable for simplicity. Use meaningful snake case variable names based on the descriptions from the data dictionaries. Only include a variable in the harmonized dataset if a similar variable is present in at least 3 of the studies.
+
 > Make this into a yaml format file named subject_level.yaml (saved in this workspace) that matches the format in example.yaml. Each item in the yaml is a variable and unique variable names from the individual source datasets are stored as a list in the inputs attribute. The data_type should be the R data type that most closely aligns with the input variables that will contribute to the harmonized variable. Ignore other attributes from the example for now.
 :::
+::::
 
-::: {.column width="50%"}
+:::: {.column width="50%"}
+
+### `subject_level` data model
+
 ```yaml
 unique_subject_id:
   key: true
   data_type: character
+  character_pattern: ^[A-Z0-9-]+-\d+-\d+$
   inputs:
       USUBJID
-  terms:
-    loinc: 97851-0
-    CDISC: 555555555
-    whodrug: 44444444
-    rxnorm: 33333333
-    snomed: xxxxxxxx
-    icd10: 8888888
-    MedDRA: xxxxxxxx
-subject_id:
-  key: false  # assume false by default
+site_id:
   data_type: character
+  character_pattern: ^\d+$
   inputs:
-    SUBJID
+  - SITEID
+  - SITE_ID
+baseline_height_cm:
+  data_type: numeric
+  numeric_units: centimeter
+  inputs:
+  - HTCMBL
+  - HEIGHTBL
+  terms:
+    loinc: 8302-2
+    snomed: C0005890
+diagnosis_date:
+  data_type: Date
+  date_format: "%Y-%m-%d"
+  inputs:
+  - DIAGDT
+  - DIAGDTC
+  - DXDT
+actual_arm:
+  data_type: factor
+  factor_allowed_values:
+    - Arm A
+    - Arm B
+    - Arm C
+  inputs:
+  - ACTARM
 ```
-:::
-
 ::::
 
+:::::
+
+<!-- Build this out to highlight all variable names, then all data types, then all type-specific values, then the inputs, etc. -->
 ::: {.notes}
 Data model (output)
 
@@ -214,76 +327,28 @@ Data model (output)
     - Structure:
         - _structure.yaml file; domain.yaml for each domain included
     - Domains: adverse_events, exposure, subjects, lab_tests, time_to_event, response
+- Future: add mapping to existing terminologies for data definitions so we're not writing new data definitions from scratch
 :::
 
-## Data model for `subject_level`
-
-```yaml
-study_id:
-  data_type: character
-  inputs:
-  - STUDYID
-unique_subject_id:
-  data_type: character
-  inputs:
-  - USUBJID
-site_id:
-  data_type: character
-  inputs:
-  - SITEID
-  - SITE_ID
-country:
-  data_type: character
-  inputs:
-  - COUNTRY
-sex:
-  data_type: character
-  inputs:
-  - SEX
-age:
-  data_type: numeric
-  inputs:
-  - AGE
-  - AAGE
-birth_date:
-  data_type: Date
-  inputs:
-  - BRTHDT
-  - BRTHDTC
-planned_arm:
-  data_type: character
-  inputs:
-  - ARM
-actual_arm:
-  data_type: character
-  inputs:
-  - ACTARM
-informed_consent_date:
-  data_type: Date
-  inputs:
-  - RFICDT
-  - RFICDTC
-baseline_height_cm:
-  data_type: numeric
-  inputs:
-  - HTCMBL
-  - HEIGHTBL
-diagnosis_date:
-  data_type: Date
-  inputs:
-  - DIAGDT
-  - DIAGDTC
-  - DXDT
-```
-
-
-## Harmonization configs (input)
+## Harmonization configs match observed data to the data model
 
 :::: {.columns}
 
 ::: {.column width="50%"}
 ```yaml
-
+unique_subject_id:
+  - {file: dm, column: subject_id, data_type: character}
+  - {file: adsl, column: USUBJID, data_type: character}
+site_id:
+  - {file: dm, column: SITE_ID, data_type: character}
+  - {file: adsl, column: SITE, data_type: character}
+baseline_height_cm:
+  - {file: adsl, column: HEIGHTBL, data_type: numeric, numeric_units: inch}
+diagnosis_date:
+  - {file: dm, column: DIAGDTC, data_type: character}
+actual_arm:
+  - {file: dm, column: study_arm, data_type: character}
+  - {file: adsl, column: ACTARMCD, data_type: character}
 ```
 :::
 
@@ -319,7 +384,7 @@ Harmonization configs (input)
 ## Config-based harmonization code
 
 ```r
-derive_subject_level <- function(data_files_read){
+derive_subject_level <- function(){
   
   # Get the set of columns to be included in the output
   domain_spec <- read_daap_specification("subject_level")
@@ -336,7 +401,6 @@ derive_subject_level <- function(data_files_read){
   # Use the harmonization config to find the source data for each column
   domain_config_df <- domain_config_df %>% 
     mutate(
-      # TODO: make this more general in case there are >2 files that map to the domain
       preferred_file = case_when(
         "adsl" %in% file ~ "adsl",
         TRUE ~ first(file)
@@ -346,7 +410,6 @@ derive_subject_level <- function(data_files_read){
   
   # Get the mapped columns from each source file
   get_mapped_data <- function(source_file){  # source_file <- "dm"
-    # TODO: make this more general for more than just adam/sdtm input types
     input_type <- ifelse(source_file %in% names(data_files_read$adam), "adam", "sdtm")
     source <- data_files_read[[input_type]][[source_file]](config=config)
     source_map <- domain_config_df %>%
@@ -360,9 +423,6 @@ derive_subject_level <- function(data_files_read){
   }
   subject_level <- purrr::map(unique(domain_config_df$preferred_file), .f=get_mapped_data)
   subject_level <- purrr::reduce(subject_level, .f=full_join)   # running this for each split of response
-
-  # TODO: add a check that every col from expected_keys_and_columns is in output
-  # and no unexpected columns
 
   return(subject_level)
 }
@@ -446,8 +506,9 @@ You can use these approaches for other use cases
 
 ::: {.column width="33%"}
 #### 2025 intern
-- Eslam Abousamra, MPH
-    - PhD student at CUNY Graduate School of Public Health and Public Policy
+Eslam Abousamra, MPH
+
+PhD student at CUNY Graduate School of Public Health and Public Policy
 :::
 
 ::::

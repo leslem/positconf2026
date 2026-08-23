@@ -6,8 +6,8 @@
 <script src="configurable-harmonization-LLMs_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="configurable-harmonization-LLMs_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="configurable-harmonization-LLMs_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="configurable-harmonization-LLMs_files/libs/quarto-html/quarto-syntax-highlighting-a696728df169e363e4859ca3ec1ae01c.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.6.42">
+<link href="configurable-harmonization-LLMs_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <title>configurable-harmonization-llms</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,10 +16,16 @@
   <link rel="stylesheet" href="configurable-harmonization-LLMs_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="configurable-harmonization-LLMs_files/libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -28,8 +34,9 @@
       vertical-align: middle;
     }
     /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -40,7 +47,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -93,7 +100,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="configurable-harmonization-LLMs_files/libs/revealjs/dist/theme/quarto-8bf1be765ec066322c4ee36182d608c1.css">
+  <link rel="stylesheet" href="configurable-harmonization-LLMs_files/libs/revealjs/dist/theme/quarto-633e10394627595878efa2434645f6e8.css">
   <link href="configurable-harmonization-LLMs_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="configurable-harmonization-LLMs_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="configurable-harmonization-LLMs_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -222,24 +229,20 @@ exiftool -gps:all= -overwrite_original assets/IMG_6706_5704.jpg
           display:block!important;
       }</style></aside>
 </section>
-<section id="clinical-trial-data-is-precious" class="slide level2" data-background-image="assets/content-central/AdobeStock_158958915.jpeg" data-background-size="cover" data-background-opacity="0.85">
+<section id="clinical-trial-data-is-precious" class="slide level2 flip-bg" data-background-image="assets/content-central/AdobeStock_158958915.jpeg" data-background-size="cover" data-background-opacity="0.75">
 <h2>Clinical trial data is precious</h2>
-<ul>
-<li>Patient outcomes (overall survival, progression-free survival)</li>
-<li>Biomarkers</li>
-<li>Adverse events</li>
-<li>Monthly or biweekly treatment visits</li>
-<li>Multiple years of long-term follow up visits</li>
-</ul>
 <div class="footer">
 <p>Stock image</p>
 </div>
 <aside class="notes">
 <ul>
-<li>The data I work with comes from clinical trials for cancer treatments, so this is very precious data, that these patients contributed at great personal cost when their time was at its most valuable
-<ul>
-<li>photo of patient visit</li>
-</ul></li>
+<li><p>I work with clinical trial data, mostly for cancer treatments</p></li>
+<li><p>Patients undergo extra procedures, visits that can be hours long, and sometimes years of follow up visits</p></li>
+<li><p>When their time was precious</p></li>
+<li><p>So it’s important to use this data for as many scientific insights as possible to</p></li>
+<li><p>Patient outcomes (overall survival, PFS)</p></li>
+<li><p>Adverse events</p></li>
+<li><p>Biomarkers</p></li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -253,19 +256,17 @@ exiftool -gps:all= -overwrite_original assets/IMG_6706_5704.jpg
           display:block!important;
       }</style></aside>
 </section>
-<section id="data-harmonization-is-needed" class="slide level2">
-<h2>Data harmonization is needed</h2>
-<blockquote>
-<p>Data harmonization: the complicated, tedious, time-consuming, and extremely important task of “combining different datasets to maximize their comparability and compatibility<sup>1</sup>”</p>
-</blockquote>
-<!-- 
-timeline of clinical trials (different years, different COMPANIES) 
+<section id="cross-study-analysis-requires-data-harmonization" class="slide level2">
+<h2>Cross-study analysis requires data harmonization</h2>
+
+<!--
 Can I make this music/harmony related somehow?
 -->
-<aside class="notes">
+<img data-src="configurable-harmonization-LLMs_files/figure-revealjs/unnamed-chunk-1-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1056"><aside class="notes">
 <ul>
 <li>To get every last insight we can from the data, we need to harmonize it</li>
 <li>Different subject ID formats, measurement units, date formats, inconsistent categorical values, synonyms for the same laboratory test</li>
+<li>“combining different datasets to maximize their comparability and compatibility” – A general primer for data harmonization. Cheng et al.&nbsp;2024. Sci Data.</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -278,9 +279,9 @@ Can I make this music/harmony related somehow?
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>A general primer for data harmonization. Cheng et al.&nbsp;2024. Sci Data.</p></li></ol></aside></section>
-<section id="complicated-data-harmonization-diagram" class="slide level2">
-<h2>Complicated data harmonization diagram</h2>
+</section>
+<section id="data-harmonization-is-tedious-and-repetitive" class="slide level2">
+<h2>Data harmonization is tedious and repetitive</h2>
 <!--
 Reusable workflow diagram, written with Pandoc fenced divs (markdown content).
 Included on a slide with:  {{< include _workflow-diagram.qmd >}}
@@ -365,6 +366,7 @@ Colon counts decrease as you nest (outer > inner) so Pandoc pairs them:
 </ul></li>
 <li>Many files from many studies, custom code for each input file to output transformation, lots of variation in the code, lots of repeating the same kinds of things over and over again</li>
 <li>Choices of common format might not be the same from harmonization project to harmonization project</li>
+<li>“I’m going to tell you about how I went from this [complicated diagram] to this [simple diagram]”</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -381,27 +383,6 @@ Colon counts decrease as you nest (outer > inner) so Pandoc pairs them:
 <section id="my-configurable-workflow-with-llm-assistance-is-better-faster" class="slide level2">
 <h2>My configurable workflow with LLM assistance is better, faster</h2>
 <!-- Like a string quartet? -->
-<aside class="notes">
-<p>Big picture description of a data harmonization project using config files made by LLM with human review</p>
-<ul>
-<li>Simpler diagram here of agent workflow</li>
-<li>“I’m going to tell you about how I went from this [complicated diagram] to this [simple diagram]”</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="my-configurable-workflow-with-llm-assistance-is-better-faster-1" class="slide level2">
-<h2>My configurable workflow with LLM assistance is better, faster</h2>
-<!-- Same diagram, but add highlight boxes with key steps -->
 <!--
 Reusable workflow diagram, written with Pandoc fenced divs (markdown content).
 Included on a slide with:  {{< include _workflow-diagram.qmd >}}
@@ -423,16 +404,7 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
 <p><span class="stage-title">Data model</span></p>
 <ul>
 <li>📄 .yaml format</li>
-<li>🗂️ One per output dataset
-<ul>
-<li>🏛️ Columns to include</li>
-<li>🔑 Primary key(s)</li>
-<li>📖 Data definition</li>
-<li>🔢 Data type</li>
-<li>🏷️ Categorical values</li>
-<li>❓ Missing value codes</li>
-<li>📏 Unit of measure</li>
-</ul></li>
+<li>🗂️ One per output dataset</li>
 </ul>
 </div>
 <div class="arrow">
@@ -443,12 +415,7 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
 <ul>
 <li>🌳 Read data model</li>
 <li>📚 Read study harmonization configs</li>
-<li>⚙️ Generalized harmonization code
-<ul>
-<li>🏛️ Select and rename columns</li>
-<li>🔄 Convert to desired data type</li>
-<li>🔁 Convert to desired units of measure</li>
-</ul></li>
+<li>⚙️ Config-based harmonization code</li>
 </ul>
 </div>
 </div>
@@ -462,13 +429,7 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
 <p><span class="stage-title">Harmonization configs</span></p>
 <ul>
 <li>📄 .yaml format</li>
-<li>📚 One per output dataset per study
-<ul>
-<li>🔗 Map input column to output column</li>
-<li>🔢 Observed data type</li>
-<li>🏷️ Observed categorical values</li>
-<li>📏 Observed units of measure</li>
-</ul></li>
+<li>📚 One per output dataset per study</li>
 </ul>
 </div>
 </div>
@@ -481,115 +442,19 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
 <li>convert it to the format you want it to be</li>
 <li>Overview of some example data from 3 studies (real column names, but not real data)</li>
 </ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="data-model-output" class="slide level2">
-<h2>Data model (output)</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div style="position: relative;">
-<p><img data-src="assets/data-model-directory-treeView.svg" style="width:100.0%"></p>
-<!-- Highlight boxes overlaid on mermaid -->
-<div style="position: absolute; top: 45%; left: 4%; width: 90%; height: 12%; border: 2px solid #BE2BBB; border-radius: 4px; background: rgba(190, 43, 187, 0.12);">
-
-</div>
-<div style="position: absolute; top: 58%; left: 4%; width: 90%; height: 12%; border: 2px solid #BE2BBB; border-radius: 4px; background: rgba(190, 43, 187, 0.12);">
-
-</div>
-<div style="position: absolute; top: 83%; left: 4%; width: 90%; height: 12%; border: 2px solid #BE2BBB; border-radius: 4px; background: rgba(190, 43, 187, 0.12);">
-
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href=""></a><span class="co"># Each terminal node is a data frame expected</span></span>
-<span id="cb1-2"><a href=""></a><span class="co"># in the output</span></span>
-<span id="cb1-3"><a href=""></a><span class="fu">data_structure</span><span class="kw">:</span></span>
-<span id="cb1-4"><a href=""></a><span class="at">    </span><span class="kw">-</span><span class="at"> adverse_events</span></span>
-<span id="cb1-5"><a href=""></a><span class="at">    </span><span class="kw">-</span><span class="at"> concomitant_medications</span></span>
-<span id="cb1-6"><a href=""></a><span class="at">    </span><span class="kw">-</span><span class="at"> exposure</span></span>
-<span id="cb1-7"><a href=""></a><span class="at">    </span><span class="kw">-</span><span class="at"> hospitalization</span></span>
-<span id="cb1-8"><a href=""></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">lab_tests</span><span class="kw">:</span></span>
-<span id="cb1-9"><a href=""></a><span class="at">        </span><span class="kw">-</span><span class="at"> albumin</span></span>
-<span id="cb1-10"><a href=""></a><span class="at">        </span><span class="kw">-</span><span class="at"> CD3</span></span>
-<span id="cb1-11"><a href=""></a><span class="at">        </span><span class="kw">-</span><span class="at"> CD4</span></span>
-<span id="cb1-12"><a href=""></a><span class="at">        </span><span class="kw">-</span><span class="at"> CRP</span></span>
-<span id="cb1-13"><a href=""></a><span class="at">        </span><span class="kw">-</span><span class="at"> kappa_flc</span></span>
-<span id="cb1-14"><a href=""></a><span class="at">        </span><span class="kw">-</span><span class="at"> lambda_flc</span></span>
-<span id="cb1-15"><a href=""></a><span class="at">        </span><span class="kw">-</span><span class="at"> ...</span></span>
-<span id="cb1-16"><a href=""></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">response</span><span class="kw">:</span></span>
-<span id="cb1-17"><a href=""></a><span class="at">        </span><span class="kw">-</span><span class="at"> best_overall_response</span></span>
-<span id="cb1-18"><a href=""></a><span class="at">        </span><span class="kw">-</span><span class="at"> overall_response</span></span>
-<span id="cb1-19"><a href=""></a><span class="at">    </span><span class="kw">-</span><span class="at"> subject_level</span></span>
-<span id="cb1-20"><a href=""></a><span class="at">    </span><span class="kw">-</span><span class="at"> subject_visit</span></span>
-<span id="cb1-21"><a href=""></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">time_to_event</span><span class="kw">:</span></span>
-<span id="cb1-22"><a href=""></a><span class="at">        </span><span class="kw">-</span><span class="at"> duration_of_response</span></span>
-<span id="cb1-23"><a href=""></a><span class="at">        </span><span class="kw">-</span><span class="at"> event_free_survival</span></span>
-<span id="cb1-24"><a href=""></a><span class="at">        </span><span class="kw">-</span><span class="at"> progression_free_survival</span></span>
-<span id="cb1-25"><a href=""></a><span class="at">        </span><span class="kw">-</span><span class="at"> time_to_progression</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></div>
-<aside class="notes">
-
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="data-model-output-1" class="slide level2">
-<h2>Data model (output)</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<blockquote>
-<p>The subject_level_labels object contains a data dictionary for each data frame in subject_level_sources. The project goal is to harmonize the data across all of these studies, whether the data comes from the sdtm dm file or the adam adsl file. Reviewing all of the variables described in the data dictionaries, come up with a list of the variables that should be in the harmonized dataset. Substantially similar variables should be combined into just one variable for simplicity. Use meaningful snake case variable names based on the descriptions from the data dictionaries. Only include a variable in the harmonized dataset if a similar variable is present in at least 3 of the studies. Make this into a yaml format file named subject_level.yaml (saved in this workspace) that matches the format in example.yaml. Each item in the yaml is a variable and unique variable names from the individual source datasets are stored as a list in the inputs attribute. The data_type should be the R data type that most closely aligns with the input variables that will contribute to the harmonized variable. Ignore other attributes from the example for now.</p>
-</blockquote>
-</div><div class="column" style="width:50%;">
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href=""></a><span class="fu">unique_subject_id</span><span class="kw">:</span></span>
-<span id="cb2-2"><a href=""></a><span class="at">  </span><span class="fu">key</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb2-3"><a href=""></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span></span>
-<span id="cb2-4"><a href=""></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
-<span id="cb2-5"><a href=""></a><span class="at">      USUBJID</span></span>
-<span id="cb2-6"><a href=""></a><span class="at">  </span><span class="fu">terms</span><span class="kw">:</span></span>
-<span id="cb2-7"><a href=""></a><span class="at">    </span><span class="fu">loinc</span><span class="kw">:</span><span class="at"> 97851-0</span></span>
-<span id="cb2-8"><a href=""></a><span class="at">    </span><span class="fu">CDISC</span><span class="kw">:</span><span class="at"> </span><span class="dv">555555555</span></span>
-<span id="cb2-9"><a href=""></a><span class="at">    </span><span class="fu">whodrug</span><span class="kw">:</span><span class="at"> </span><span class="dv">44444444</span></span>
-<span id="cb2-10"><a href=""></a><span class="at">    </span><span class="fu">rxnorm</span><span class="kw">:</span><span class="at"> </span><span class="dv">33333333</span></span>
-<span id="cb2-11"><a href=""></a><span class="at">    </span><span class="fu">snomed</span><span class="kw">:</span><span class="at"> xxxxxxxx</span></span>
-<span id="cb2-12"><a href=""></a><span class="at">    </span><span class="fu">icd10</span><span class="kw">:</span><span class="at"> </span><span class="dv">8888888</span></span>
-<span id="cb2-13"><a href=""></a><span class="at">    </span><span class="fu">MedDRA</span><span class="kw">:</span><span class="at"> xxxxxxxx</span></span>
-<span id="cb2-14"><a href=""></a><span class="fu">subject_id</span><span class="kw">:</span></span>
-<span id="cb2-15"><a href=""></a><span class="at">  </span><span class="fu">key</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span><span class="co">  # assume false by default</span></span>
-<span id="cb2-16"><a href=""></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span></span>
-<span id="cb2-17"><a href=""></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
-<span id="cb2-18"><a href=""></a><span class="at">    SUBJID</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></div>
-<aside class="notes">
-<p>Data model (output)</p>
+<p>Data model:</p>
 <ul>
-<li>Show prompt to get Posit Assistant to make the data model based on a group of studies</li>
-<li>Show example data model
+<li>🏛️ Columns to include</li>
+<li>🔑 Primary key(s)</li>
+<li>📖 Data definition</li>
+<li>🔢 Data type</li>
+<li>🏷️ Categorical values</li>
+<li>❓ Missing value codes</li>
+<li>📏 Unit of measure</li>
+</ul>
+<p>Harmonization configs:</p>
 <ul>
-<li>Structure:
-<ul>
-<li>_structure.yaml file; domain.yaml for each domain included</li>
-</ul></li>
-<li>Domains: adverse_events, exposure, subjects, lab_tests, time_to_event, response</li>
-</ul></li>
+<li>observed data type, categorical values, missing value codes, units of measure</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -603,71 +468,161 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
           display:block!important;
       }</style></aside>
 </section>
-<section id="data-model-for-subject_level" class="slide level2">
-<h2>Data model for <code>subject_level</code></h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href=""></a><span class="fu">study_id</span><span class="kw">:</span></span>
-<span id="cb3-2"><a href=""></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span></span>
-<span id="cb3-3"><a href=""></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
-<span id="cb3-4"><a href=""></a><span class="at">  </span><span class="kw">-</span><span class="at"> STUDYID</span></span>
-<span id="cb3-5"><a href=""></a><span class="fu">unique_subject_id</span><span class="kw">:</span></span>
-<span id="cb3-6"><a href=""></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span></span>
-<span id="cb3-7"><a href=""></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
-<span id="cb3-8"><a href=""></a><span class="at">  </span><span class="kw">-</span><span class="at"> USUBJID</span></span>
-<span id="cb3-9"><a href=""></a><span class="fu">site_id</span><span class="kw">:</span></span>
-<span id="cb3-10"><a href=""></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span></span>
-<span id="cb3-11"><a href=""></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
-<span id="cb3-12"><a href=""></a><span class="at">  </span><span class="kw">-</span><span class="at"> SITEID</span></span>
-<span id="cb3-13"><a href=""></a><span class="at">  </span><span class="kw">-</span><span class="at"> SITE_ID</span></span>
-<span id="cb3-14"><a href=""></a><span class="fu">country</span><span class="kw">:</span></span>
-<span id="cb3-15"><a href=""></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span></span>
-<span id="cb3-16"><a href=""></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
-<span id="cb3-17"><a href=""></a><span class="at">  </span><span class="kw">-</span><span class="at"> COUNTRY</span></span>
-<span id="cb3-18"><a href=""></a><span class="fu">sex</span><span class="kw">:</span></span>
-<span id="cb3-19"><a href=""></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span></span>
-<span id="cb3-20"><a href=""></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
-<span id="cb3-21"><a href=""></a><span class="at">  </span><span class="kw">-</span><span class="at"> SEX</span></span>
-<span id="cb3-22"><a href=""></a><span class="fu">age</span><span class="kw">:</span></span>
-<span id="cb3-23"><a href=""></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> numeric</span></span>
-<span id="cb3-24"><a href=""></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
-<span id="cb3-25"><a href=""></a><span class="at">  </span><span class="kw">-</span><span class="at"> AGE</span></span>
-<span id="cb3-26"><a href=""></a><span class="at">  </span><span class="kw">-</span><span class="at"> AAGE</span></span>
-<span id="cb3-27"><a href=""></a><span class="fu">birth_date</span><span class="kw">:</span></span>
-<span id="cb3-28"><a href=""></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> Date</span></span>
-<span id="cb3-29"><a href=""></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
-<span id="cb3-30"><a href=""></a><span class="at">  </span><span class="kw">-</span><span class="at"> BRTHDT</span></span>
-<span id="cb3-31"><a href=""></a><span class="at">  </span><span class="kw">-</span><span class="at"> BRTHDTC</span></span>
-<span id="cb3-32"><a href=""></a><span class="fu">planned_arm</span><span class="kw">:</span></span>
-<span id="cb3-33"><a href=""></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span></span>
-<span id="cb3-34"><a href=""></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
-<span id="cb3-35"><a href=""></a><span class="at">  </span><span class="kw">-</span><span class="at"> ARM</span></span>
-<span id="cb3-36"><a href=""></a><span class="fu">actual_arm</span><span class="kw">:</span></span>
-<span id="cb3-37"><a href=""></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span></span>
-<span id="cb3-38"><a href=""></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
-<span id="cb3-39"><a href=""></a><span class="at">  </span><span class="kw">-</span><span class="at"> ACTARM</span></span>
-<span id="cb3-40"><a href=""></a><span class="fu">informed_consent_date</span><span class="kw">:</span></span>
-<span id="cb3-41"><a href=""></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> Date</span></span>
-<span id="cb3-42"><a href=""></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
-<span id="cb3-43"><a href=""></a><span class="at">  </span><span class="kw">-</span><span class="at"> RFICDT</span></span>
-<span id="cb3-44"><a href=""></a><span class="at">  </span><span class="kw">-</span><span class="at"> RFICDTC</span></span>
-<span id="cb3-45"><a href=""></a><span class="fu">baseline_height_cm</span><span class="kw">:</span></span>
-<span id="cb3-46"><a href=""></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> numeric</span></span>
-<span id="cb3-47"><a href=""></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
-<span id="cb3-48"><a href=""></a><span class="at">  </span><span class="kw">-</span><span class="at"> HTCMBL</span></span>
-<span id="cb3-49"><a href=""></a><span class="at">  </span><span class="kw">-</span><span class="at"> HEIGHTBL</span></span>
-<span id="cb3-50"><a href=""></a><span class="fu">diagnosis_date</span><span class="kw">:</span></span>
-<span id="cb3-51"><a href=""></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> Date</span></span>
-<span id="cb3-52"><a href=""></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
-<span id="cb3-53"><a href=""></a><span class="at">  </span><span class="kw">-</span><span class="at"> DIAGDT</span></span>
-<span id="cb3-54"><a href=""></a><span class="at">  </span><span class="kw">-</span><span class="at"> DIAGDTC</span></span>
-<span id="cb3-55"><a href=""></a><span class="at">  </span><span class="kw">-</span><span class="at"> DXDT</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="harmonization-configs-input" class="slide level2">
-<h2>Harmonization configs (input)</h2>
+<section id="the-data-model-specifies-the-output-format-in-detail" class="slide level2">
+<h2>The data model specifies the output format in detail</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div style="position: relative;">
+<p><img data-src="assets/data-model-directory-treeView.svg" style="width:100.0%"></p>
+<!-- Highlight boxes overlaid on mermaid (BMS theme colors, not purple) -->
+<div style="position: absolute; top: 45%; left: 4%; width: 90%; height: 12%; border: 2px solid #496FE3; border-radius: 4px; background: rgba(73, 111, 227, 0.12);">
+
+</div>
+<div style="position: absolute; top: 58%; left: 4%; width: 90%; height: 12%; border: 2px solid #2CF1B1; border-radius: 4px; background: rgba(44, 241, 177, 0.15);">
+
+</div>
+<div style="position: absolute; top: 83%; left: 4%; width: 90%; height: 12%; border: 2px solid #A9FA17; border-radius: 4px; background: rgba(169, 250, 23, 0.15);">
+
+</div>
+</div>
 </div><div class="column" style="width:50%;">
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="" aria-label="1"></a><span class="co"># Each terminal node is a data frame expected</span></span>
+<span id="cb1-2"><a href="" aria-label="2"></a><span class="co"># in the output</span></span>
+<span id="cb1-3"><a href="" aria-label="3"></a><span class="fu">data_structure</span><span class="kw">:</span></span>
+<span id="cb1-4"><a href="" aria-label="4"></a><span class="at">    </span><span class="kw">-</span><span class="at"> adverse_events</span></span>
+<span id="cb1-5"><a href="" aria-label="5"></a><span class="at">    </span><span class="kw">-</span><span class="at"> concomitant_medications</span></span>
+<span id="cb1-6"><a href="" aria-label="6"></a><span class="at">    </span><span class="kw">-</span><span class="at"> exposure</span></span>
+<span id="cb1-7"><a href="" aria-label="7"></a><span class="at">    </span><span class="kw">-</span><span class="at"> hospitalization</span></span>
+<span id="cb1-8"><a href="" aria-label="8"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">lab_tests</span><span class="kw">:</span></span>
+<span id="cb1-9"><a href="" aria-label="9"></a><span class="at">        </span><span class="kw">-</span><span class="at"> albumin</span></span>
+<span id="cb1-10"><a href="" aria-label="10"></a><span class="at">        </span><span class="kw">-</span><span class="at"> CD3</span></span>
+<span id="cb1-11"><a href="" aria-label="11"></a><span class="at">        </span><span class="kw">-</span><span class="at"> CD4</span></span>
+<span id="cb1-12"><a href="" aria-label="12"></a><span class="at">        </span><span class="kw">-</span><span class="at"> CRP</span></span>
+<span id="cb1-13"><a href="" aria-label="13"></a><span class="at">        </span><span class="kw">-</span><span class="at"> kappa_flc</span></span>
+<span id="cb1-14"><a href="" aria-label="14"></a><span class="at">        </span><span class="kw">-</span><span class="at"> lambda_flc</span></span>
+<span id="cb1-15"><a href="" aria-label="15"></a><span class="at">        </span><span class="kw">-</span><span class="at"> ...</span></span>
+<span id="cb1-16"><a href="" aria-label="16"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">response</span><span class="kw">:</span></span>
+<span id="cb1-17"><a href="" aria-label="17"></a><span class="at">        </span><span class="kw">-</span><span class="at"> best_overall_response</span></span>
+<span id="cb1-18"><a href="" aria-label="18"></a><span class="at">        </span><span class="kw">-</span><span class="at"> overall_response</span></span>
+<span id="cb1-19"><a href="" aria-label="19"></a><span class="at">    </span><span class="kw">-</span><span class="at"> subject_level</span></span>
+<span id="cb1-20"><a href="" aria-label="20"></a><span class="at">    </span><span class="kw">-</span><span class="at"> subject_visit</span></span>
+<span id="cb1-21"><a href="" aria-label="21"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">time_to_event</span><span class="kw">:</span></span>
+<span id="cb1-22"><a href="" aria-label="22"></a><span class="at">        </span><span class="kw">-</span><span class="at"> duration_of_response</span></span>
+<span id="cb1-23"><a href="" aria-label="23"></a><span class="at">        </span><span class="kw">-</span><span class="at"> event_free_survival</span></span>
+<span id="cb1-24"><a href="" aria-label="24"></a><span class="at">        </span><span class="kw">-</span><span class="at"> progression_free_survival</span></span>
+<span id="cb1-25"><a href="" aria-label="25"></a><span class="at">        </span><span class="kw">-</span><span class="at"> time_to_progression</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<aside class="notes">
+
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="bootstrap-the-initial-data-model-with-posit-assistant" class="slide level2">
+<h2>Bootstrap the initial data model with Posit Assistant</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="small-quote">
+<blockquote>
+<p>The subject_level_labels object contains a data dictionary for each data frame in subject_level_sources. The project goal is to harmonize the data across all of these studies, whether the data comes from the sdtm dm file or the adam adsl file. Reviewing all of the variables described in the data dictionaries, come up with a list of the variables that should be in the harmonized dataset. Substantially similar variables should be combined into just one variable for simplicity. Use meaningful snake case variable names based on the descriptions from the data dictionaries. Only include a variable in the harmonized dataset if a similar variable is present in at least 3 of the studies.</p>
+</blockquote>
+<blockquote>
+<p>Make this into a yaml format file named subject_level.yaml (saved in this workspace) that matches the format in example.yaml. Each item in the yaml is a variable and unique variable names from the individual source datasets are stored as a list in the inputs attribute. The data_type should be the R data type that most closely aligns with the input variables that will contribute to the harmonized variable. Ignore other attributes from the example for now.</p>
+</blockquote>
+</div>
+</div><div class="column" style="width:50%;">
+<h3 id="subject_level-data-model"><code>subject_level</code> data model</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="" aria-label="1"></a><span class="fu">unique_subject_id</span><span class="kw">:</span></span>
+<span id="cb2-2"><a href="" aria-label="2"></a><span class="at">  </span><span class="fu">key</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb2-3"><a href="" aria-label="3"></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span></span>
+<span id="cb2-4"><a href="" aria-label="4"></a><span class="at">  </span><span class="fu">character_pattern</span><span class="kw">:</span><span class="at"> ^[A-Z0-9-]+-\d+-\d+$</span></span>
+<span id="cb2-5"><a href="" aria-label="5"></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
+<span id="cb2-6"><a href="" aria-label="6"></a><span class="at">      USUBJID</span></span>
+<span id="cb2-7"><a href="" aria-label="7"></a><span class="fu">site_id</span><span class="kw">:</span></span>
+<span id="cb2-8"><a href="" aria-label="8"></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span></span>
+<span id="cb2-9"><a href="" aria-label="9"></a><span class="at">  </span><span class="fu">character_pattern</span><span class="kw">:</span><span class="at"> ^\d+$</span></span>
+<span id="cb2-10"><a href="" aria-label="10"></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
+<span id="cb2-11"><a href="" aria-label="11"></a><span class="at">  </span><span class="kw">-</span><span class="at"> SITEID</span></span>
+<span id="cb2-12"><a href="" aria-label="12"></a><span class="at">  </span><span class="kw">-</span><span class="at"> SITE_ID</span></span>
+<span id="cb2-13"><a href="" aria-label="13"></a><span class="fu">baseline_height_cm</span><span class="kw">:</span></span>
+<span id="cb2-14"><a href="" aria-label="14"></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> numeric</span></span>
+<span id="cb2-15"><a href="" aria-label="15"></a><span class="at">  </span><span class="fu">numeric_units</span><span class="kw">:</span><span class="at"> centimeter</span></span>
+<span id="cb2-16"><a href="" aria-label="16"></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
+<span id="cb2-17"><a href="" aria-label="17"></a><span class="at">  </span><span class="kw">-</span><span class="at"> HTCMBL</span></span>
+<span id="cb2-18"><a href="" aria-label="18"></a><span class="at">  </span><span class="kw">-</span><span class="at"> HEIGHTBL</span></span>
+<span id="cb2-19"><a href="" aria-label="19"></a><span class="at">  </span><span class="fu">terms</span><span class="kw">:</span></span>
+<span id="cb2-20"><a href="" aria-label="20"></a><span class="at">    </span><span class="fu">loinc</span><span class="kw">:</span><span class="at"> 8302-2</span></span>
+<span id="cb2-21"><a href="" aria-label="21"></a><span class="at">    </span><span class="fu">snomed</span><span class="kw">:</span><span class="at"> C0005890</span></span>
+<span id="cb2-22"><a href="" aria-label="22"></a><span class="fu">diagnosis_date</span><span class="kw">:</span></span>
+<span id="cb2-23"><a href="" aria-label="23"></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> Date</span></span>
+<span id="cb2-24"><a href="" aria-label="24"></a><span class="at">  </span><span class="fu">date_format</span><span class="kw">:</span><span class="at"> </span><span class="st">"%Y-%m-%d"</span></span>
+<span id="cb2-25"><a href="" aria-label="25"></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
+<span id="cb2-26"><a href="" aria-label="26"></a><span class="at">  </span><span class="kw">-</span><span class="at"> DIAGDT</span></span>
+<span id="cb2-27"><a href="" aria-label="27"></a><span class="at">  </span><span class="kw">-</span><span class="at"> DIAGDTC</span></span>
+<span id="cb2-28"><a href="" aria-label="28"></a><span class="at">  </span><span class="kw">-</span><span class="at"> DXDT</span></span>
+<span id="cb2-29"><a href="" aria-label="29"></a><span class="fu">actual_arm</span><span class="kw">:</span></span>
+<span id="cb2-30"><a href="" aria-label="30"></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> factor</span></span>
+<span id="cb2-31"><a href="" aria-label="31"></a><span class="at">  </span><span class="fu">factor_allowed_values</span><span class="kw">:</span></span>
+<span id="cb2-32"><a href="" aria-label="32"></a><span class="at">    </span><span class="kw">-</span><span class="at"> Arm A</span></span>
+<span id="cb2-33"><a href="" aria-label="33"></a><span class="at">    </span><span class="kw">-</span><span class="at"> Arm B</span></span>
+<span id="cb2-34"><a href="" aria-label="34"></a><span class="at">    </span><span class="kw">-</span><span class="at"> Arm C</span></span>
+<span id="cb2-35"><a href="" aria-label="35"></a><span class="at">  </span><span class="fu">inputs</span><span class="kw">:</span></span>
+<span id="cb2-36"><a href="" aria-label="36"></a><span class="at">  </span><span class="kw">-</span><span class="at"> ACTARM</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<!-- Build this out to highlight all variable names, then all data types, then all type-specific values, then the inputs, etc. -->
+<aside class="notes">
+<p>Data model (output)</p>
+<ul>
+<li>Show prompt to get Posit Assistant to make the data model based on a group of studies</li>
+<li>Show example data model
+<ul>
+<li>Structure:
+<ul>
+<li>_structure.yaml file; domain.yaml for each domain included</li>
+</ul></li>
+<li>Domains: adverse_events, exposure, subjects, lab_tests, time_to_event, response</li>
+</ul></li>
+<li>Future: add mapping to existing terminologies for data definitions so we’re not writing new data definitions from scratch</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="harmonization-configs-match-observed-data-to-the-data-model" class="slide level2">
+<h2>Harmonization configs match observed data to the data model</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="" aria-label="1"></a><span class="fu">unique_subject_id</span><span class="kw">:</span></span>
+<span id="cb3-2"><a href="" aria-label="2"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> subject_id</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
+<span id="cb3-3"><a href="" aria-label="3"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> USUBJID</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
+<span id="cb3-4"><a href="" aria-label="4"></a><span class="fu">site_id</span><span class="kw">:</span></span>
+<span id="cb3-5"><a href="" aria-label="5"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> SITE_ID</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
+<span id="cb3-6"><a href="" aria-label="6"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> SITE</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
+<span id="cb3-7"><a href="" aria-label="7"></a><span class="fu">baseline_height_cm</span><span class="kw">:</span></span>
+<span id="cb3-8"><a href="" aria-label="8"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> HEIGHTBL</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> numeric</span><span class="kw">,</span><span class="at"> </span><span class="fu">numeric_units</span><span class="kw">:</span><span class="at"> inch</span><span class="kw">}</span></span>
+<span id="cb3-9"><a href="" aria-label="9"></a><span class="fu">diagnosis_date</span><span class="kw">:</span></span>
+<span id="cb3-10"><a href="" aria-label="10"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> DIAGDTC</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
+<span id="cb3-11"><a href="" aria-label="11"></a><span class="fu">actual_arm</span><span class="kw">:</span></span>
+<span id="cb3-12"><a href="" aria-label="12"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> study_arm</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
+<span id="cb3-13"><a href="" aria-label="13"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> ACTARMCD</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 <aside class="notes">
 <p>Harmonization configs (input)</p>
@@ -716,53 +671,48 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
 </section>
 <section id="config-based-harmonization-code" class="slide level2">
 <h2>Config-based harmonization code</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>derive_subject_level <span class="ot">&lt;-</span> <span class="cf">function</span>(data_files_read){</span>
-<span id="cb6-2"><a href=""></a>  </span>
-<span id="cb6-3"><a href=""></a>  <span class="co"># Get the set of columns to be included in the output</span></span>
-<span id="cb6-4"><a href=""></a>  domain_spec <span class="ot">&lt;-</span> <span class="fu">read_daap_specification</span>(<span class="st">"subject_level"</span>)</span>
-<span id="cb6-5"><a href=""></a>  </span>
-<span id="cb6-6"><a href=""></a>  <span class="co"># Get the harmonization config</span></span>
-<span id="cb6-7"><a href=""></a>  domain_config <span class="ot">&lt;-</span> <span class="fu">read_harmonization_config</span>(<span class="st">"subject_level"</span>)</span>
-<span id="cb6-8"><a href=""></a>  domain_config_df <span class="ot">&lt;-</span> <span class="fu">harmonization_config_to_tibble</span>(domain_config)</span>
-<span id="cb6-9"><a href=""></a>  </span>
-<span id="cb6-10"><a href=""></a>  <span class="co"># Which columns need to be in the output?</span></span>
-<span id="cb6-11"><a href=""></a>  expected_keys <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_chr</span>(domain_spec<span class="sc">$</span>keys, <span class="at">.f=</span>names)</span>
-<span id="cb6-12"><a href=""></a>  expected_keys_and_columns <span class="ot">&lt;-</span> <span class="fu">c</span>(expected_keys,</span>
-<span id="cb6-13"><a href=""></a>                                 purrr<span class="sc">::</span><span class="fu">map_chr</span>(domain_spec<span class="sc">$</span>columns, <span class="at">.f=</span>names))</span>
-<span id="cb6-14"><a href=""></a>  </span>
-<span id="cb6-15"><a href=""></a>  <span class="co"># Use the harmonization config to find the source data for each column</span></span>
-<span id="cb6-16"><a href=""></a>  domain_config_df <span class="ot">&lt;-</span> domain_config_df <span class="sc">%&gt;%</span> </span>
-<span id="cb6-17"><a href=""></a>    <span class="fu">mutate</span>(</span>
-<span id="cb6-18"><a href=""></a>      <span class="co"># </span><span class="al">TODO</span><span class="co">: make this more general in case there are &gt;2 files that map to the domain</span></span>
-<span id="cb6-19"><a href=""></a>      <span class="at">preferred_file =</span> <span class="fu">case_when</span>(</span>
-<span id="cb6-20"><a href=""></a>        <span class="st">"adsl"</span> <span class="sc">%in%</span> file <span class="sc">~</span> <span class="st">"adsl"</span>,</span>
-<span id="cb6-21"><a href=""></a>        <span class="cn">TRUE</span> <span class="sc">~</span> <span class="fu">first</span>(file)</span>
-<span id="cb6-22"><a href=""></a>        ),</span>
-<span id="cb6-23"><a href=""></a>        <span class="at">.by=</span>output_column</span>
-<span id="cb6-24"><a href=""></a>    )</span>
-<span id="cb6-25"><a href=""></a>  </span>
-<span id="cb6-26"><a href=""></a>  <span class="co"># Get the mapped columns from each source file</span></span>
-<span id="cb6-27"><a href=""></a>  get_mapped_data <span class="ot">&lt;-</span> <span class="cf">function</span>(source_file){  <span class="co"># source_file &lt;- "dm"</span></span>
-<span id="cb6-28"><a href=""></a>    <span class="co"># </span><span class="al">TODO</span><span class="co">: make this more general for more than just adam/sdtm input types</span></span>
-<span id="cb6-29"><a href=""></a>    input_type <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(source_file <span class="sc">%in%</span> <span class="fu">names</span>(data_files_read<span class="sc">$</span>adam), <span class="st">"adam"</span>, <span class="st">"sdtm"</span>)</span>
-<span id="cb6-30"><a href=""></a>    source <span class="ot">&lt;-</span> data_files_read[[input_type]][[source_file]](<span class="at">config=</span>config)</span>
-<span id="cb6-31"><a href=""></a>    source_map <span class="ot">&lt;-</span> domain_config_df <span class="sc">%&gt;%</span></span>
-<span id="cb6-32"><a href=""></a>      <span class="fu">filter</span>((preferred_file <span class="sc">==</span> source_file <span class="sc">|</span> output_column <span class="sc">%in%</span> expected_keys ) <span class="sc">&amp;</span></span>
-<span id="cb6-33"><a href=""></a>               file <span class="sc">==</span> source_file)</span>
-<span id="cb6-34"><a href=""></a>    rename_map <span class="ot">&lt;-</span> source_map<span class="sc">$</span>column</span>
-<span id="cb6-35"><a href=""></a>    <span class="fu">names</span>(rename_map) <span class="ot">&lt;-</span> source_map<span class="sc">$</span>output_column</span>
-<span id="cb6-36"><a href=""></a>    mapped_data <span class="ot">&lt;-</span> source <span class="sc">%&gt;%</span> </span>
-<span id="cb6-37"><a href=""></a>      <span class="fu">select</span>(<span class="fu">all_of</span>(source_map<span class="sc">$</span>column)) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-38"><a href=""></a>      <span class="fu">rename</span>(<span class="fu">all_of</span>(rename_map))</span>
-<span id="cb6-39"><a href=""></a>  }</span>
-<span id="cb6-40"><a href=""></a>  subject_level <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(<span class="fu">unique</span>(domain_config_df<span class="sc">$</span>preferred_file), <span class="at">.f=</span>get_mapped_data)</span>
-<span id="cb6-41"><a href=""></a>  subject_level <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">reduce</span>(subject_level, <span class="at">.f=</span>full_join)   <span class="co"># running this for each split of response</span></span>
-<span id="cb6-42"><a href=""></a></span>
-<span id="cb6-43"><a href=""></a>  <span class="co"># </span><span class="al">TODO</span><span class="co">: add a check that every col from expected_keys_and_columns is in output</span></span>
-<span id="cb6-44"><a href=""></a>  <span class="co"># and no unexpected columns</span></span>
-<span id="cb6-45"><a href=""></a></span>
-<span id="cb6-46"><a href=""></a>  <span class="fu">return</span>(subject_level)</span>
-<span id="cb6-47"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-label="1"></a>derive_subject_level <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
+<span id="cb5-2"><a href="" aria-label="2"></a>  </span>
+<span id="cb5-3"><a href="" aria-label="3"></a>  <span class="co"># Get the set of columns to be included in the output</span></span>
+<span id="cb5-4"><a href="" aria-label="4"></a>  domain_spec <span class="ot">&lt;-</span> <span class="fu">read_daap_specification</span>(<span class="st">"subject_level"</span>)</span>
+<span id="cb5-5"><a href="" aria-label="5"></a>  </span>
+<span id="cb5-6"><a href="" aria-label="6"></a>  <span class="co"># Get the harmonization config</span></span>
+<span id="cb5-7"><a href="" aria-label="7"></a>  domain_config <span class="ot">&lt;-</span> <span class="fu">read_harmonization_config</span>(<span class="st">"subject_level"</span>)</span>
+<span id="cb5-8"><a href="" aria-label="8"></a>  domain_config_df <span class="ot">&lt;-</span> <span class="fu">harmonization_config_to_tibble</span>(domain_config)</span>
+<span id="cb5-9"><a href="" aria-label="9"></a>  </span>
+<span id="cb5-10"><a href="" aria-label="10"></a>  <span class="co"># Which columns need to be in the output?</span></span>
+<span id="cb5-11"><a href="" aria-label="11"></a>  expected_keys <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_chr</span>(domain_spec<span class="sc">$</span>keys, <span class="at">.f=</span>names)</span>
+<span id="cb5-12"><a href="" aria-label="12"></a>  expected_keys_and_columns <span class="ot">&lt;-</span> <span class="fu">c</span>(expected_keys,</span>
+<span id="cb5-13"><a href="" aria-label="13"></a>                                 purrr<span class="sc">::</span><span class="fu">map_chr</span>(domain_spec<span class="sc">$</span>columns, <span class="at">.f=</span>names))</span>
+<span id="cb5-14"><a href="" aria-label="14"></a>  </span>
+<span id="cb5-15"><a href="" aria-label="15"></a>  <span class="co"># Use the harmonization config to find the source data for each column</span></span>
+<span id="cb5-16"><a href="" aria-label="16"></a>  domain_config_df <span class="ot">&lt;-</span> domain_config_df <span class="sc">%&gt;%</span> </span>
+<span id="cb5-17"><a href="" aria-label="17"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb5-18"><a href="" aria-label="18"></a>      <span class="at">preferred_file =</span> <span class="fu">case_when</span>(</span>
+<span id="cb5-19"><a href="" aria-label="19"></a>        <span class="st">"adsl"</span> <span class="sc">%in%</span> file <span class="sc">~</span> <span class="st">"adsl"</span>,</span>
+<span id="cb5-20"><a href="" aria-label="20"></a>        <span class="cn">TRUE</span> <span class="sc">~</span> <span class="fu">first</span>(file)</span>
+<span id="cb5-21"><a href="" aria-label="21"></a>        ),</span>
+<span id="cb5-22"><a href="" aria-label="22"></a>        <span class="at">.by=</span>output_column</span>
+<span id="cb5-23"><a href="" aria-label="23"></a>    )</span>
+<span id="cb5-24"><a href="" aria-label="24"></a>  </span>
+<span id="cb5-25"><a href="" aria-label="25"></a>  <span class="co"># Get the mapped columns from each source file</span></span>
+<span id="cb5-26"><a href="" aria-label="26"></a>  get_mapped_data <span class="ot">&lt;-</span> <span class="cf">function</span>(source_file){  <span class="co"># source_file &lt;- "dm"</span></span>
+<span id="cb5-27"><a href="" aria-label="27"></a>    input_type <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(source_file <span class="sc">%in%</span> <span class="fu">names</span>(data_files_read<span class="sc">$</span>adam), <span class="st">"adam"</span>, <span class="st">"sdtm"</span>)</span>
+<span id="cb5-28"><a href="" aria-label="28"></a>    source <span class="ot">&lt;-</span> data_files_read[[input_type]][[source_file]](<span class="at">config=</span>config)</span>
+<span id="cb5-29"><a href="" aria-label="29"></a>    source_map <span class="ot">&lt;-</span> domain_config_df <span class="sc">%&gt;%</span></span>
+<span id="cb5-30"><a href="" aria-label="30"></a>      <span class="fu">filter</span>((preferred_file <span class="sc">==</span> source_file <span class="sc">|</span> output_column <span class="sc">%in%</span> expected_keys ) <span class="sc">&amp;</span></span>
+<span id="cb5-31"><a href="" aria-label="31"></a>               file <span class="sc">==</span> source_file)</span>
+<span id="cb5-32"><a href="" aria-label="32"></a>    rename_map <span class="ot">&lt;-</span> source_map<span class="sc">$</span>column</span>
+<span id="cb5-33"><a href="" aria-label="33"></a>    <span class="fu">names</span>(rename_map) <span class="ot">&lt;-</span> source_map<span class="sc">$</span>output_column</span>
+<span id="cb5-34"><a href="" aria-label="34"></a>    mapped_data <span class="ot">&lt;-</span> source <span class="sc">%&gt;%</span> </span>
+<span id="cb5-35"><a href="" aria-label="35"></a>      <span class="fu">select</span>(<span class="fu">all_of</span>(source_map<span class="sc">$</span>column)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-36"><a href="" aria-label="36"></a>      <span class="fu">rename</span>(<span class="fu">all_of</span>(rename_map))</span>
+<span id="cb5-37"><a href="" aria-label="37"></a>  }</span>
+<span id="cb5-38"><a href="" aria-label="38"></a>  subject_level <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(<span class="fu">unique</span>(domain_config_df<span class="sc">$</span>preferred_file), <span class="at">.f=</span>get_mapped_data)</span>
+<span id="cb5-39"><a href="" aria-label="39"></a>  subject_level <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">reduce</span>(subject_level, <span class="at">.f=</span>full_join)   <span class="co"># running this for each split of response</span></span>
+<span id="cb5-40"><a href="" aria-label="40"></a></span>
+<span id="cb5-41"><a href="" aria-label="41"></a>  <span class="fu">return</span>(subject_level)</span>
+<span id="cb5-42"><a href="" aria-label="42"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>Config-based harmonization code</p>
 <ul>
@@ -906,16 +856,11 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
 </ul>
 </div><div class="column" style="width:33%;">
 <h4 id="intern">2025 intern</h4>
-<ul>
-<li>Eslam Abousamra, MPH
-<ul>
-<li>PhD student at CUNY Graduate School of Public Health and Public Policy</li>
-</ul></li>
-</ul>
+<p>Eslam Abousamra, MPH</p>
+<p>PhD student at CUNY Graduate School of Public Health and Public Policy</p>
 </div></div>
 
 </section>
-
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="assets/bms-logo.png" class="slide-logo"></p>
@@ -1106,7 +1051,7 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
         margin: 2.0e-2,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1171,190 +1116,173 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
     </script>
 
     <script id="quarto-html-after-body" type="application/javascript">
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-      const toggleBodyColorMode = (bsSheetEl) => {
-        const mode = bsSheetEl.getAttribute("data-mode");
-        const bodyEl = window.document.querySelector("body");
-        if (mode === "dark") {
-          bodyEl.classList.add("quarto-dark");
-          bodyEl.classList.remove("quarto-light");
-        } else {
-          bodyEl.classList.add("quarto-light");
-          bodyEl.classList.remove("quarto-dark");
-        }
-      }
-      const toggleBodyColorPrimary = () => {
-        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-        if (bsSheetEl) {
-          toggleBodyColorMode(bsSheetEl);
-        }
-      }
-      toggleBodyColorPrimary();  
-      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-      tabsets.forEach(function(tabset) {
-        const tabby = new Tabby('#' + tabset.id);
-      });
-      const isCodeAnnotation = (el) => {
-        for (const clz of el.classList) {
-          if (clz.startsWith('code-annotation-')) {                     
-            return true;
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
           }
+          return false;
         }
-        return false;
-      }
-      const onCopySuccess = function(e) {
-        // button target
-        const button = e.trigger;
-        // don't keep focus
-        button.blur();
-        // flash "checked"
-        button.classList.add('code-copy-button-checked');
-        var currentTitle = button.getAttribute("title");
-        button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
-        setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
           }
-          button.setAttribute("title", currentTitle);
-          button.classList.remove('code-copy-button-checked');
-        }, 1000);
-        // clear code selection
-        e.clearSelection();
-      }
-      const getTextToCopy = function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
           for (const childEl of codeEl.children) {
             if (isCodeAnnotation(childEl)) {
               childEl.remove();
             }
           }
           return codeEl.innerText;
-      }
-      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-        text: getTextToCopy
-      });
-      clipboard.on('success', onCopySuccess);
-      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-          text: getTextToCopy,
-          container: window.document.getElementById('quarto-embedded-source-code-modal')
-        });
-        clipboardModal.on('success', onCopySuccess);
-      }
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-        var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp('/' + window.location.host + '/');
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-            // undo the damage that might have been done by quarto-nav.js in the case of
-            // links that we want to consider external
-            if (link.dataset.originalHref !== undefined) {
-              link.href = link.dataset.originalHref;
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
             }
           }
-        }
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-        const config = {
-          allowHTML: true,
-          maxWidth: 500,
-          delay: 100,
-          arrow: false,
-          appendTo: function(el) {
-              return el.closest('section.slide') || el.parentElement;
-          },
-          interactive: true,
-          interactiveBorder: 10,
-          theme: 'light-border',
-          placement: 'bottom-start',
-        };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
-          config['offset'] = [0,0];
-          config['maxWidth'] = 700;
-        window.tippy(el, config); 
-      }
-      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-      for (var i=0; i<noterefs.length; i++) {
-        const ref = noterefs[i];
-        tippyHover(ref, function() {
-          // use id or data attribute instead here
-          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-          try { href = new URL(href).hash; } catch {}
-          const id = href.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note) {
-            return note.innerHTML;
-          } else {
-            return "";
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
           }
-        });
-      }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
           }
-        } else {
-          return undefined;
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
         }
-      };
-      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-      for (var i=0; i<bibliorefs.length; i++) {
-        const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
-              }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
           });
         }
-      }
-    });
-    </script>
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
     
 
 </body></html>

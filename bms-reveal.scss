@@ -60,6 +60,7 @@ $danger:    $bms-dark-indigo;
   padding: 0;
   line-height: 1.1;   // tighten leading so the title sits snug at the top
   font-size: 1.9em;
+  max-width: 67%;   // keep the title in the left half, off the right-side photo
 }
 
 // Author + affiliation grouped in .title-byline, pushed to the bottom of the
@@ -91,6 +92,12 @@ $danger:    $bms-dark-indigo;
 .reveal .slide-background.title-hero .slide-background-content {
   -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 1) 100%);
   mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 1) 100%);
+}
+
+// Horizontally flip a slide's background image (add {.flip-bg} to the heading).
+// reveal copies the section's classes onto the generated .slide-background.
+.reveal .slide-background.flip-bg .slide-background-content {
+  transform: scaleX(-1);
 }
 
 // --- Purple hero: section dividers ----------------------------------------
@@ -160,6 +167,25 @@ $danger:    $bms-dark-indigo;
   color: rgba(255, 255, 255, 0.9) !important;
 }
 
+// --- Footer: dark gray, doubled from Quarto's default sizes -----------------
+// div.footer out-specifies the plugin's `.reveal .footer`. Mirror the plugin's
+// one breakpoint (18px -> 14px at <=800px) at 2x so the footer stays responsive.
+// Color on purple divider slides is still overridden white above.
+.reveal div.footer {
+  color: $bms-dark-gray;
+  font-size: 36px;   // 2x the plugin's 18px
+}
+@media screen and (max-width: 800px) {
+  .reveal div.footer {
+    font-size: 28px;   // 2x the plugin's 14px
+  }
+}
+
+// --- Scoped smaller blockquote (wrap a quote in ::: {.small-quote}) ---------
+.reveal .small-quote blockquote {
+  font-size: 0.6em;
+}
+
 // --- Code on a light-gray surface for contrast -----------------------------
 .reveal code,
 .reveal pre {
@@ -175,6 +201,16 @@ $danger:    $bms-dark-indigo;
 // --- Slide number in dark gray (matching body text) ------------------------
 .reveal .slide-number {
   color: $bms-dark-gray;
+}
+
+// --- Reserve bottom space so content can't overlap the fixed logo/number ----
+// The logo (bottom: 12px, 44px tall -> ~56px zone) and slide number are
+// position:fixed and float over the slide, so pad the content area to keep it
+// clear of them. title-hero runs its own bottom layout, so it's excluded.
+.reveal .slides > section:not(.title-hero),
+.reveal .slides > section:not(.title-hero) > section {
+  box-sizing: border-box;
+  padding-bottom: 64px;
 }
 
 // --- Workflow diagram (fenced-div layout) ----------------------------------
