@@ -20,8 +20,9 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
 
 :::: {.stage-row}
 
-::: {.stage}
+::: {.stage .highlight}
 [Data model]{.stage-title}
+[🤖 LLM-drafted <br> 👩🏻‍💻 human-reviewed]{.stage-badge}
 
 - 📄 .yaml format
 - 🗂️ One per output dataset
@@ -50,8 +51,9 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
 ::::: {.workflow-group}
 [For each study]{.workflow-group-title}
 
-::: {.stage}
+::: {.stage .highlight}
 [Harmonization configs]{.stage-title}
+[🤖 LLM-drafted <br> 👩🏻‍💻 human-reviewed]{.stage-badge}
 
 - 📄 .yaml format
 - 📚 One per output dataset per study

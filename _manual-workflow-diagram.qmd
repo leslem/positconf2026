@@ -50,7 +50,7 @@ Colon counts decrease as you nest (outer > inner) so Pandoc pairs them:
 [Column content]{.stage-title}
 
 - 🔢 Data type
-- 🗂️ Categorical values
+- 🏷️ Categorical values
 - ❓ Missing value codes
 - 📏 Unit of measure
 :::
@@ -74,6 +74,7 @@ x
 - 💊 Medications
 - 🩺 Patient visits
 - ⏱️ Time to event
+- 📈 Response
 ::::
 
 ::: {.arrow}

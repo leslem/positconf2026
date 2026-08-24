@@ -100,7 +100,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="configurable-harmonization-LLMs_files/libs/revealjs/dist/theme/quarto-633e10394627595878efa2434645f6e8.css">
+  <link rel="stylesheet" href="configurable-harmonization-LLMs_files/libs/revealjs/dist/theme/quarto-5198552e5ab539477d75314a82a7cee3.css">
   <link href="configurable-harmonization-LLMs_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="configurable-harmonization-LLMs_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="configurable-harmonization-LLMs_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -215,7 +215,7 @@ exiftool -gps:all= -overwrite_original assets/IMG_6706_5704.jpg
 -->
 <aside class="notes">
 <ul>
-<li>I’m a data scientist at the Seattle office of Bristol Myers Squibb (or BMS)</li>
+<li>I’m a data scientist at the Seattle office of pharma co Bristol Myers Squibb (or BMS)</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -236,13 +236,9 @@ exiftool -gps:all= -overwrite_original assets/IMG_6706_5704.jpg
 </div>
 <aside class="notes">
 <ul>
-<li><p>I work with clinical trial data, mostly for cancer treatments</p></li>
-<li><p>Patients undergo extra procedures, visits that can be hours long, and sometimes years of follow up visits</p></li>
-<li><p>When their time was precious</p></li>
-<li><p>So it’s important to use this data for as many scientific insights as possible to</p></li>
-<li><p>Patient outcomes (overall survival, PFS)</p></li>
-<li><p>Adverse events</p></li>
-<li><p>Biomarkers</p></li>
+<li>The data I work with is from clinical trials, mostly for cancer treatments</li>
+<li>The patients participating go through grueling treatments, visits that can be hours long, extra procedures that are sometimes painful, sometimes years of follow up visits</li>
+<li>Their time is precious so it’s important to get every insight we can from this data for the benefit of these patients and other patients to come</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -264,9 +260,10 @@ Can I make this music/harmony related somehow?
 -->
 <img data-src="configurable-harmonization-LLMs_files/figure-revealjs/unnamed-chunk-1-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1056"><aside class="notes">
 <ul>
-<li>To get every last insight we can from the data, we need to harmonize it</li>
+<li>One way we do this is to do cross-study analysis, combining multiple studies together for additional research to improve on these treatments and look for new ones</li>
+<li>You would think this would be easy, but it’s not</li>
 <li>Different subject ID formats, measurement units, date formats, inconsistent categorical values, synonyms for the same laboratory test</li>
-<li>“combining different datasets to maximize their comparability and compatibility” – A general primer for data harmonization. Cheng et al.&nbsp;2024. Sci Data.</li>
+<li>reformat data to “combining different datasets to maximize their comparability and compatibility” – A general primer for data harmonization. Cheng et al.&nbsp;2024. Sci Data.</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -327,7 +324,7 @@ Colon counts decrease as you nest (outer > inner) so Pandoc pairs them:
 <p><span class="stage-title">Column content</span></p>
 <ul>
 <li>🔢 Data type</li>
-<li>🗂️ Categorical values</li>
+<li>🏷️ Categorical values</li>
 <li>❓ Missing value codes</li>
 <li>📏 Unit of measure</li>
 </ul>
@@ -348,6 +345,7 @@ Colon counts decrease as you nest (outer > inner) so Pandoc pairs them:
 <li>💊 Medications</li>
 <li>🩺 Patient visits</li>
 <li>⏱️ Time to event</li>
+<li>📈 Response</li>
 </ul>
 </div>
 <div class="arrow">
@@ -380,8 +378,8 @@ Colon counts decrease as you nest (outer > inner) so Pandoc pairs them:
           display:block!important;
       }</style></aside>
 </section>
-<section id="my-configurable-workflow-with-llm-assistance-is-better-faster" class="slide level2">
-<h2>My configurable workflow with LLM assistance is better, faster</h2>
+<section id="a-config-based-harmonization-workflow-scaled-up-by-llms" class="slide level2">
+<h2>A config-based harmonization workflow scaled up by LLMs</h2>
 <!-- Like a string quartet? -->
 <!--
 Reusable workflow diagram, written with Pandoc fenced divs (markdown content).
@@ -400,8 +398,8 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
 <p><span class="workflow-group-title">One time setup</span></p>
 <p><span class="workflow-note">🔃 update as needed</span></p>
 <div class="stage-row">
-<div class="stage">
-<p><span class="stage-title">Data model</span></p>
+<div class="stage highlight">
+<p><span class="stage-title">Data model</span> <span class="stage-badge">🤖 LLM-drafted <br> 👩🏻‍💻 human-reviewed</span></p>
 <ul>
 <li>📄 .yaml format</li>
 <li>🗂️ One per output dataset</li>
@@ -425,8 +423,8 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
 </div>
 <div class="workflow-group">
 <p><span class="workflow-group-title">For each study</span></p>
-<div class="stage">
-<p><span class="stage-title">Harmonization configs</span></p>
+<div class="stage highlight">
+<p><span class="stage-title">Harmonization configs</span> <span class="stage-badge">🤖 LLM-drafted <br> 👩🏻‍💻 human-reviewed</span></p>
 <ul>
 <li>📄 .yaml format</li>
 <li>📚 One per output dataset per study</li>
@@ -526,8 +524,8 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
           display:block!important;
       }</style></aside>
 </section>
-<section id="bootstrap-the-initial-data-model-with-posit-assistant" class="slide level2">
-<h2>Bootstrap the initial data model with Posit Assistant</h2>
+<section id="draft-the-initial-data-model-with-posit-assistant" class="slide level2">
+<h2>Draft the initial data model with Posit Assistant</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="small-quote">
@@ -608,21 +606,37 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
 <h2>Harmonization configs match observed data to the data model</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="" aria-label="1"></a><span class="fu">unique_subject_id</span><span class="kw">:</span></span>
-<span id="cb3-2"><a href="" aria-label="2"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> subject_id</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
-<span id="cb3-3"><a href="" aria-label="3"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> USUBJID</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
-<span id="cb3-4"><a href="" aria-label="4"></a><span class="fu">site_id</span><span class="kw">:</span></span>
-<span id="cb3-5"><a href="" aria-label="5"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> SITE_ID</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
-<span id="cb3-6"><a href="" aria-label="6"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> SITE</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
-<span id="cb3-7"><a href="" aria-label="7"></a><span class="fu">baseline_height_cm</span><span class="kw">:</span></span>
-<span id="cb3-8"><a href="" aria-label="8"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> HEIGHTBL</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> numeric</span><span class="kw">,</span><span class="at"> </span><span class="fu">numeric_units</span><span class="kw">:</span><span class="at"> inch</span><span class="kw">}</span></span>
-<span id="cb3-9"><a href="" aria-label="9"></a><span class="fu">diagnosis_date</span><span class="kw">:</span></span>
-<span id="cb3-10"><a href="" aria-label="10"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> DIAGDTC</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
-<span id="cb3-11"><a href="" aria-label="11"></a><span class="fu">actual_arm</span><span class="kw">:</span></span>
-<span id="cb3-12"><a href="" aria-label="12"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> study_arm</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
-<span id="cb3-13"><a href="" aria-label="13"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> ACTARMCD</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="small-quote">
+<blockquote>
+<p><strong>Input:</strong><br>
+- Data model YAML file (as reference for domains/variables) Example: model/subject_level.yaml - One or more CSV dictionary/data files to be mapped Example: [dm_data_dictionary.csv, adsl_data_dictionary.csv]</p>
+<p><strong>Instructions:</strong><br>
+1. Given a specification YAML and one or more dictionary/data files, generate a configuration YAML mapping each domain to its source(s).<br>
+2. For each variable, include all relevant file/column/label mappings.<br>
+3. Only map variables present in the specification.<br>
+4. If a variable exists in multiple datasets, include all mappings.<br>
+5. Based on the data, identify the type of the variables either categorical, numeric, date, or date-time. 6. Output only the final YAML in the format below (no intermediate steps).<br>
+7. If more than 50 variables, split into chunks of max 50 variables per YAML file.<br>
+8. Do not invent or omit any variables.<br>
+9. Save only the final YAML to S3 (write_to_file=True). 10. Validate that the number of variables in the configuration matches the number in the original files - confirm this in your response.</p>
+</blockquote>
+</div>
 </div><div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="" aria-label="1"></a><span class="fu">preferred_file</span><span class="kw">:</span><span class="at"> adsl</span></span>
+<span id="cb3-2"><a href="" aria-label="2"></a><span class="fu">columns</span><span class="kw">:</span></span>
+<span id="cb3-3"><a href="" aria-label="3"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">unique_subject_id</span><span class="kw">:</span></span>
+<span id="cb3-4"><a href="" aria-label="4"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> subject_id</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
+<span id="cb3-5"><a href="" aria-label="5"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> USUBJID</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
+<span id="cb3-6"><a href="" aria-label="6"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">site_id</span><span class="kw">:</span></span>
+<span id="cb3-7"><a href="" aria-label="7"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> SITE_ID</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
+<span id="cb3-8"><a href="" aria-label="8"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> SITE</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
+<span id="cb3-9"><a href="" aria-label="9"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">baseline_height_cm</span><span class="kw">:</span></span>
+<span id="cb3-10"><a href="" aria-label="10"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> HEIGHTBL</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> numeric</span><span class="kw">,</span><span class="at"> </span><span class="fu">numeric_units</span><span class="kw">:</span><span class="at"> inch</span><span class="kw">}</span></span>
+<span id="cb3-11"><a href="" aria-label="11"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">diagnosis_date</span><span class="kw">:</span></span>
+<span id="cb3-12"><a href="" aria-label="12"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> DIAGDTC</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
+<span id="cb3-13"><a href="" aria-label="13"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">actual_arm</span><span class="kw">:</span></span>
+<span id="cb3-14"><a href="" aria-label="14"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> study_arm</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
+<span id="cb3-15"><a href="" aria-label="15"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> ACTARMCD</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 <aside class="notes">
 <p>Harmonization configs (input)</p>
@@ -650,9 +664,15 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
           display:block!important;
       }</style></aside>
 </section>
-<section id="when-the-simplest-example-isnt" class="slide level2">
-<h2>When the simplest example isn’t</h2>
+<section id="insights-from-the-pilot-project-2025-internship" class="slide level2">
+<h2>Insights from the pilot project &amp; 2025 internship</h2>
 <!-- Include photo of Eslam -->
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="use-data-dictionaries-not-actual-data">Use data dictionaries, not actual data</h3>
+</div><div class="column" style="width:50%;">
+<h3 id="easier-task-for-humans-might-not-be-easier-for-llms">Easier task for humans might not be easier for LLMs</h3>
+</div></div>
 <aside class="notes">
 <ul>
 <li>Side story here about me telling Eslam to start with dm file, but it turned out to be most difficult</li>
@@ -671,54 +691,61 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
 </section>
 <section id="config-based-harmonization-code" class="slide level2">
 <h2>Config-based harmonization code</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-label="1"></a>derive_subject_level <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
-<span id="cb5-2"><a href="" aria-label="2"></a>  </span>
-<span id="cb5-3"><a href="" aria-label="3"></a>  <span class="co"># Get the set of columns to be included in the output</span></span>
-<span id="cb5-4"><a href="" aria-label="4"></a>  domain_spec <span class="ot">&lt;-</span> <span class="fu">read_daap_specification</span>(<span class="st">"subject_level"</span>)</span>
-<span id="cb5-5"><a href="" aria-label="5"></a>  </span>
-<span id="cb5-6"><a href="" aria-label="6"></a>  <span class="co"># Get the harmonization config</span></span>
-<span id="cb5-7"><a href="" aria-label="7"></a>  domain_config <span class="ot">&lt;-</span> <span class="fu">read_harmonization_config</span>(<span class="st">"subject_level"</span>)</span>
-<span id="cb5-8"><a href="" aria-label="8"></a>  domain_config_df <span class="ot">&lt;-</span> <span class="fu">harmonization_config_to_tibble</span>(domain_config)</span>
-<span id="cb5-9"><a href="" aria-label="9"></a>  </span>
-<span id="cb5-10"><a href="" aria-label="10"></a>  <span class="co"># Which columns need to be in the output?</span></span>
-<span id="cb5-11"><a href="" aria-label="11"></a>  expected_keys <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_chr</span>(domain_spec<span class="sc">$</span>keys, <span class="at">.f=</span>names)</span>
-<span id="cb5-12"><a href="" aria-label="12"></a>  expected_keys_and_columns <span class="ot">&lt;-</span> <span class="fu">c</span>(expected_keys,</span>
-<span id="cb5-13"><a href="" aria-label="13"></a>                                 purrr<span class="sc">::</span><span class="fu">map_chr</span>(domain_spec<span class="sc">$</span>columns, <span class="at">.f=</span>names))</span>
-<span id="cb5-14"><a href="" aria-label="14"></a>  </span>
-<span id="cb5-15"><a href="" aria-label="15"></a>  <span class="co"># Use the harmonization config to find the source data for each column</span></span>
-<span id="cb5-16"><a href="" aria-label="16"></a>  domain_config_df <span class="ot">&lt;-</span> domain_config_df <span class="sc">%&gt;%</span> </span>
-<span id="cb5-17"><a href="" aria-label="17"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb5-18"><a href="" aria-label="18"></a>      <span class="at">preferred_file =</span> <span class="fu">case_when</span>(</span>
-<span id="cb5-19"><a href="" aria-label="19"></a>        <span class="st">"adsl"</span> <span class="sc">%in%</span> file <span class="sc">~</span> <span class="st">"adsl"</span>,</span>
-<span id="cb5-20"><a href="" aria-label="20"></a>        <span class="cn">TRUE</span> <span class="sc">~</span> <span class="fu">first</span>(file)</span>
-<span id="cb5-21"><a href="" aria-label="21"></a>        ),</span>
-<span id="cb5-22"><a href="" aria-label="22"></a>        <span class="at">.by=</span>output_column</span>
-<span id="cb5-23"><a href="" aria-label="23"></a>    )</span>
-<span id="cb5-24"><a href="" aria-label="24"></a>  </span>
-<span id="cb5-25"><a href="" aria-label="25"></a>  <span class="co"># Get the mapped columns from each source file</span></span>
-<span id="cb5-26"><a href="" aria-label="26"></a>  get_mapped_data <span class="ot">&lt;-</span> <span class="cf">function</span>(source_file){  <span class="co"># source_file &lt;- "dm"</span></span>
-<span id="cb5-27"><a href="" aria-label="27"></a>    input_type <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(source_file <span class="sc">%in%</span> <span class="fu">names</span>(data_files_read<span class="sc">$</span>adam), <span class="st">"adam"</span>, <span class="st">"sdtm"</span>)</span>
-<span id="cb5-28"><a href="" aria-label="28"></a>    source <span class="ot">&lt;-</span> data_files_read[[input_type]][[source_file]](<span class="at">config=</span>config)</span>
-<span id="cb5-29"><a href="" aria-label="29"></a>    source_map <span class="ot">&lt;-</span> domain_config_df <span class="sc">%&gt;%</span></span>
-<span id="cb5-30"><a href="" aria-label="30"></a>      <span class="fu">filter</span>((preferred_file <span class="sc">==</span> source_file <span class="sc">|</span> output_column <span class="sc">%in%</span> expected_keys ) <span class="sc">&amp;</span></span>
-<span id="cb5-31"><a href="" aria-label="31"></a>               file <span class="sc">==</span> source_file)</span>
-<span id="cb5-32"><a href="" aria-label="32"></a>    rename_map <span class="ot">&lt;-</span> source_map<span class="sc">$</span>column</span>
-<span id="cb5-33"><a href="" aria-label="33"></a>    <span class="fu">names</span>(rename_map) <span class="ot">&lt;-</span> source_map<span class="sc">$</span>output_column</span>
-<span id="cb5-34"><a href="" aria-label="34"></a>    mapped_data <span class="ot">&lt;-</span> source <span class="sc">%&gt;%</span> </span>
-<span id="cb5-35"><a href="" aria-label="35"></a>      <span class="fu">select</span>(<span class="fu">all_of</span>(source_map<span class="sc">$</span>column)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-36"><a href="" aria-label="36"></a>      <span class="fu">rename</span>(<span class="fu">all_of</span>(rename_map))</span>
-<span id="cb5-37"><a href="" aria-label="37"></a>  }</span>
-<span id="cb5-38"><a href="" aria-label="38"></a>  subject_level <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(<span class="fu">unique</span>(domain_config_df<span class="sc">$</span>preferred_file), <span class="at">.f=</span>get_mapped_data)</span>
-<span id="cb5-39"><a href="" aria-label="39"></a>  subject_level <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">reduce</span>(subject_level, <span class="at">.f=</span>full_join)   <span class="co"># running this for each split of response</span></span>
-<span id="cb5-40"><a href="" aria-label="40"></a></span>
-<span id="cb5-41"><a href="" aria-label="41"></a>  <span class="fu">return</span>(subject_level)</span>
-<span id="cb5-42"><a href="" aria-label="42"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-label="1"></a>harmonize_domain <span class="ot">&lt;-</span> <span class="cf">function</span>(domain_name){</span>
+<span id="cb4-2"><a href="" aria-label="2"></a>  </span>
+<span id="cb4-3"><a href="" aria-label="3"></a>  <span class="co"># Get the set of columns to be included in the output</span></span>
+<span id="cb4-4"><a href="" aria-label="4"></a>  domain_data_model <span class="ot">&lt;-</span> <span class="fu">read_data_model</span>(domain_name)</span>
+<span id="cb4-5"><a href="" aria-label="5"></a>  </span>
+<span id="cb4-6"><a href="" aria-label="6"></a>  <span class="co"># Get the harmonization config</span></span>
+<span id="cb4-7"><a href="" aria-label="7"></a>  domain_config <span class="ot">&lt;-</span> <span class="fu">read_harmonization_config</span>(domain_name)</span>
+<span id="cb4-8"><a href="" aria-label="8"></a>  preferred_file <span class="ot">&lt;-</span> domain_data_model<span class="sc">$</span>preferred_file</span>
+<span id="cb4-9"><a href="" aria-label="9"></a>  domain_config_df <span class="ot">&lt;-</span> <span class="fu">harmonization_config_to_tibble</span>(domain_config<span class="sc">$</span>columns)</span>
+<span id="cb4-10"><a href="" aria-label="10"></a>  </span>
+<span id="cb4-11"><a href="" aria-label="11"></a>  <span class="co"># Which columns need to be in the output?</span></span>
+<span id="cb4-12"><a href="" aria-label="12"></a>  expected_keys <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_chr</span>(domain_data_model<span class="sc">$</span>keys, <span class="at">.f=</span>names)</span>
+<span id="cb4-13"><a href="" aria-label="13"></a>  expected_keys_and_columns <span class="ot">&lt;-</span> <span class="fu">c</span>(expected_keys,</span>
+<span id="cb4-14"><a href="" aria-label="14"></a>                                 purrr<span class="sc">::</span><span class="fu">map_chr</span>(domain_data_model<span class="sc">$</span>columns, <span class="at">.f=</span>names))</span>
+<span id="cb4-15"><a href="" aria-label="15"></a>  </span>
+<span id="cb4-16"><a href="" aria-label="16"></a>  <span class="co"># Use the harmonization config to find the source data for each column</span></span>
+<span id="cb4-17"><a href="" aria-label="17"></a>  domain_config_df <span class="ot">&lt;-</span> domain_config_df <span class="sc">%&gt;%</span> </span>
+<span id="cb4-18"><a href="" aria-label="18"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb4-19"><a href="" aria-label="19"></a>      <span class="at">preferred_file =</span> <span class="fu">case_when</span>(</span>
+<span id="cb4-20"><a href="" aria-label="20"></a>        <span class="co"># group contains the preferred file: flag the matching row</span></span>
+<span id="cb4-21"><a href="" aria-label="21"></a>        .env<span class="sc">$</span>preferred_file <span class="sc">%in%</span> file <span class="sc">~</span> file <span class="sc">==</span> .env<span class="sc">$</span>preferred_file,</span>
+<span id="cb4-22"><a href="" aria-label="22"></a>        <span class="co"># otherwise: flag the first file in the group</span></span>
+<span id="cb4-23"><a href="" aria-label="23"></a>        <span class="at">.default =</span> file <span class="sc">==</span> <span class="fu">first</span>(file)</span>
+<span id="cb4-24"><a href="" aria-label="24"></a>      ),</span>
+<span id="cb4-25"><a href="" aria-label="25"></a>      <span class="at">.by =</span> output_column</span>
+<span id="cb4-26"><a href="" aria-label="26"></a>    )</span>
+<span id="cb4-27"><a href="" aria-label="27"></a>  </span>
+<span id="cb4-28"><a href="" aria-label="28"></a>  <span class="co"># Get the harmonized columns from each source file</span></span>
+<span id="cb4-29"><a href="" aria-label="29"></a>  get_harmonized_source_data <span class="ot">&lt;-</span> <span class="cf">function</span>(source_file){</span>
+<span id="cb4-30"><a href="" aria-label="30"></a>    source <span class="ot">&lt;-</span> <span class="fu">read_study_file</span>(source_file)</span>
+<span id="cb4-31"><a href="" aria-label="31"></a>    source_map <span class="ot">&lt;-</span> domain_config_df <span class="sc">%&gt;%</span></span>
+<span id="cb4-32"><a href="" aria-label="32"></a>      <span class="fu">filter</span>((preferred_file <span class="sc">==</span> source_file <span class="sc">|</span> output_column <span class="sc">%in%</span> expected_keys ) <span class="sc">&amp;</span></span>
+<span id="cb4-33"><a href="" aria-label="33"></a>             file <span class="sc">==</span> source_file)</span>
+<span id="cb4-34"><a href="" aria-label="34"></a>    rename_map <span class="ot">&lt;-</span> source_map<span class="sc">$</span>column</span>
+<span id="cb4-35"><a href="" aria-label="35"></a>    <span class="fu">names</span>(rename_map) <span class="ot">&lt;-</span> source_map<span class="sc">$</span>output_column</span>
+<span id="cb4-36"><a href="" aria-label="36"></a>    mapped_data <span class="ot">&lt;-</span> source <span class="sc">%&gt;%</span> </span>
+<span id="cb4-37"><a href="" aria-label="37"></a>      <span class="fu">select</span>(<span class="fu">all_of</span>(source_map<span class="sc">$</span>column)) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-38"><a href="" aria-label="38"></a>      <span class="fu">rename</span>(<span class="fu">all_of</span>(rename_map))</span>
+<span id="cb4-39"><a href="" aria-label="39"></a>    <span class="co"># Convert data types</span></span>
+<span id="cb4-40"><a href="" aria-label="40"></a>    <span class="co"># Convert units of measure</span></span>
+<span id="cb4-41"><a href="" aria-label="41"></a>    <span class="co"># Convert missing value codes</span></span>
+<span id="cb4-42"><a href="" aria-label="42"></a>    <span class="co"># Convert categorical values</span></span>
+<span id="cb4-43"><a href="" aria-label="43"></a>  }</span>
+<span id="cb4-44"><a href="" aria-label="44"></a>  harmonized_domain <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(<span class="fu">unique</span>(domain_config_df<span class="sc">$</span>preferred_file), <span class="at">.f=</span>get_harmonized_source_data)</span>
+<span id="cb4-45"><a href="" aria-label="45"></a>  harmonized_domain <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">reduce</span>(harmonized_domain, <span class="at">.f=</span>full_join)</span>
+<span id="cb4-46"><a href="" aria-label="46"></a></span>
+<span id="cb4-47"><a href="" aria-label="47"></a>  <span class="fu">return</span>(harmonized_domain)</span>
+<span id="cb4-48"><a href="" aria-label="48"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>Config-based harmonization code</p>
 <ul>
-<li>Show code snippets from subjects domain</li>
-<li>Fully working for simple case of just renaming columns and converting data types</li>
-<li>Still to handle (should I mention this or not?):
+<li><p>Same harmonization code for every domain</p></li>
+<li><p>Show code snippets from subjects domain</p></li>
+<li><p>Fully working for simple case of just renaming columns and converting data types</p></li>
+<li><p>Still to handle (should I mention this or not?):</p>
 <ul>
 <li>Converting units</li>
 <li>Harmonizing categorical values</li>
@@ -758,6 +785,7 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
 </section>
 <section id="you-get-a-great-data-dictionary-for-your-output-basically-for-free-with-the-harmonization-configs-data-model" class="slide level2">
 <h2>You get a great data dictionary for your output basically for free with the harmonization configs + data model</h2>
+<pre><code></code></pre>
 <aside class="notes">
 <p>You get a great data dictionary for your output basically for free with the harmonization configs + data model</p>
 <ul>
@@ -776,28 +804,10 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
           display:block!important;
       }</style></aside>
 </section>
-<section id="weve-done-this-in-a-pilot-project-and-it-gets-us-pretty-close-to-final-state-so-we-can-focus-our-time-on-the-hard-parts" class="slide level2">
-<h2>We’ve done this in a pilot project and it gets us pretty close to final state so we can focus our time on the hard parts</h2>
-<aside class="notes">
-<p>We’ve done this in a pilot project and it gets us pretty close to final state so we can focus our time on the hard parts</p>
-<ul>
-<li>Mention Burak’s Shiny app for human review</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="we-are-building-out-a-claude-code-plugin-using-our-daapr-framework" class="slide level2">
-<h2>We are building out a Claude Code plugin using our daapr framework</h2>
-<aside class="notes">
+<section id="section" class="slide level2">
+<h2></h2>
+
+<img data-src="assets/daap-agent-sequence.svg" class="quarto-figure quarto-figure-center r-stretch"><aside class="notes">
 <p>We are building out a Claude Code plugin using our daapr framework</p>
 <ul>
 <li>Mention Jason for plugin</li>
@@ -818,10 +828,30 @@ Colon counts: ::::: wraps :::: which wraps :::  (outer > inner so Pandoc pairs t
 </section>
 <section id="you-can-use-these-approaches-for-other-use-cases" class="slide level2">
 <h2>You can use these approaches for other use cases</h2>
+<div class="columns">
+<div class="column" style="width:33%;">
+<h3 id="other-harmonization-projects">Other harmonization projects</h3>
+<ul>
+<li>COVID data from multiple health authorities</li>
+<li>Published data sets from different research groups</li>
+<li>eCommerce data from acquired companies</li>
+<li>…</li>
+</ul>
+</div><div class="column" style="width:33%;">
+<h3 id="yaml-output-format-specification">.yaml output format specification</h3>
+<ul>
+<li>“Specification-driven development”</li>
+</ul>
+</div><div class="column" style="width:33%;">
+<h3 id="yaml-data-dictionaries">.yaml data dictionaries</h3>
+<ul>
+<li>See <a href="https://data-dict.tidyverse.org"><code>data-dict.yaml</code></a> from Tidyverse</li>
+</ul>
+</div></div>
 <aside class="notes">
 <p>You can use these approaches for other use cases</p>
 <ul>
-<li>Any project where you’re combining data from multiple sources (e.g.&nbsp;COVID data from different health authorities, published datasets from different reserach groups, eCommerce data from acquired companies, etc.)</li>
+<li>Any project where you’re combining data from multiple sources (e.g.&nbsp;COVID data from different health authorities, published datasets from different research groups, eCommerce data from acquired companies, etc.)</li>
 <li>Use data model .yaml to instruct LLM to make the output format you want</li>
 <li>Use a config file that describes all of your inputs (makes it easier for LLM to reason about your data)</li>
 </ul>

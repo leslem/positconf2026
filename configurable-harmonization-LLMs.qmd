@@ -30,7 +30,7 @@ exiftool -gps:all= -overwrite_original assets/IMG_6706_5704.jpg
 -->
 
 ::: {.notes}
-- I'm a data scientist at the Seattle office of Bristol Myers Squibb (or BMS)
+- I'm a data scientist at the Seattle office of pharma co Bristol Myers Squibb (or BMS)
 :::
 
 
@@ -41,14 +41,9 @@ Stock image
 :::
 
 ::: {.notes}
-- I work with clinical trial data, mostly for cancer treatments
-- Patients undergo extra procedures, visits that can be hours long, and sometimes years of follow up visits
-- When their time was precious
-- So it's important to use this data for as many scientific insights as possible to 
-
-- Patient outcomes (overall survival, PFS)
-- Adverse events
-- Biomarkers
+- The data I work with is from clinical trials, mostly for cancer treatments
+- The patients participating go through grueling treatments, visits that can be hours long, extra procedures that are sometimes painful, sometimes years of follow up visits
+- Their time is precious so it's important to get every insight we can from this data for the benefit of these patients and other patients to come
 :::
 
 
@@ -147,9 +142,10 @@ Can I make this music/harmony related somehow?
 -->
 
 ::: {.notes}
-- To get every last insight we can from the data, we need to harmonize it
+- One way we do this is to do cross-study analysis, combining multiple studies together for additional research to improve on these treatments and look for new ones
+- You would think this would be easy, but it's not
 - Different subject ID formats, measurement units, date formats, inconsistent categorical values, synonyms for the same laboratory test
-- "combining different datasets to maximize their comparability and compatibility" -- A general primer for data harmonization. Cheng et al. 2024. Sci Data.
+- reformat data to "combining different datasets to maximize their comparability and compatibility" -- A general primer for data harmonization. Cheng et al. 2024. Sci Data.
 :::
 
 
@@ -168,7 +164,7 @@ Can I make this music/harmony related somehow?
 :::
 
 
-## My configurable workflow with LLM assistance is better, faster
+## A config-based harmonization workflow scaled up by LLMs
 
 <!-- Like a string quartet? -->
 
@@ -260,7 +256,7 @@ data_structure:
 :::
 
 
-## Bootstrap the initial data model with Posit Assistant
+## Draft the initial data model with Posit Assistant
 
 ::::: {.columns}
 
@@ -334,27 +330,44 @@ Data model (output)
 
 :::: {.columns}
 
-::: {.column width="50%"}
-```yaml
-unique_subject_id:
-  - {file: dm, column: subject_id, data_type: character}
-  - {file: adsl, column: USUBJID, data_type: character}
-site_id:
-  - {file: dm, column: SITE_ID, data_type: character}
-  - {file: adsl, column: SITE, data_type: character}
-baseline_height_cm:
-  - {file: adsl, column: HEIGHTBL, data_type: numeric, numeric_units: inch}
-diagnosis_date:
-  - {file: dm, column: DIAGDTC, data_type: character}
-actual_arm:
-  - {file: dm, column: study_arm, data_type: character}
-  - {file: adsl, column: ACTARMCD, data_type: character}
-```
+:::: {.column width="50%"}
+
+::: {.small-quote}
+> **Input:**  
+> - Data model YAML file (as reference for domains/variables) Example: model/subject_level.yaml
+> - One or more CSV dictionary/data files to be mapped Example: [dm_data_dictionary.csv, adsl_data_dictionary.csv]
+> 
+> **Instructions:**  
+> 1. Given a specification YAML and one or more dictionary/data files, generate a configuration YAML mapping each domain to its source(s).  
+> 2. For each variable, include all relevant file/column/label mappings.  
+> 3. Only map variables present in the specification.  
+> 4. If a variable exists in multiple datasets, include all mappings.  
+> 5. Based on the data, identify the type of the variables either categorical, numeric, date, or date-time. 
+> 6. Output only the final YAML in the format below (no intermediate steps).  
+> 7. If more than 50 variables, split into chunks of max 50 variables per YAML file.  
+> 8. Do not invent or omit any variables.  
+> 9. Save only the final YAML to S3 (write_to_file=True).
+> 10. Validate that the number of variables in the configuration matches the number in the original files - confirm this in your response.
 :::
+::::
 
 ::: {.column width="50%"}
 ```yaml
-
+preferred_file: adsl
+columns:
+    - unique_subject_id:
+        - {file: dm, column: subject_id, data_type: character}
+        - {file: adsl, column: USUBJID, data_type: character}
+    - site_id:
+        - {file: dm, column: SITE_ID, data_type: character}
+        - {file: adsl, column: SITE, data_type: character}
+    - baseline_height_cm:
+        - {file: adsl, column: HEIGHTBL, data_type: numeric, numeric_units: inch}
+    - diagnosis_date:
+        - {file: dm, column: DIAGDTC, data_type: character}
+    - actual_arm:
+        - {file: dm, column: study_arm, data_type: character}
+        - {file: adsl, column: ACTARMCD, data_type: character}
 ```
 :::
 
@@ -373,9 +386,21 @@ Harmonization configs (input)
 - Mention relation to data dictionary? (of recent interest in field)
 :::
 
-## When the simplest example isn't
+## Insights from the pilot project & 2025 internship
 
 <!-- Include photo of Eslam -->
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Use data dictionaries, not actual data
+:::
+
+::: {.column width="50%"}
+### Easier task for humans might not be easier for LLMs
+:::
+
+::::
 
 ::: {.notes}
 - Side story here about me telling Eslam to start with dm file, but it turned out to be most difficult
@@ -384,52 +409,61 @@ Harmonization configs (input)
 ## Config-based harmonization code
 
 ```r
-derive_subject_level <- function(){
+harmonize_domain <- function(domain_name){
   
   # Get the set of columns to be included in the output
-  domain_spec <- read_daap_specification("subject_level")
+  domain_data_model <- read_data_model(domain_name)
   
   # Get the harmonization config
-  domain_config <- read_harmonization_config("subject_level")
-  domain_config_df <- harmonization_config_to_tibble(domain_config)
+  domain_config <- read_harmonization_config(domain_name)
+  preferred_file <- domain_data_model$preferred_file
+  domain_config_df <- harmonization_config_to_tibble(domain_config$columns)
   
   # Which columns need to be in the output?
-  expected_keys <- purrr::map_chr(domain_spec$keys, .f=names)
+  expected_keys <- purrr::map_chr(domain_data_model$keys, .f=names)
   expected_keys_and_columns <- c(expected_keys,
-                                 purrr::map_chr(domain_spec$columns, .f=names))
+                                 purrr::map_chr(domain_data_model$columns, .f=names))
   
   # Use the harmonization config to find the source data for each column
   domain_config_df <- domain_config_df %>% 
     mutate(
       preferred_file = case_when(
-        "adsl" %in% file ~ "adsl",
-        TRUE ~ first(file)
-        ),
-        .by=output_column
+        # group contains the preferred file: flag the matching row
+        .env$preferred_file %in% file ~ file == .env$preferred_file,
+        # otherwise: flag the first file in the group
+        .default = file == first(file)
+      ),
+      .by = output_column
     )
   
-  # Get the mapped columns from each source file
-  get_mapped_data <- function(source_file){  # source_file <- "dm"
-    input_type <- ifelse(source_file %in% names(data_files_read$adam), "adam", "sdtm")
-    source <- data_files_read[[input_type]][[source_file]](config=config)
+  # Get the harmonized columns from each source file
+  get_harmonized_source_data <- function(source_file){
+    source <- read_study_file(source_file)
     source_map <- domain_config_df %>%
       filter((preferred_file == source_file | output_column %in% expected_keys ) &
-               file == source_file)
+             file == source_file)
     rename_map <- source_map$column
     names(rename_map) <- source_map$output_column
     mapped_data <- source %>% 
       select(all_of(source_map$column)) %>% 
       rename(all_of(rename_map))
+    # Convert data types
+    # Convert units of measure
+    # Convert missing value codes
+    # Convert categorical values
   }
-  subject_level <- purrr::map(unique(domain_config_df$preferred_file), .f=get_mapped_data)
-  subject_level <- purrr::reduce(subject_level, .f=full_join)   # running this for each split of response
+  harmonized_domain <- purrr::map(unique(domain_config_df$preferred_file), .f=get_harmonized_source_data)
+  harmonized_domain <- purrr::reduce(harmonized_domain, .f=full_join)
 
-  return(subject_level)
+  return(harmonized_domain)
 }
 ```
 
 ::: {.notes}
 Config-based harmonization code
+
+- Same harmonization code for every domain
+
 
 - Show code snippets from subjects domain
 - Fully working for simple case of just renaming columns and converting data types
@@ -440,6 +474,8 @@ Config-based harmonization code
 
 ## The harmonization config files maximize human attention/time spent reviewing LLM output
 
+
+
 ::: {.notes}
 The harmonization config files maximize human attention/time spent reviewing LLM output
 
@@ -449,6 +485,10 @@ The harmonization config files maximize human attention/time spent reviewing LLM
 
 ## You get a great data dictionary for your output basically for free with the harmonization configs + data model
 
+```
+
+```
+
 ::: {.notes}
 You get a great data dictionary for your output basically for free with the harmonization configs + data model
 
@@ -456,15 +496,16 @@ You get a great data dictionary for your output basically for free with the harm
 - Links back to the input dataset + columns that were used
 :::
 
-## We've done this in a pilot project and it gets us pretty close to final state so we can focus our time on the hard parts
 
-::: {.notes}
-We've done this in a pilot project and it gets us pretty close to final state so we can focus our time on the hard parts
+##
 
-- Mention Burak's Shiny app for human review
-:::
+```{r}
+#| include: false
+# Render the daap-building sequence diagram to SVG with mermaid-cli.
+system("mmdc -i daap-agent-sequence.mmd -o assets/daap-agent-sequence.svg -b transparent")
+```
 
-## We are building out a Claude Code plugin using our daapr framework
+![](assets/daap-agent-sequence.svg){fig-align="center"}
 
 ::: {.notes}
 We are building out a Claude Code plugin using our daapr framework
@@ -476,10 +517,38 @@ We are building out a Claude Code plugin using our daapr framework
 
 ## You can use these approaches for other use cases
 
+:::: {.columns}
+
+::: {.column width="33%"}
+### Other harmonization projects
+
+- COVID data from multiple health authorities
+- Published data sets from different research groups
+- eCommerce data from acquired companies
+- ...
+
+:::
+
+::: {.column width="33%"}
+### .yaml output format specification
+
+- "Specification-driven development"
+
+:::
+
+::: {.column width="33%"}
+### .yaml data dictionaries
+
+- See [`data-dict.yaml`](https://data-dict.tidyverse.org) from Tidyverse
+
+:::
+
+::::
+
 ::: {.notes}
 You can use these approaches for other use cases
 
-- Any project where you're combining data from multiple sources (e.g. COVID data from different health authorities, published datasets from different reserach groups, eCommerce data from acquired companies, etc.)
+- Any project where you're combining data from multiple sources (e.g. COVID data from different health authorities, published datasets from different research groups, eCommerce data from acquired companies, etc.)
 - Use data model .yaml to instruct LLM to make the output format you want
 - Use a config file that describes all of your inputs (makes it easier for LLM to reason about your data)
 :::

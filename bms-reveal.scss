@@ -283,6 +283,7 @@ $danger:    $bms-dark-indigo;
 
 // A single step card. Shrinks to fit so the whole flow stays on one row.
 .reveal .stage {
+  position: relative;   // anchor for an optional corner .stage-badge
   flex: 0 1 auto;
   min-width: 0;
   padding: 14px 18px;
@@ -290,6 +291,38 @@ $danger:    $bms-dark-indigo;
   border-top: 4px solid $bms-purple;
   border-radius: 8px;
   text-align: left;
+}
+
+// Highlighted stage: calls out a stage with a different characteristic than the
+// rest. Full purple border + a corner pill. Author it as:
+//   ::: {.stage .highlight}
+//   [Title]{.stage-title}
+//   [🤖 LLM-drafted]{.stage-badge}   <- pill text; edit/remove freely
+//   - bullet ...
+//   :::
+.reveal .stage.highlight {
+  border: 2px solid $bms-purple;
+  border-top-width: 4px;   // keep the top accent bar prominent
+}
+
+.reveal .stage-badge {
+  position: absolute;
+  // Center the badge on the card's top edge via translateY(-50%) so it stays
+  // vertically centered whether it's one line or two (a fixed top offset would
+  // let a second line hang below the corner).
+  top: 0;
+  right: -0.6em;
+  transform: translateY(-50%);
+  padding: 0.15em 0.6em;
+  background: $bms-purple;
+  color: #fff;
+  border-radius: 999px;   // pill
+  font-size: 0.45em;
+  font-weight: bold;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .reveal .stage-title {
