@@ -67,13 +67,13 @@ Tweak gaps/padding to adjust spacing; there are no pixel coordinates to recomput
     <div class="fragment" data-fragment-index="4">
       <div>&#9888;&#65039; Adverse events</div>
       <div>&#128101; Demographics</div>
-      <div>&#128137; Exposure</div>
       <div>&#127973; Hospitalization</div>
       <div>&#129514; Lab tests</div>
       <div>&#128138; Medications</div>
-      <div>&#129658; Patient visits</div>
       <div>&#128200; Response</div>
       <div>&#9201;&#65039; Time to event</div>
+      <div>&#128137; Treatment</div>
+      <div>&#129658; Visits</div>
     </div>
   </div>
 

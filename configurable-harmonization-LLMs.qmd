@@ -106,54 +106,46 @@ Harmonization configs:
 ::::: {.columns}
 
 :::: {.column width="50%"}
-::: {style="font-size: 0.6em"}
-> The subject_level_labels object contains a data dictionary for each data frame in subject_level_sources. The project goal is to harmonize the data across all of these studies, whether the data comes from the sdtm dm file or the adam adsl file. Reviewing all of the variables described in the data dictionaries, come up with a list of the variables that should be in the harmonized dataset. Substantially similar variables should be combined into just one variable for simplicity. Use meaningful snake case variable names based on the descriptions from the data dictionaries. Only include a variable in the harmonized dataset if a similar variable is present in at least 3 of the studies.
 
-> Make this into a yaml format file named subject_level.yaml (saved in this workspace) that matches the format in example.yaml. Each item in the yaml is a variable and unique variable names from the individual source datasets are stored as a list in the inputs attribute. The data_type should be the R data type that most closely aligns with the input variables that will contribute to the harmonized variable. Ignore other attributes from the example for now.
-:::
+```{=html}
+<div style="display: flex; flex-direction: column; align-items: center; gap: 12px; color: #4F4A4A; font-size: 34px; margin: 100px;">
+  <div style="padding: 10px 16px; white-space: nowrap; border: 1px solid #000; border-radius: 8px;">Prompt</div>
+  <div style="font-size: 44px; font-weight: bold;">+</div>
+  <div style="padding: 10px 16px; white-space: nowrap; border: 1px solid #000; border-radius: 8px;">Demographics from 15 trials</div>
+  <div style="font-size: 44px; font-weight: bold;">+</div>
+  <div style="padding: 10px 16px; white-space: nowrap; border: 1px solid #000; border-radius: 8px;">Example .yaml file</div>
+</div>
+```
+
 ::::
 
-:::: {.column width="50%"}
+:::: {.column width="45%" .fragment}
 
-### `subject_level` data model
+### `demographics` data model
 
-```yaml
+```{.yaml code-line-numbers="1,5,8,14,17|2|3,6,9,15,18|4,7,10,11,16,19,20,21,22"}
 unique_subject_id:
   key: true
   data_type: character
   character_pattern: ^[A-Z0-9-]+-\d+-\d+$
-  inputs:
-      USUBJID
 site_id:
   data_type: character
   character_pattern: ^\d+$
-  inputs:
-  - SITEID
-  - SITE_ID
 baseline_height_cm:
   data_type: numeric
   numeric_units: centimeter
-  inputs:
-  - HTCMBL
-  - HEIGHTBL
   terms:
     loinc: 8302-2
     snomed: C0005890
 diagnosis_date:
   data_type: Date
   date_format: "%Y-%m-%d"
-  inputs:
-  - DIAGDT
-  - DIAGDTC
-  - DXDT
 actual_arm:
   data_type: factor
   factor_allowed_values:
     - Arm A
     - Arm B
     - Arm C
-  inputs:
-  - ACTARM
 ```
 ::::
 
@@ -161,7 +153,7 @@ actual_arm:
 
 <!-- Build this out to highlight all variable names, then all data types, then all type-specific values, then the inputs, etc. -->
 ::: {.notes}
-Data model (output)
+The data model specifies the output format in detail
 
 - Show prompt to get Posit Assistant to make the data model based on a group of studies
 - Show example data model
@@ -172,7 +164,7 @@ Data model (output)
 :::
 
 
-## The data model specifies the output format in detail
+## Update the data model as needed for new trials or data set types
 
 ```{r}
 #| include: false
@@ -186,9 +178,9 @@ system("mmdc -i data-model-directory-treeView.mmd -o assets/data-model-directory
 ![](assets/data-model-directory-treeView.svg){width=60% fig-align="center"}
 
 <!-- Highlight boxes overlaid on mermaid (BMS theme colors, not purple) -->
-<div class="fragment" data-fragment-index="1" style="position: absolute; top: 29%; left: 20%; width: 60%; height: 12%; border: 2px solid #3312AF; border-radius: 4px; background: rgba(73, 111, 227, 0.15);"></div>
-<div class="fragment" data-fragment-index="1" style="position: absolute; top: 49%; left: 20%; width: 60%; height: 12%; border: 2px solid #3312AF; border-radius: 4px; background: rgba(73, 111, 227, 0.15);"></div>
-<div class="fragment" data-fragment-index="1" style="position: absolute; top: 76%; left: 20%; width: 60%; height: 12%; border: 2px solid #3312AF; border-radius: 4px; background: rgba(73, 111, 227, 0.15);"></div>
+<div class="fragment" data-fragment-index="1" style="position: absolute; top: 36%; left: 20%; width: 60%; height: 12%; border: 2px solid #3312AF; border-radius: 4px; background: rgba(73, 111, 227, 0.15);"></div>
+<div class="fragment" data-fragment-index="1" style="position: absolute; top: 56%; left: 20%; width: 60%; height: 12%; border: 2px solid #3312AF; border-radius: 4px; background: rgba(73, 111, 227, 0.15);"></div>
+<div class="fragment" data-fragment-index="1" style="position: absolute; top: 70%; left: 20%; width: 60%; height: 12%; border: 2px solid #3312AF; border-radius: 4px; background: rgba(73, 111, 227, 0.15);"></div>
 
 </div>
 
@@ -200,44 +192,36 @@ system("mmdc -i data-model-directory-treeView.mmd -o assets/data-model-directory
 
 :::: {.columns}
 
-:::: {.column width="50%"}
+:::: {.column width="30%"}
 
-::: {style="font-size: 0.4em"}
-> **Input:**  
-> - Data model YAML file (as reference for domains/variables) Example: model/subject_level.yaml
-> - One or more CSV dictionary/data files to be mapped Example: [dm_data_dictionary.csv, adsl_data_dictionary.csv]
-> 
-> **Instructions:**  
-> 1. Given a specification YAML and one or more dictionary/data files, generate a configuration YAML mapping each domain to its source(s).  
-> 2. For each variable, include all relevant file/column/label mappings.  
-> 3. Only map variables present in the specification.  
-> 4. If a variable exists in multiple datasets, include all mappings.  
-> 5. Based on the data, identify the type of the variables either categorical, numeric, date, or date-time. 
-> 6. Output only the final YAML in the format below (no intermediate steps).  
-> 7. If more than 50 variables, split into chunks of max 50 variables per YAML file.  
-> 8. Do not invent or omit any variables.  
-> 9. Save only the final YAML to S3 (write_to_file=True).
-> 10. Validate that the number of variables in the configuration matches the number in the original files - confirm this in your response.
-:::
+```{=html}
+<div style="display: flex; flex-direction: column; align-items: center; gap: 12px; color: #4F4A4A; font-size: 34px; margin: 30px;">
+  <div style="padding: 10px 16px; text-align: center; border: 1px solid #000; border-radius: 8px;">Prompt</div>
+  <div style="font-size: 44px; font-weight: bold;">+</div>
+  <div style="padding: 10px 16px; text-align: center; border: 1px solid #000; border-radius: 8px;">Demographics data model</div>
+  <div style="font-size: 44px; font-weight: bold;">+</div>
+  <div style="padding: 10px 16px; text-align: center; border: 1px solid #000; border-radius: 8px;">Demographics data for one trial</div>
+</div>
+```
 ::::
 
-::: {.column width="50%"}
-```yaml
-preferred_file: adsl
-columns:
-    - unique_subject_id:
-        - {file: dm, column: subject_id, data_type: character}
-        - {file: adsl, column: USUBJID, data_type: character}
-    - site_id:
-        - {file: dm, column: SITE_ID, data_type: character}
-        - {file: adsl, column: SITE, data_type: character}
-    - baseline_height_cm:
-        - {file: adsl, column: HEIGHTBL, data_type: numeric, numeric_units: inch}
-    - diagnosis_date:
-        - {file: dm, column: DIAGDTC, data_type: character}
-    - actual_arm:
-        - {file: dm, column: study_arm, data_type: character}
-        - {file: adsl, column: ACTARMCD, data_type: character}
+::: {.column width="65%" .fragment}
+`demographics` harmonization config for one trial
+```{.yaml code-line-numbers="1,2,3|1|2|3|4,5,6|7,8,9|10,11|12,13,14"}
+unique_subject_id:
+  - {file: dm.csv, column: subject_id, data_type: character}
+  - {file: adsl.csv, column: USUBJID, data_type: character}
+site_id:
+  - {file: dm.csv, column: SITE_ID, data_type: character}
+  - {file: adsl.csv, column: SITE, data_type: character}
+baseline_height_cm:
+  - {file: adsl.csv, column: HEIGHTBL, data_type: numeric,
+     numeric_units: inch}
+diagnosis_date:
+  - {file: dm.csv, column: DIAGDTC, data_type: character}
+actual_arm:
+  - {file: dm.csv, column: study_arm, data_type: character}
+  - {file: adsl.csv, column: ACTARMCD, data_type: character}
 ```
 :::
 
@@ -262,11 +246,11 @@ Harmonization configs (input)
 
 :::: {.columns}
 
-::: {.column width="33%"}
+::: {.column width="50%" .fragment}
 ### Use data dictionaries, not actual data
 :::
 
-::: {.column width="33%"}
+::: {.column width="50%" .fragment}
 ### Easier task for humans might not be easier for LLMs
 :::
 
@@ -281,42 +265,14 @@ Harmonization configs (input)
 ```r
 harmonize_domain <- function(domain_name){
   
-  # Get the set of columns to be included in the output
   domain_data_model <- read_data_model(domain_name)
-  
-  # Get the harmonization config
   domain_config <- read_harmonization_config(domain_name)
-  preferred_file <- domain_data_model$preferred_file
-  domain_config_df <- harmonization_config_to_tibble(domain_config$columns)
-  
-  # Which columns need to be in the output?
-  expected_keys <- purrr::map_chr(domain_data_model$keys, .f=names)
-  expected_keys_and_columns <- c(expected_keys,
-                                 purrr::map_chr(domain_data_model$columns, .f=names))
-  
-  # Use the harmonization config to find the source data for each column
-  domain_config_df <- domain_config_df %>% 
-    mutate(
-      preferred_file = case_when(
-        # group contains the preferred file: flag the matching row
-        .env$preferred_file %in% file ~ file == .env$preferred_file,
-        # otherwise: flag the first file in the group
-        .default = file == first(file)
-      ),
-      .by = output_column
-    )
   
   # Get the harmonized columns from each source file
   get_harmonized_source_data <- function(source_file){
     source <- read_study_file(source_file)
-    source_map <- domain_config_df %>%
-      filter((preferred_file == source_file | output_column %in% expected_keys ) &
-             file == source_file)
-    rename_map <- source_map$column
-    names(rename_map) <- source_map$output_column
-    mapped_data <- source %>% 
-      select(all_of(source_map$column)) %>% 
-      rename(all_of(rename_map))
+    # Select columns
+    # Rename columns
     # Convert data types
     # Convert units of measure
     # Convert missing value codes
@@ -333,8 +289,6 @@ harmonize_domain <- function(domain_name){
 Config-based harmonization code
 
 - Same harmonization code for every domain
-
-
 - Show code snippets from subjects domain
 - Fully working for simple case of just renaming columns and converting data types
 - Still to handle (should I mention this or not?):
@@ -344,20 +298,52 @@ Config-based harmonization code
 
 ## The harmonization config files maximize human attention/time spent reviewing LLM output
 
+:::: {.columns}
+
+::: {.column width="50%"}
+Tidyverse code before update
+Tidyverse code after update
+:::
+
+::: {.column width="50%"}
+Config block before update
+Config block after update
+:::
+
+::::
 
 
 ::: {.notes}
 The harmonization config files maximize human attention/time spent reviewing LLM output
-
 - The configs capture the most important parts of the harmonization decisions -- which inputs map to which outputs, and what data transformations happen
 - Screenshot of the review app Burak has built
 :::
 
 ## You get a great data dictionary for your output basically for free with the harmonization configs + data model
 
+:::: {.columns}
+
+::: {.column width="40%"}
+
+```{=html}
+<div style="display: flex; flex-direction: column; align-items: center; gap: 12px; color: #4F4A4A; font-size: 34px; margin: 30px;">
+  <div style="padding: 10px 16px; text-align: center; border: 1px solid #000; border-radius: 8px;">Demographics data model</div>
+  <div style="font-size: 44px; font-weight: bold;">+</div>
+  <div style="padding: 10px 16px; text-align: center; border: 1px solid #000; border-radius: 8px;">Demographics harmonization configs for each trial</div>
+  <div style="font-size: 44px; font-weight: bold;">+</div>
+  <div style="padding: 10px 16px; text-align: center; border: 1px solid #000; border-radius: 8px;">Harmonized demographics data dictionary with definition, data type, units, data sources</div>
+</div>
+```
+:::
+
+::: {.column width="60%"}
+
+```yaml
 ```
 
-```
+:::
+
+::::
 
 ::: {.notes}
 You get a great data dictionary for your output basically for free with the harmonization configs + data model
@@ -367,7 +353,7 @@ You get a great data dictionary for your output basically for free with the harm
 :::
 
 
-## Claude Code data harmonization plugin
+## Claude Code harmonization plugin by Jason Moore
 
 ```{=html}
 <div style="display: flex; flex-direction: column; gap: 12px; font-size: 28px; line-height: 1.35; margin-top: 10px;">
@@ -408,17 +394,9 @@ We are building out a Claude Code plugin using our daapr framework
 :::
 
 
-## Takeaways
+## How do I use this in my own work?
 
 :::: {.columns}
-
-::: {.column width="33%"}
-### Config-driven everything
-:::
-
-::: {.column width="33%"}
-### YAML files for everything
-:::
 
 ::: {.column width="33%"}
 ### The tech is moving fast, so be flexible
@@ -428,18 +406,16 @@ We are building out a Claude Code plugin using our daapr framework
 - Claude Code plugin
 :::
 
-::::
+::: {.column width="33%"}
+### YAML files and configs for everything
 
-::: {.notes}
-- Side story here about me telling Eslam to start with dm file, but it turned out to be most difficult
+- Specification-driven development
+- See [`data-dict.yaml`](https://data-dict.tidyverse.org) from Tidyverse
+
 :::
 
-
-## You can use these approaches for other use cases
-
-:::: {.columns}
-
 ::: {.column width="33%"}
+
 ### Other harmonization projects
 
 - COVID data from multiple health authorities
@@ -448,18 +424,6 @@ We are building out a Claude Code plugin using our daapr framework
 - ...
 
 :::
-
-::: {.column width="33%"}
-### .yaml output format specification
-
-- "Specification-driven development"
-
-:::
-
-::: {.column width="33%"}
-### .yaml data dictionaries
-
-- See [`data-dict.yaml`](https://data-dict.tidyverse.org) from Tidyverse
 
 :::
 
@@ -475,8 +439,6 @@ You can use these approaches for other use cases
 
 
 ## Acknowledgements
-
-<!-- Image of a conductor with an orchestra here? -->
 
 :::: {.columns}
 
