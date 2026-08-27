@@ -1,88 +1,87 @@
 <!--
-Reusable workflow diagram, written with Pandoc fenced divs (markdown content).
-Included on a slide with:  {{< include _workflow-diagram.qmd >}}
-Styling lives in bms-reveal.scss under the "workflow diagram" section.
+Harmonization-flow diagram, laid out with flexbox + CSS grid (no absolute
+positioning), so spacing and centering adjust automatically to font-size changes.
+Included on a slide with:  {{< include _harmonization-flow-diagram.qmd >}}
+Must stay inside a ```{=html} fence so Pandoc passes it through verbatim.
 
-NOTE: titles here use bracketed spans ([text]{.class}), NOT ### headings.
-Headings inside a slide become nested <section> elements, which reveal.js
-treats as vertical slides and which break linear navigation.
-
-Edit the stage titles and bullets below; add/remove .stage blocks as needed.
-Colon counts decrease as you nest (outer > inner) so Pandoc pairs them:
-::::::  .workflow
- :::::  .workflow-group
-  ::::  .stage-row   (keeps a group's stages on one row under its title)
-   :::  .stage / .arrow
+Layout:
+- Outer wrapper is a flex row; align-items:center vertically centers the
+  multiplication sign and the domain list against the dashed container.
+- The dashed container is a 5-column grid: label | arrow | label | arrow | label.
+  Row 1 = stage labels + block arrows; row 2 = the box stack (col 1) and the
+  reformat steps (col 3), so each content column sits under its label.
+Tweak gaps/padding to adjust spacing; there are no pixel coordinates to recompute.
 -->
+```{=html}
+<div style="display: flex; align-items: center; justify-content: center; gap: 16px; color: #4F4A4A; font-size: 34px; margin-top: 20px;">
 
-:::::: {.workflow}
+  <!-- Box container: 5-column grid (label / arrow / label / arrow / label) -->
+  <!-- Frame wrapper: grid content shows from the start; the box outline is a
+       separate overlay that appears as a fragment (grid itself has no border). -->
+  <div style="position: relative; display: inline-block;">
 
-::::: {.workflow-group}
-[Code to harmonize each dataset]{.workflow-group-title}
+  <!-- Box outline overlay: appears with the multiplication sign and heading -->
+  <div class="fragment" data-fragment-index="3" style="position: absolute; inset: 0; border: 2px solid #4F4A4A; border-radius: 24px; pointer-events: none;"></div>
 
-[👩🏻‍💻 *(Don't) plan output format*]{.workflow-note}
+  <div style="display: inline-grid; grid-template-columns: auto 50px auto 50px auto; column-gap: 8px; row-gap: 28px; align-items: center; justify-items: center; padding: 24px;">
 
-:::: {.stage-row}
+    <!-- Row 1: stage labels + block arrows -->
+    <div style="grid-column: 1; grid-row: 1; padding: 10px; white-space: nowrap; border: 1px solid #000; border-radius: 8px;">Clinical data</div>
+    <div style="grid-column: 2; grid-row: 1; width: 50px; height: 26px; background: #4F4A4A; clip-path: polygon(0 30%, 60% 30%, 60% 0, 100% 50%, 60% 100%, 60% 70%, 0 70%);"></div>
+    <div style="grid-column: 3; grid-row: 1; padding: 10px; white-space: nowrap; border: 1px solid #000; border-radius: 8px;">Reformat</div>
+    <div style="grid-column: 4; grid-row: 1; width: 50px; height: 26px; background: #4F4A4A; clip-path: polygon(0 30%, 60% 30%, 60% 0, 100% 50%, 60% 100%, 60% 70%, 0 70%);"></div>
+    <div style="grid-column: 5; grid-row: 1; padding: 10px; white-space: nowrap; text-align: center; border: 1px solid #000; border-radius: 8px;">Harmonized output</div>
 
-::: {.stage}
-[Data shape]{.stage-title}
+    <!-- Row 2, col 1: stack of empty dataset boxes -->
+    <div style="grid-column: 1; grid-row: 2; align-self: start; display: flex; flex-direction: column; gap: 8px;" class="fragment" data-fragment-index="1">
+      <div style="font-size: 28px; text-align: center; color: #ADA599;">15 trials</div>
+      <div style="width: 150px; height: 34px; border: 1px solid #000; border-radius: 3px;"></div>
+      <div style="width: 150px; height: 34px; border: 1px solid #000; border-radius: 3px;"></div>
+      <div style="width: 150px; height: 34px; border: 1px solid #000; border-radius: 3px;"></div>
+      <div style="width: 150px; height: 34px; border: 1px solid #000; border-radius: 3px;"></div>
+      <div style="width: 150px; height: 34px; text-align: center;">...</div>
+      <div style="width: 150px; height: 34px; border: 1px solid #000; border-radius: 3px;"></div>
+    </div>
 
-- ↔️ Widen
-- 🔑 Primary keys
-:::
+    <!-- Row 2, col 3: reformat steps under "Reformat" -->
+    <div style="grid-column: 3; grid-row: 2; align-self: start; font-size: 28px; line-height: 1.5; text-align: center; color: #ADA599;" class="fragment" data-fragment-index="2">
+      <div>Pivot wide</div>
+      <div>Primary keys</div>
+      <div>Match columns</div>
+      <div>Data type</div>
+      <div>Factor values</div>
+      <div>Missing codes</div>
+      <div>Unit of measure</div>
+    </div>
 
-::: {.arrow}
-→
-:::
+  </div>
 
-::: {.stage}
-[Columns]{.stage-title}
+  </div>
 
-- 🔍 Identify columns
-- 🏷️ Rename
-:::
+  <!-- Multiplication sign: flex item between the box and the domain list -->
+  <div class="fragment" data-fragment-index="3" style="font-size: 80px; font-weight: bold;">&#10799;</div>
 
-::: {.arrow}
-→
-:::
+  <!-- Domain list (caption + items), vertically centered by the wrapper -->
+  <div style="font-size: 28px; line-height: 1.5; color: #ADA599;">
+    <div style="font-size: 34px; font-weight: bold; margin-bottom: 12px; color: #4F4A4A;" class="fragment" data-fragment-index="3">10 data sets</div>
+    <div class="fragment" data-fragment-index="4">
+      <div>&#9888;&#65039; Adverse events</div>
+      <div>&#128101; Demographics</div>
+      <div>&#128137; Exposure</div>
+      <div>&#127973; Hospitalization</div>
+      <div>&#129514; Lab tests</div>
+      <div>&#128138; Medications</div>
+      <div>&#129658; Patient visits</div>
+      <div>&#128200; Response</div>
+      <div>&#9201;&#65039; Time to event</div>
+    </div>
+  </div>
 
-::: {.stage}
-[Column content]{.stage-title}
+</div>
 
-- 🔢 Data type
-- 🏷️ Categorical values
-- ❓ Missing value codes
-- 📏 Unit of measure
-:::
-
-::::
-
-:::::
-
-::: {.arrow}
-x
-:::
-
-:::: {.stage}
-[Datasets (domains)]{.stage-title}
-
-- ⚠️ Adverse events
-- 👥 Demographics
-- 💉 Exposure
-- 🏥 Hospitalization
-- 🧪 Lab tests
-- 💊 Medications
-- 🩺 Patient visits
-- ⏱️ Time to event
-- 📈 Response
-::::
-
-::: {.arrow}
-x
-:::
-
-:::: {.stage}
-[Every study]{.stage-title}
-::::
-
-::::::
+<!-- Decorative emoji, bottom-left corner (~100px tall). On the final build step
+     it swaps to a screaming face: the first fades out and the second fades in at
+     the same position (shared data-fragment-index = the last step). -->
+<div class="fragment fade-out" data-fragment-index="5" style="position: absolute; left: 330px; bottom: 30px; font-size: 150px; line-height: 1;">👩🏻‍💻</div>
+<div class="fragment fade-in"  data-fragment-index="5" style="position: absolute; left: 330px; bottom: 30px; font-size: 150px; line-height: 1;">😱</div>
+```

@@ -1,0 +1,266 @@
+.circle-flow {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  margin: auto;
+}
+
+.circle-flow .node {
+  position: absolute;
+  background: #2e6b8a;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.circle-flow .node.node-circle {
+  border-radius: 50%;
+}
+
+.circle-flow .node.node-none {
+  background: transparent;
+  color: #222222;
+}
+
+.circle-flow .arrow-shape {
+  position: absolute;
+  background: #2e6b8a;
+  clip-path: polygon(0 25%, 60% 25%, 60% 0%, 100% 50%, 60% 100%, 60% 75%, 0 75%);
+}
+
+.process {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  height: 200px;
+  margin: auto;
+}
+
+.process.vertical {
+  width: 200px;
+  max-width: 200px;
+  height: 600px;
+}
+
+.process .node {
+  position: absolute;
+  background: #2e6b8a;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.process .node.node-circle {
+  border-radius: 50%;
+}
+
+.process .node.node-none {
+  background: transparent;
+  color: #222222;
+}
+
+.process .node.chevron-step {
+  --notch: 14px;
+  border-radius: 0;
+  text-align: center;
+}
+
+.process .arrow-shape {
+  position: absolute;
+  background: #2e6b8a;
+  clip-path: polygon(0 25%, 60% 25%, 60% 0%, 100% 50%, 60% 100%, 60% 75%, 0 75%);
+}
+
+.hierarchy {
+  position: relative;
+  margin: auto;
+}
+
+.hierarchy svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.hierarchy .node {
+  position: absolute;
+  background: #2e6b8a;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  box-sizing: border-box;
+  padding: 4px 8px;
+}
+
+.hierarchy .node.node-circle {
+  border-radius: 50%;
+}
+
+.hierarchy .node.node-none {
+  background: transparent;
+  color: #222222;
+}
+
+.pie,
+.pyramid,
+.matrix,
+.venn,
+.stacked-venn,
+.funnel,
+.cycle {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  margin: auto;
+}
+
+.pie svg,
+.pyramid svg,
+.matrix svg,
+.venn svg,
+.stacked-venn svg,
+.funnel svg,
+.cycle svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.venn .set-label {
+  position: absolute;
+  color: #222222;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.stacked-venn .set-label {
+  position: absolute;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.15;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.venn .overlap-label {
+  position: absolute;
+  color: #222222;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: center;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.matrix .axis-end {
+  position: absolute;
+  color: #555555;
+  font-size: 0.85rem;
+  text-align: center;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.matrix .axis-title {
+  position: absolute;
+  color: #333333;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  pointer-events: none;
+}
+
+.pie .donut-center {
+  position: absolute;
+  color: #222222;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+/* External annotation callouts (shared by radial/segmented layouts) */
+.annotation {
+  position: absolute;
+  width: 164px;
+  color: #444444;
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.annotation.annotation-right {
+  text-align: left;
+}
+
+.annotation.annotation-left {
+  text-align: right;
+  transform: translateX(-100%);
+}
+
+.annotation.annotation-center {
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.annotation p {
+  margin: 0 0 0.2em;
+}
+
+.annotation p:last-child {
+  margin-bottom: 0;
+}
+
+/* A bold run or heading is tinted to match the shape (optional title) */
+.annotation strong,
+.annotation b,
+.annotation :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--ann-color);
+}
+
+.annotation :is(h1, h2, h3, h4, h5, h6) {
+  margin: 0 0 0.15em;
+  font-size: 1.05rem;
+}
+
+.pie .slice-label,
+.pyramid .slice-label,
+.matrix .slice-label,
+.funnel .slice-label,
+.cycle .slice-label {
+  position: absolute;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-align: center;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+/* Font Awesome icons used as labels. The text auto-scaler measures plain text
+   and no-ops on icon-only labels, so set a default icon size relative to the
+   label font — `em` keeps them proportional when a mixed label is scaled up.
+   Wrapped in :where() so the rule has zero specificity: a per-icon Font Awesome
+   size class (e.g. `fa-2x` from `{{< fa rocket size=2x >}}`) still overrides it. */
+:where(.node, .slice-label) :where(i[class*="fa-"]) {
+  font-size: 1.4em;
+  vertical-align: -0.1em;
+}

@@ -32,6 +32,13 @@ $info:      $bms-light-indigo;
 $warning:   $bms-lime;
 $danger:    $bms-dark-indigo;
 
+// Code on a light-gray surface (BMS palette). Quarto reveal SASS variables:
+// $code-block-bg = code blocks (pre); $code-bg = inline code bg; $code-color =
+// inline code text. Padding/radius have no variable, so they stay as a rule.
+$code-block-bg: $bms-light-gray;
+$code-bg:       $bms-light-gray;
+$code-color:    $bms-dark-indigo;
+
 /*-- scss:rules --*/
 
 // --- Manual title slide -----------------------------------------------------
@@ -60,7 +67,7 @@ $danger:    $bms-dark-indigo;
   padding: 0;
   line-height: 1.1;   // tighten leading so the title sits snug at the top
   font-size: 1.9em;
-  max-width: 67%;   // keep the title in the left half, off the right-side photo
+  max-width: 75%;   // keep the title in the left half, off the right-side photo
 }
 
 // Author + affiliation grouped in .title-byline, pushed to the bottom of the
@@ -81,7 +88,7 @@ $danger:    $bms-dark-indigo;
 .reveal section.title-hero .title-affiliation {
   margin: 0.15em 0 0 0;
   color: $bms-dark-gray;
-  font-size: 0.9em;
+  font-size: 0.6em;
   text-align: left;
 }
 
@@ -181,19 +188,8 @@ $danger:    $bms-dark-indigo;
   }
 }
 
-// --- Scoped smaller blockquote (wrap a quote in ::: {.small-quote}) ---------
-.reveal .small-quote blockquote {
-  font-size: 0.6em;
-}
-
-// --- Code on a light-gray surface for contrast -----------------------------
-.reveal code,
-.reveal pre {
-  background-color: $bms-light-gray;
-}
-
+// --- Inline code: small padded chip (bg/color set via SASS vars above) ------
 .reveal code {
-  color: $bms-dark-indigo;
   padding: 0.1em 0.3em;
   border-radius: 3px;
 }
