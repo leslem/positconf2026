@@ -6,7 +6,7 @@ format:
     slide-number: true
     width: 1280
     height: 720
-    margin: 0.02  # default 0.04
+    margin: 0.04  # default 0.04
     incremental: false
 ---
 
@@ -257,12 +257,21 @@ Harmonization configs (input)
 - Mention relation to data dictionary? (of recent interest in field)
 :::
 
-## 
+## Pilot project insights
 
-![Eslam Abousamra, 2025 intern](assets/eslam-abousamra.jpeg){.nostretch width="25%"}
+:::: {.columns}
 
-- Use data dictionaries, not actual data
-- Easier task for humans might not be easier for LLMs
+::: {.column width="75%"}
+[❶ Use [data dictionaries]{.bms-purple}, not actual data]{style="font-size: 2em; display: inline-block; margin: 1em 0.5em 0em;" .fragment}
+
+[❷ Easier task for humans might not be easier for LLMs]{style="font-size: 2em; display: inline-block; margin: 1em 0.5em 0em;" .fragment}
+:::
+
+::: {.column width="25%"}
+![Eslam Abousamra, MPH<br>2025 intern](assets/eslam-abousamra.jpeg){.nostretch fig-align="center"  style="display: inline-block; margin: 2em 0.5em;"}
+:::
+
+::::
 
 ::: {.notes}
 
@@ -298,8 +307,8 @@ harmonize_trial_domain <- function(domain_name,
   harmonized_domain_files <- purrr::map(
     domain_source_files,
     \(x) harmonize_trial_file(x, domain_config))
-  # Because primary keys are always included,
-  # we can use a full_join to combine the files
+  # Because primary keys are always included, we can
+  # use a full_join to combine multiple source files
   harmonized_domain <- purrr::reduce(
     harmonized_domain_files, full_join)
 }
@@ -335,60 +344,29 @@ Config-based harmonization code
 
 ## Much easier to reason about than old code
 
-
-:::: {.columns}
-
-::: {.column width="50%"}
-Before update
-```{.r style="font-size: 1.2em;"}
-demographics <- bind_rows(
-  dm |> 
-    select(subject_id, DIAGDTC) |> 
-    rename(unique_subject_id = subject_id,
-           diagnosis_date = DIAGDTC) |> 
-    mutate(diagnosis_date = lubridate::ymd(diagnosis_date)),
-  adsl |> 
-    select(USUBJID, SITE, HEIGHTBL, ACTARM) |> 
-    rename(unique_subject_id = USUBJID,
-           site_id = SITE,
-           baseline_height_cm = HEIGHTBL,
-           actual_arm = ACTARM) |> 
-    mutate(baseline_height_cm = in_to_cm(as.numeric(baseline_height_cm)),
-           actual_arm = forcats::fct_recode(actual_arm,
-             "Arm A: 10M cells" = "Arm A",
-             "Arm B: 25M cells" = "Arm B",
-             "Standard of care" = "Control"
-           ))
-)
+```{.r .no-scroll-code style="width: 80%; margin: 0 auto; font-size: 1.2em;"}
+demographics <- read_csv("adsl.csv") |> 
+  select(
+    USUBJID, SITE, HEIGHTBL, ACTARM,
+    # many more lines of select() ...
+  ) |> 
+  rename(
+    unique_subject_id = USUBJID,
+    site_id = SITE,
+    baseline_height_cm = HEIGHTBL,
+    actual_arm = ACTARM,
+    # many more lines of rename() ...
+  ) |> 
+  mutate(
+    baseline_height_cm = in_to_cm(as.numeric(baseline_height_cm)),
+    actual_arm = forcats::fct_recode(actual_arm,
+      "Arm A: 10M cells" = "Arm A",
+      "Arm B: 25M cells" = "Arm B",
+      "Standard of care" = "Control"
+    )
+    # many more lines of mutate()...
+  )
 ```
-:::
-
-::: {.column width="50%"}
-After update
-```{.r style="font-size: 1.2em;"}
-xxx
-```
-:::
-
-::::
-
-
-## And 
-
-:::: {.columns}
-
-::: {.column width="50%"}
-Tidyverse code before update
-Tidyverse code after update
-:::
-
-::: {.column width="50%"}
-Config block before update
-Config block after update
-:::
-
-::::
-
 
 ::: {.notes}
 The harmonization config files maximize human attention/time spent reviewing LLM output
@@ -396,26 +374,61 @@ The harmonization config files maximize human attention/time spent reviewing LLM
 - Screenshot of the review app Burak has built
 :::
 
-## You get a great data dictionary for your output basically for free with the harmonization configs + data model
+## Harmonized data dictionary for free
 
-:::: {.columns}
+:::: {.r-stack}
 
-::: {.column width="40%"}
+::: {.fragment .fade-out fragment-index="1"}
 
 ```{=html}
-<div style="display: flex; flex-direction: column; align-items: center; gap: 12px; color: #4F4A4A; font-size: 34px; margin: 30px;">
-  <div style="padding: 10px 16px; text-align: center; border: 1px solid #000; border-radius: 8px;">Demographics data model</div>
-  <div style="font-size: 44px; font-weight: bold;">+</div>
-  <div style="padding: 10px 16px; text-align: center; border: 1px solid #000; border-radius: 8px;">Demographics harmonization configs for each trial</div>
-  <div style="font-size: 44px; font-weight: bold;">+</div>
-  <div style="padding: 10px 16px; text-align: center; border: 1px solid #000; border-radius: 8px;">Harmonized demographics data dictionary with definition, data type, units, data sources</div>
+<div style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 24px; color: #4F4A4A; font-size: 34px; margin: 30px auto; width: 75%;">
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+    <div style="padding: 10px 16px; text-align: center; border: 1px solid #000; border-radius: 8px;">Demographics data model</div>
+    <div style="font-size: 44px; font-weight: bold;">+</div>
+    <div style="padding: 10px 16px; text-align: center; border: 1px solid #000; border-radius: 8px;">Demographics harmonization configs</div>
+  </div>
+  <div style="font-size: 48px; font-weight: bold;">➡</div>
+  <div style="padding: 10px 16px; text-align: center; border: 1px solid #000; border-radius: 8px;">Harmonized demographics data dictionary</div>
 </div>
 ```
+
 :::
 
-::: {.column width="60%"}
+::: {.fragment fragment-index="1"}
 
-```yaml
+```{.yaml style="margin: 0 auto; font-size: 1.2em;" code-line-numbers="|1-7|3-5|6-7"}
+unique_subject_id:
+  definition: Unique identifier for each subject across trials
+  model: {data_type: character,
+          character_pattern: '^[A-Z0-9-]+-\d+-\d+$',
+          key: true}
+  inputs: [{trial: X, file: adsl.csv, column: USUBJID},
+           {trial: Y, file: dm.csv, column: subject_id}]
+site_id:
+  definition: Study site where the subject was enrolled
+  model: {data_type: character,
+          character_pattern: '^\d+$'}
+  inputs: [{trial: X, file: adsl.csv, column: SITE},
+           {trial: Y, file: dm.csv, column: SITE_ID}]
+baseline_height_cm:
+  definition: Subject height at baseline
+  model: {data_type: numeric,
+          numeric_units: centimeter,
+          terms: {loinc: 8302-2, snomed: C0005890}}
+  inputs: [{trial: X, file: adsl.csv, column: HEIGHTBL,
+            numeric_units: inch}]
+diagnosis_date:
+  definition: Date of the subject's initial diagnosis
+  model: {data_type: Date,
+          date_format: "%Y-%m-%d"}
+  inputs: [{trial: X, file: adsl.csv, column: DIAGDTC},
+           {trial: Y, file: dm.csv, column: DIAGDTC}]
+actual_arm:
+  definition: Treatment arm the subject actually received
+  model: {data_type: factor,
+          factor_allowed_values: [Arm A, Arm B, Arm C]}
+  inputs: [{trial: X, file: adsl.csv, column: ACTARM},
+           {trial: Y, file: dm.csv, column: study_arm}]
 ```
 
 :::
@@ -430,37 +443,48 @@ You get a great data dictionary for your output basically for free with the harm
 :::
 
 
-## Claude Code harmonization plugin by Jason Moore
+## Building a Claude Code harmonization plugin
+
+:::: {.columns}
+
+::: {.column width="75%"}
 
 ```{=html}
-<div style="display: flex; flex-direction: column; gap: 12px; font-size: 28px; line-height: 1.35; margin-top: 10px;">
+<div style="display: flex; flex-direction: column; gap: 12px; font-size: 28px; line-height: 1.35; margin-top: 10px; margin-left: 80px; margin-right: 80px;">
 
   <div style="display: flex; justify-content: space-between; font-size: 40px; font-weight: bold;">
     <span style="color: #005AB5;">👩🏻‍💻 User</span>
     <span style="color: #4F4A4A; display: inline-flex; align-items: center; gap: 0.3em;">Claude Code<img src="assets/claude-spark.svg" alt="Claude Code" style="height: 0.9em; width: auto;"></span>
   </div>
 
-  <div style="text-align: left; color: #005AB5;">“Harmonize clinical trial X”</div>
+  <div class="fragment" style="text-align: left; color: #005AB5;">“Harmonize clinical trial X”</div>
 
-  <div style="text-align: right; color: #4F4A4A;">Creates project GitHub repo and code skeleton</div>
+  <div class="fragment" style="text-align: right; color: #4F4A4A;">Create GitHub repo project template</div>
 
-  <div style="text-align: left; color: #005AB5;">Provides data location (e.g. specific data cut) and domains to include</div>
+  <div class="fragment" style="text-align: left; color: #005AB5;">Provide data source and domains</div>
 
-  <div style="text-align: right; color: #4F4A4A;">Analyzes input datasets in comparison to data model</div>
-  <div style="text-align: right; color: #4F4A4A;">Suggests adding the new data domains/variables to the data model if needed</div>
-  <div style="text-align: right; color: #4F4A4A;">Proposes initial harmonization config for each data model output domain</div>
+  <div class="fragment" style="text-align: right; color: #4F4A4A;">Compare source datasets ↔ Data model</div>
+  <div class="fragment" style="text-align: right; color: #4F4A4A;">Draft trial harmonization configs</div>
 
-  <div style="text-align: left; color: #005AB5;">Reviews proposed configs one by one and approves/modifies</div>
+  <div class="fragment" style="text-align: left; color: #005AB5;">Review, edit, & approve configs</div>
 
-  <div style="text-align: right; color: #4F4A4A;">Pushes new harmonization configs to harmonization project GitHub repo</div>
-  <div style="text-align: right; color: #4F4A4A;">Runs harmonization pipeline and prompts user to review the results</div>
+  <div class="fragment" style="text-align: right; color: #4F4A4A;">Push configs + pipeline code to GitHub repo</div>
+  <div class="fragment" style="text-align: right; color: #4F4A4A;">Run pipeline</div>
 
-  <div style="text-align: left; color: #005AB5;">Reviews clinical trial's harmonized results and approves or prompts for modifications</div>
+  <div class="fragment" style="text-align: left; color: #005AB5;">Review harmonized output</div>
 
-  <div style="text-align: right; color: #4F4A4A;">Deploys final harmonized dataset</div>
+  <div class="fragment" style="text-align: right; color: #4F4A4A;">Deploy harmonized dataset</div>
 
 </div>
 ```
+
+:::
+
+::: {.column width="25%"}
+![Jason Moore<br>Data engineer](assets/jason-moore.jpeg){.nostretch fig-align="center" style="display: inline-block; margin: 0.5em;"}
+:::
+
+::::
 
 ::: {.notes}
 We are building out a Claude Code plugin using our daapr framework
@@ -471,74 +495,60 @@ We are building out a Claude Code plugin using our daapr framework
 :::
 
 
-## How do I use this in my own work?
+## Takeaways for your own work {.no-title}
 
-:::: {.columns}
+::: {style="width: 80%; margin-left:3em;"}
+[Be flexible to rapid change]{style="font-size: 2em; display: inline-block; margin-top: 0.75em; margin-bottom: 0em;"}
+[AWS Bedrock agent → langchain agent → Claude Code plugin]{style="font-size: 1em; display: inline-block; margin-top: 0.5em; margin-bottom: 0em; margin-left: 3em; color: #ADA599;"}
 
-::: {.column width="33%"}
-### The tech is moving fast, so be flexible
+[Design with structured files]{style="font-size: 2em; display: inline-block; margin-top: 0.75em; margin-bottom: 0em;"}
+[.yaml or .json or even .xml]{style="font-size: 1em; display: inline-block; margin-top: 0.5em; margin-bottom: 0em; margin-left: 3em; color: #ADA599;"}
 
-- AWS Bedrock agent
-- langchain + langgraph agent
-- Claude Code plugin
+[Look for data wrangling patterns]{style="font-size: 2em; display: inline-block; margin-top: 0.75em; margin-bottom: 0em;"}
 :::
 
-::: {.column width="33%"}
-### YAML files and configs for everything
+::: {.notes}
+- Any project where you're combining data from multiple sources (e.g. COVID data from different health authorities, published datasets from different research groups, eCommerce data from acquired companies, etc.)
 
+- Use data model .yaml to instruct LLM to make the output format you want
+- Use a config file that describes all of your inputs (makes it easier for LLM to reason about your data)
 - Specification-driven development
 - See [`data-dict.yaml`](https://data-dict.tidyverse.org) from Tidyverse
 
-:::
-
-::: {.column width="33%"}
-
-### Other harmonization projects
-
-- COVID data from multiple health authorities
-- Published datasets from different research groups
-- eCommerce data from acquired companies
-- ...
-
-:::
-
-:::
-
-::::
-
-::: {.notes}
-You can use these approaches for other use cases
-
-- Any project where you're combining data from multiple sources (e.g. COVID data from different health authorities, published datasets from different research groups, eCommerce data from acquired companies, etc.)
-- Use data model .yaml to instruct LLM to make the output format you want
-- Use a config file that describes all of your inputs (makes it easier for LLM to reason about your data)
+- If you can make it into a function, you make it into a tool call an LLM can use and you can make it reproducible with a structured file
 :::
 
 
-## Acknowledgements
+## Acknowledgements {.no-bullets .no-title}
 
 :::: {.columns}
 
-::: {.column width="33%"}
+::: {.column width="25%" style="width: 25%; text-align: center;"}
 #### Managers
 - Garth McGrath
 - Burak Kutlu
 :::
 
-::: {.column width="33%"}
+::: {.column width="25%" style="width: 25%; text-align: center;"}
 #### Project team
 - Jason Moore
 - Clara Amorosi
 - Mandeep Takhar
 :::
 
-::: {.column width="33%"}
-#### 2025 intern
-Eslam Abousamra, MPH
-
-PhD student at CUNY Graduate School of Public Health and Public Policy
+::: {.column width="25%" style="width: 25%; text-align: center;"}
+#### Subject matter experts
+- Begüm Topcuoglu
+- José Malagon-Lopez
+- Julie Rytlewski
 :::
 
-![2025 Translational Data Science team meeting](assets/KSR-TDS-pikeplace-2025-cropped.jpg){.nostretch width="50%"}
+::: {.column width="25%" style="width: 25%; text-align: center;"}
+#### 2025 intern
+- Eslam Abousamra
+:::
+
+![2025 Translational Data Science team meeting](assets/KSR-TDS-pikeplace-2025-cropped.jpg){.nostretch width="40%" fig-align="center"}
+
 
 ::::

@@ -238,3 +238,52 @@ $code-color:    $bms-dark-indigo;
   justify-content: flex-start;
   background: $body-bg;
 }
+
+// --- Right/left-aligned figure captions ------------------------------------
+// Quarto's .quarto-figure-{right,left} only aligns the <p> holding the image,
+// not the <figcaption>, so a right-aligned image gets a centered caption that
+// doesn't sit under it. Make the caption follow the figure's alignment.
+.reveal .quarto-figure-right figcaption {
+  text-align: right;
+}
+.reveal .quarto-figure-left figcaption {
+  text-align: left;
+}
+.reveal .quarto-figure-center figcaption {
+  text-align: center;
+}
+
+// --- Inline text-color helper ----------------------------------------------
+.reveal .bms-purple {
+  color: $bms-purple;
+}
+
+// --- Bullet-less lists ------------------------------------------------------
+// Add `{.no-bullets}` to a slide heading to drop list markers (and their
+// indent) for every list on that slide.
+.reveal .no-bullets ul,
+.reveal .no-bullets ol {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+// --- Title-less slide ------------------------------------------------------
+// Author a slide with `## {.no-title}` when it has no title: hide the empty
+// heading (and its purple accent underline) and reclaim the vertical space.
+.reveal section.no-title h2 {
+  display: none;
+}
+
+// --- Full-height code block ------------------------------------------------
+// Quarto's theme caps code height with `.reveal pre.sourceCode code { max-height:
+// 500px }` (specificity 0,2,2) and reveal sets `overflow: hidden !important` on
+// `pre code`. Add `.no-scroll-code` to a code block to lift the cap so it uses
+// the available vertical space. The `.no-scroll-code` class lands on the <pre>,
+// so we match `pre.sourceCode.no-scroll-code` to outrank the theme rule, and
+// use !important to beat reveal's overflow declaration.
+.reveal pre.sourceCode.no-scroll-code,
+.reveal pre.sourceCode.no-scroll-code code {
+  max-height: none !important;
+  overflow: visible !important;
+}
