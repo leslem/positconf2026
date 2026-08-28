@@ -1,0 +1,16 @@
+<!--
+Whole-trial harmonization code for the "Harmonizing all datasets in a trial"
+slide. Pulled into the deck with an include shortcode pointing at this file.
+-->
+```{.r style="width: 80%; margin: 0 auto; font-size: 1.2em;"}
+trialX_source_files <- list(
+  demographics = c("dm.csv", "adsl.csv"),
+  lab_tests = "lb.csv",
+  medications = "cm.csv",
+  response = "adrs.csv"
+)
+trialX_harmonized <- purrr::imap(
+  trialX_source_files,
+  \x(f, d) harmonize_trial_dataset(dataset = d, dataset_source_files = f)
+)
+```

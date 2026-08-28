@@ -24,7 +24,7 @@ black border and gain a fragment purple-border overlay to fake a color change.
   <!-- Group 1: For each study (border + title are fragments at step 3) -->
   <div style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 24px 28px 28px;">
     <div class="fragment" data-fragment-index="5" style="position: absolute; inset: 0; border: 2px solid #4F4A4A; border-radius: 24px; pointer-events: none;"></div>
-    <div class="fragment" data-fragment-index="5" style="align-self: flex-start; font-size: 34px; font-weight: bold; color: #4F4A4A;">For each study</div>
+    <div class="fragment" data-fragment-index="5" style="align-self: flex-start; font-size: 34px; color: #4F4A4A;">For each study</div>
 
     <!-- Stage: Harmonization configs (starts plain; turns purple + badge at step 4) -->
     <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
@@ -47,7 +47,7 @@ black border and gain a fragment purple-border overlay to fake a color change.
   <!-- Group 2: One time setup (border + title are fragments; stages show at start) -->
   <div style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 24px 28px 28px;">
     <div class="fragment" data-fragment-index="1" style="position: absolute; inset: 0; border: 2px solid #4F4A4A; border-radius: 24px; pointer-events: none;"></div>
-    <div class="fragment" data-fragment-index="1" style="align-self: flex-start; font-size: 34px; font-weight: bold; color: #4F4A4A;">One time setup</div>
+    <div class="fragment" data-fragment-index="1" style="align-self: flex-start; font-size: 34px; color: #4F4A4A;">One time setup</div>
 
     <div style="display: flex; align-items: flex-start; gap: 24px;">
 
@@ -83,5 +83,5 @@ black border and gain a fragment purple-border overlay to fake a color change.
 </div>
 
 <div class="fragment fade-out" data-fragment-index="8" style="position: absolute; left: 330px; bottom: 30px; font-size: 150px; line-height: 1;">👩🏻‍💻</div>
-<div class="fragment fade-in"  data-fragment-index="8" style="position: absolute; left: 330px; bottom: 30px; font-size: 150px; line-height: 1;">🤩</div>
+<div class="fragment fade-in"  data-fragment-index="8" style="position: absolute; left: 330px; bottom: 30px; font-size: 150px; line-height: 1;">🎉</div>
 ```

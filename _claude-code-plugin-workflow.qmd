@@ -1,0 +1,36 @@
+<!--
+User <-> Claude Code back-and-forth for the "Building a Claude Code
+harmonization plugin" slide. Pulled into the deck with an include
+shortcode pointing at this file.
+Left-aligned rows are the user, right-aligned rows are Claude Code; each
+step appears on its own fragment.
+Must stay inside a ```{=html} fence so Pandoc passes it through verbatim.
+-->
+```{=html}
+<div style="display: flex; flex-direction: column; gap: 12px; font-size: 28px; line-height: 1.35; margin-top: 10px; margin-left: 80px; margin-right: 80px;">
+
+  <div style="display: flex; justify-content: space-between; font-size: 40px; font-weight: bold;">
+    <span style="color: #005AB5;">👩🏻‍💻 User</span>
+    <span style="color: #4F4A4A; display: inline-flex; align-items: center; gap: 0.3em;">Claude Code<img src="assets/claude-spark.svg" alt="Claude Code" style="height: 0.9em; width: auto;"></span>
+  </div>
+
+  <div class="fragment" style="text-align: left; color: #005AB5;">“Harmonize clinical trial X”</div>
+
+  <div class="fragment" style="text-align: right; color: #4F4A4A;">Create GitHub repo project template</div>
+
+  <div class="fragment" style="text-align: left; color: #005AB5;">Provide data source and datasets</div>
+
+  <div class="fragment" style="text-align: right; color: #4F4A4A;">Compare source datasets ↔ Data model</div>
+  <div class="fragment" style="text-align: right; color: #4F4A4A;">Draft trial harmonization configs</div>
+
+  <div class="fragment" style="text-align: left; color: #005AB5;">Review, edit, & approve configs</div>
+
+  <div class="fragment" style="text-align: right; color: #4F4A4A;">Push configs + pipeline code to GitHub repo</div>
+  <div class="fragment" style="text-align: right; color: #4F4A4A;">Run pipeline</div>
+
+  <div class="fragment" style="text-align: left; color: #005AB5;">Review harmonized output</div>
+
+  <div class="fragment" style="text-align: right; color: #4F4A4A;">Deploy harmonized dataset</div>
+
+</div>
+```

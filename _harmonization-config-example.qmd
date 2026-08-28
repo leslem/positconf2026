@@ -1,0 +1,39 @@
+<!--
+Example harmonization configs (YAML) for two trials, stacked so trial Y
+covers trial X on a fragment. Pulled into the deck with an include
+shortcode pointing at this file.
+-->
+:::: {.r-stack}
+
+::: {.harmonization-config}
+Demographics config for trial X
+```{.yaml code-line-numbers="1,2|5-7|" style="font-size: 1.2em;"}
+unique_subject_id:
+  - {file: adsl.csv, column: USUBJID, data_type: character}
+site_id:
+  - {file: adsl.csv, column: SITE, data_type: character}
+baseline_height_cm:
+  - {file: adsl.csv, column: HEIGHTBL, data_type: numeric,
+     numeric_units: inch}
+diagnosis_date:
+  - {file: adsl.csv, column: DIAGDTC, data_type: character}
+actual_arm:
+  - {file: adsl.csv, column: ACTARM, data_type: character}
+```
+:::
+
+::: {.harmonization-config .config-cover .fragment}
+Demographics config for trial Y
+```{.yaml style="font-size: 1.2em;"}
+unique_subject_id:
+  - {file: dm.csv, column: subject_id, data_type: character}
+site_id:
+  - {file: dm.csv, column: SITE_ID, data_type: character}
+diagnosis_date:
+  - {file: dm.csv, column: DIAGDTC, data_type: character}
+actual_arm:
+  - {file: dm.csv, column: study_arm, data_type: character}
+```
+:::
+
+::::

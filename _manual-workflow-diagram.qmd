@@ -6,7 +6,7 @@ Must stay inside a ```{=html} fence so Pandoc passes it through verbatim.
 
 Layout:
 - Outer wrapper is a flex row; align-items:center vertically centers the
-  multiplication sign and the domain list against the dashed container.
+  multiplication sign and the dataset list against the dashed container.
 - The dashed container is a 5-column grid: label | arrow | label | arrow | label.
   Row 1 = stage labels + block arrows; row 2 = the box stack (col 1) and the
   reformat steps (col 3), so each content column sits under its label.
@@ -61,10 +61,10 @@ Tweak gaps/padding to adjust spacing; there are no pixel coordinates to recomput
 
   </div>
 
-  <!-- Multiplication sign: flex item between the box and the domain list -->
+  <!-- Multiplication sign: flex item between the box and the dataset list -->
   <div class="fragment" data-fragment-index="4" style="font-size: 80px; font-weight: bold;">&#10799;</div>
 
-  <!-- Domain list (caption + items), vertically centered by the wrapper -->
+  <!-- Dataset list (caption + items), vertically centered by the wrapper -->
   <div style="font-size: 28px; line-height: 1.5; color: #ADA599;">
     <div style="font-size: 34px; font-weight: bold; margin-bottom: 12px; color: #4F4A4A;" class="fragment" data-fragment-index="4">10 datasets</div>
     <div class="fragment" data-fragment-index="5">

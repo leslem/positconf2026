@@ -1,0 +1,28 @@
+<!--
+The old bespoke harmonization code for the "Much easier to reason about than
+old code" slide. Pulled into the deck with an include shortcode pointing
+at this file.
+-->
+```{.r .no-scroll-code style="width: 80%; margin: 0 auto; font-size: 1.2em;"}
+demographics <- read_csv("adsl.csv") |>
+  select(
+    USUBJID, SITE, HEIGHTBL, ACTARM,
+    # many more lines of select() ...
+  ) |>
+  rename(
+    unique_subject_id = USUBJID,
+    site_id = SITE,
+    baseline_height_cm = HEIGHTBL,
+    actual_arm = ACTARM,
+    # many more lines of rename() ...
+  ) |>
+  mutate(
+    baseline_height_cm = in_to_cm(as.numeric(baseline_height_cm)),
+    actual_arm = forcats::fct_recode(actual_arm,
+      "Arm A: 10M cells" = "Arm A",
+      "Arm B: 25M cells" = "Arm B",
+      "Standard of care" = "Control"
+    )
+    # many more lines of mutate()...
+  )
+```
