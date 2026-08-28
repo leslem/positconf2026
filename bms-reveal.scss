@@ -209,157 +209,32 @@ $code-color:    $bms-dark-indigo;
   padding-bottom: 64px;
 }
 
-// --- Workflow diagram (fenced-div layout) ----------------------------------
-// Authored in _workflow-diagram.qmd and pulled in with {{< include >}}.
-// Structure:
-//   .workflow  > .workflow-group (optional titled group) > .stage / .arrow
-// Stages are cards with a heading and a bullet list; arrows sit between them.
-.reveal .workflow {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  // Center the diagram in the empty space below the slide title rather than
-  // letting it sit up top. The diagram is wide-and-short, so we fill the
-  // vertical gap by centering, not by scaling (scaling forces wraps/overflow).
-  min-height: 70vh;
+// --- Harmonization config crossfade (r-stack) ------------------------------
+// Two configs are stacked in the same spot inside a .fragment column. Block A
+// (trial X) steps through its code-line-numbers highlights; then block B
+// (trial Y, .config-cover) fades in on top as the column's last fragment.
+//
+// Reveal renumbers un-indexed fragments in DOM order, so the sequence on this
+// slide is: column reveal -> 7 highlight-step clones -> the cover fade-in. We
+// don't fade block A out (Quarto's highlight clones are un-indexed, so a
+// same-tick fade-out can't be co-indexed cleanly); instead the cover block
+// fills the whole stack cell with an opaque, slide-colored background and thus
+// fully masks block A behind it. Block A stays in the DOM but is hidden.
+// Both configs top-align to the same corner of the stack cell so their labels
+// and first code lines coincide (they have different heights, so centering
+// would offset them). The cover still stretches to fill the cell for masking,
+// but its content is top-aligned too, matching block A.
+.reveal .r-stack > .harmonization-config {
+  margin: 0;
+  align-self: start;
+  justify-self: start;
 }
-
-// A titled group of stages (the "titles for groups of steps").
-// Row layout that wraps; the title spans the full width above its stages.
-.reveal .workflow-group {
-  // Column layout: the title sits on its own line above the stage row. This
-  // lets the group shrink to hug its widest child (the stage row) instead of
-  // stretching to full slide width -- the old flex-basis:100% row approach
-  // forced the group full-width and left whitespace beside the stages.
+.reveal .r-stack > .config-cover {
+  align-self: stretch;
+  justify-self: stretch;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
-  padding: 16px;
-  border: 2px solid rgba($bms-purple, 0.35);
-  border-radius: 12px;
-  width: fit-content;
-}
-
-// Group title: small, uppercase, purple, full-width above the group's stages.
-.reveal .workflow-group-title {
-  display: block;
-  // Negative bottom margin trims the space under the title only (the group's
-  // 12px column gap otherwise spaces it like every other child).
-  margin: 0 0 -6px 0;
-  color: $bms-purple;
-  font-size: 0.6em;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-// An annotation line inside a group (e.g. a human-in-the-loop note), sized to
-// match the stage bullet text (.stage ul is also 0.55em).
-.reveal .workflow-note {
-  display: block;
-  font-size: 0.55em;
-}
-
-// A group's stages sit on one no-wrap row beneath the (full-width) title.
-.reveal .stage-row {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  gap: 12px;
-}
-
-// Stages/arrows within a stage-row flow left-to-right and stretch to equal
-// height; the arrows keep their size, the stages may shrink to fit the row.
-.reveal .stage-row > .stage,
-.reveal .stage-row > .arrow {
-  align-self: stretch;
-}
-
-// A single step card. Shrinks to fit so the whole flow stays on one row.
-.reveal .stage {
-  position: relative;   // anchor for an optional corner .stage-badge
-  flex: 0 1 auto;
-  min-width: 0;
-  padding: 14px 18px;
-  background: $bms-light-gray;
-  border-top: 4px solid $bms-purple;
-  border-radius: 8px;
-  text-align: left;
-}
-
-// Highlighted stage: calls out a stage with a different characteristic than the
-// rest. Full purple border + a corner pill. Author it as:
-//   ::: {.stage .highlight}
-//   [Title]{.stage-title}
-//   [🤖 LLM-drafted]{.stage-badge}   <- pill text; edit/remove freely
-//   - bullet ...
-//   :::
-.reveal .stage.highlight {
-  border: 2px solid $bms-purple;
-  border-top-width: 4px;   // keep the top accent bar prominent
-}
-
-.reveal .stage-badge {
-  position: absolute;
-  // Center the badge on the card's top edge via translateY(-50%) so it stays
-  // vertically centered whether it's one line or two (a fixed top offset would
-  // let a second line hang below the corner).
-  top: 0;
-  right: -0.6em;
-  transform: translateY(-50%);
-  padding: 0.15em 0.6em;
-  background: $bms-purple;
-  color: #fff;
-  border-radius: 999px;   // pill
-  font-size: 0.45em;
-  font-weight: bold;
-  line-height: 1.2;
-  letter-spacing: 0.05em;
-  white-space: nowrap;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-.reveal .stage-title {
-  display: block;
-  margin: 0 0 0.3em 0;
-  font-size: 0.7em;
-  font-weight: bold;
-  color: $bms-dark-gray;
-}
-
-// Emoji at the start of each bullet acts as the marker, so drop the disc
-// and its indent, and give the rows room to breathe.
-.reveal .stage ul {
-  margin: 0;
-  padding-left: 0;
-  list-style: none;
-  font-size: 0.55em;
-  line-height: 1.5;
-}
-
-// Indent nested bullets to show the hierarchy. font-size:1em keeps them the
-// same size as their parent bullets -- otherwise the 0.55em above compounds
-// on each level and sub-items shrink.
-.reveal .stage ul ul {
-  padding-left: 1.1em;
-  font-size: 1em;
-}
-
-// Arrow connector between stages. inline-flex so it stays on the row and
-// doesn't shrink; align/justify center the glyph.
-.reveal .arrow {
-  display: inline-flex;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
-  color: $bms-purple;
-  font-size: 1.6em;
-  line-height: 1;
-}
-
-// Lay the groups themselves out in a row with arrows between, if desired.
-.reveal .workflow-group + .workflow-group {
-  align-self: center;
+  justify-content: flex-start;
+  background: $body-bg;
 }

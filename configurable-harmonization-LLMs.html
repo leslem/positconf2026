@@ -100,7 +100,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="configurable-harmonization-LLMs_files/libs/revealjs/dist/theme/quarto-99038c2fa60d85396225623684cf4381.css">
+  <link rel="stylesheet" href="configurable-harmonization-LLMs_files/libs/revealjs/dist/theme/quarto-0e414193e22b8ec7c440b81123e09db5.css">
   <link href="configurable-harmonization-LLMs_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="configurable-harmonization-LLMs_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="configurable-harmonization-LLMs_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -326,7 +326,7 @@ Tweak gaps/padding to adjust spacing; there are no pixel coordinates to recomput
 
   <!-- Domain list (caption + items), vertically centered by the wrapper -->
   <div style="font-size: 28px; line-height: 1.5; color: #ADA599;">
-    <div style="font-size: 34px; font-weight: bold; margin-bottom: 12px; color: #4F4A4A;" class="fragment" data-fragment-index="3">10 data sets</div>
+    <div style="font-size: 34px; font-weight: bold; margin-bottom: 12px; color: #4F4A4A;" class="fragment" data-fragment-index="3">10 datasets</div>
     <div class="fragment" data-fragment-index="4">
       <div>⚠️ Adverse events</div>
       <div>👥 Demographics</div>
@@ -494,19 +494,19 @@ black border and gain a fragment purple-border overlay to fake a color change.
           display:block!important;
       }</style></aside>
 </section>
-<section id="draft-the-initial-data-model-with-posit-assistant" class="slide level2">
-<h2>Draft the initial data model with Posit Assistant</h2>
+<section id="the-data-model-specifies-the-output-format-in-detail" class="slide level2">
+<h2>The data model specifies the output format in detail</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; color: #4F4A4A; font-size: 34px; margin: 100px;">
-  <div style="padding: 10px 16px; white-space: nowrap; border: 1px solid #000; border-radius: 8px;">Prompt</div>
+  <div style="padding: 10px 16px; white-space: nowrap; border: 1px solid #000; border-radius: 8px;">Posit Assistant</div>
   <div style="font-size: 44px; font-weight: bold;">+</div>
   <div style="padding: 10px 16px; white-space: nowrap; border: 1px solid #000; border-radius: 8px;">Demographics from 15 trials</div>
   <div style="font-size: 44px; font-weight: bold;">+</div>
   <div style="padding: 10px 16px; white-space: nowrap; border: 1px solid #000; border-radius: 8px;">Example .yaml file</div>
 </div>
 </div><div class="column fragment" style="width:45%;">
-<h3 id="demographics-data-model"><code>demographics</code> data model</h3>
+<h3 id="demographics-data-model">Demographics data model</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers="1,5,8,14,17|2|3,6,9,15,18|4,7,10,11,16,19,20,21,22"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="" aria-label="1"></a><span class="fu">unique_subject_id</span><span class="kw">:</span></span>
 <span id="cb1-2"><a href="" aria-label="2"></a><span class="at">  </span><span class="fu">key</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
 <span id="cb1-3"><a href="" aria-label="3"></a><span class="at">  </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span></span>
@@ -532,9 +532,8 @@ black border and gain a fragment purple-border overlay to fake a color change.
 </div></div>
 <!-- Build this out to highlight all variable names, then all data types, then all type-specific values, then the inputs, etc. -->
 <aside class="notes">
-<p>The data model specifies the output format in detail</p>
 <ul>
-<li>Show prompt to get Posit Assistant to make the data model based on a group of studies</li>
+<li>I’ve tried a few different tools but right now I’m using Posit Assistant to make the data model based on a group of studies and an example yaml file written by hand</li>
 <li>Show example data model
 <ul>
 <li>Structure:
@@ -557,8 +556,8 @@ black border and gain a fragment purple-border overlay to fake a color change.
           display:block!important;
       }</style></aside>
 </section>
-<section id="update-the-data-model-as-needed-for-new-trials-or-data-set-types" class="slide level2">
-<h2>Update the data model as needed for new trials or data set types</h2>
+<section id="update-the-data-model-as-needed-for-new-trials-or-dataset-types" class="slide level2">
+<h2>Update the data model as needed for new trials or dataset types</h2>
 <div style="position: relative;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -590,8 +589,8 @@ black border and gain a fragment purple-border overlay to fake a color change.
           display:block!important;
       }</style></aside>
 </section>
-<section id="harmonization-configs-match-observed-data-to-the-data-model" class="slide level2">
-<h2>Harmonization configs match observed data to the data model</h2>
+<section id="harmonization-configs-match-a-trials-data-to-the-data-model" class="slide level2">
+<h2>Harmonization configs match a trial’s data to the data model</h2>
 <div class="columns">
 <div class="column" style="width:30%;">
 <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; color: #4F4A4A; font-size: 34px; margin: 30px;">
@@ -601,22 +600,34 @@ black border and gain a fragment purple-border overlay to fake a color change.
   <div style="font-size: 44px; font-weight: bold;">+</div>
   <div style="padding: 10px 16px; text-align: center; border: 1px solid #000; border-radius: 8px;">Demographics data for one trial</div>
 </div>
-</div><div class="column fragment" style="width:65%;">
-<p><code>demographics</code> harmonization config for one trial</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-code-line-numbers="1,2,3|1|2|3|4,5,6|7,8,9|10,11|12,13,14"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="" aria-label="1"></a><span class="fu">unique_subject_id</span><span class="kw">:</span></span>
-<span id="cb2-2"><a href="" aria-label="2"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm.csv</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> subject_id</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
-<span id="cb2-3"><a href="" aria-label="3"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl.csv</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> USUBJID</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
-<span id="cb2-4"><a href="" aria-label="4"></a><span class="fu">site_id</span><span class="kw">:</span></span>
-<span id="cb2-5"><a href="" aria-label="5"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm.csv</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> SITE_ID</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
-<span id="cb2-6"><a href="" aria-label="6"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl.csv</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> SITE</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
-<span id="cb2-7"><a href="" aria-label="7"></a><span class="fu">baseline_height_cm</span><span class="kw">:</span></span>
-<span id="cb2-8"><a href="" aria-label="8"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl.csv</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> HEIGHTBL</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> numeric</span><span class="kw">,</span></span>
-<span id="cb2-9"><a href="" aria-label="9"></a><span class="at">     </span><span class="fu">numeric_units</span><span class="kw">:</span><span class="at"> inch</span><span class="kw">}</span></span>
-<span id="cb2-10"><a href="" aria-label="10"></a><span class="fu">diagnosis_date</span><span class="kw">:</span></span>
-<span id="cb2-11"><a href="" aria-label="11"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm.csv</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> DIAGDTC</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
-<span id="cb2-12"><a href="" aria-label="12"></a><span class="fu">actual_arm</span><span class="kw">:</span></span>
-<span id="cb2-13"><a href="" aria-label="13"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm.csv</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> study_arm</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
-<span id="cb2-14"><a href="" aria-label="14"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl.csv</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> ACTARMCD</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column fragment" style="width:70%;">
+<div class="r-stack">
+<div class="harmonization-config">
+<p>Demographics config for trial X</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="font-size: 1.2em;" data-code-line-numbers="1,2|5-7|"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="" aria-label="1"></a><span class="fu">unique_subject_id</span><span class="kw">:</span></span>
+<span id="cb2-2"><a href="" aria-label="2"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl.csv</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> USUBJID</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
+<span id="cb2-3"><a href="" aria-label="3"></a><span class="fu">site_id</span><span class="kw">:</span></span>
+<span id="cb2-4"><a href="" aria-label="4"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl.csv</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> SITE</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
+<span id="cb2-5"><a href="" aria-label="5"></a><span class="fu">baseline_height_cm</span><span class="kw">:</span></span>
+<span id="cb2-6"><a href="" aria-label="6"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl.csv</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> HEIGHTBL</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> numeric</span><span class="kw">,</span></span>
+<span id="cb2-7"><a href="" aria-label="7"></a><span class="at">     </span><span class="fu">numeric_units</span><span class="kw">:</span><span class="at"> inch</span><span class="kw">}</span></span>
+<span id="cb2-8"><a href="" aria-label="8"></a><span class="fu">diagnosis_date</span><span class="kw">:</span></span>
+<span id="cb2-9"><a href="" aria-label="9"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl.csv</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> DIAGDTC</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
+<span id="cb2-10"><a href="" aria-label="10"></a><span class="fu">actual_arm</span><span class="kw">:</span></span>
+<span id="cb2-11"><a href="" aria-label="11"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> adsl.csv</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> ACTARM</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="harmonization-config config-cover fragment">
+<p>Demographics config for trial Y</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="font-size: 1.2em;"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="" aria-label="1"></a><span class="fu">unique_subject_id</span><span class="kw">:</span></span>
+<span id="cb3-2"><a href="" aria-label="2"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm.csv</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> subject_id</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
+<span id="cb3-3"><a href="" aria-label="3"></a><span class="fu">site_id</span><span class="kw">:</span></span>
+<span id="cb3-4"><a href="" aria-label="4"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm.csv</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> SITE_ID</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
+<span id="cb3-5"><a href="" aria-label="5"></a><span class="fu">diagnosis_date</span><span class="kw">:</span></span>
+<span id="cb3-6"><a href="" aria-label="6"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm.csv</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> DIAGDTC</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span>
+<span id="cb3-7"><a href="" aria-label="7"></a><span class="fu">actual_arm</span><span class="kw">:</span></span>
+<span id="cb3-8"><a href="" aria-label="8"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="kw">{</span><span class="fu">file</span><span class="kw">:</span><span class="at"> dm.csv</span><span class="kw">,</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> study_arm</span><span class="kw">,</span><span class="at"> </span><span class="fu">data_type</span><span class="kw">:</span><span class="at"> character</span><span class="kw">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
 </div></div>
 <aside class="notes">
 <p>Harmonization configs (input)</p>
@@ -644,15 +655,18 @@ black border and gain a fragment purple-border overlay to fake a color change.
           display:block!important;
       }</style></aside>
 </section>
-<section id="insights-from-the-pilot-project-2025-internship" class="slide level2">
-<h2>Insights from the pilot project &amp; 2025 internship</h2>
-<!-- Include photo of Eslam -->
-<div class="columns">
-<div class="column fragment" style="width:50%;">
-<h3 id="use-data-dictionaries-not-actual-data">Use data dictionaries, not actual data</h3>
-</div><div class="column fragment" style="width:50%;">
-<h3 id="easier-task-for-humans-might-not-be-easier-for-llms">Easier task for humans might not be easier for LLMs</h3>
-</div></div>
+<section id="section" class="slide level2">
+<h2></h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="assets/eslam-abousamra.jpeg" class="" style="width:25.0%"></p>
+<figcaption>Eslam Abousamra, 2025 intern</figcaption>
+</figure>
+</div>
+<ul>
+<li>Use data dictionaries, not actual data</li>
+<li>Easier task for humans might not be easier for LLMs</li>
+</ul>
 <aside class="notes">
 <ul>
 <li>Side story here about me telling Eslam to start with dm file, but it turned out to be most difficult</li>
@@ -669,28 +683,48 @@ black border and gain a fragment purple-border overlay to fake a color change.
           display:block!important;
       }</style></aside>
 </section>
-<section id="config-based-harmonization-code" class="slide level2">
-<h2>Config-based harmonization code</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-label="1"></a>harmonize_domain <span class="ot">&lt;-</span> <span class="cf">function</span>(domain_name){</span>
-<span id="cb3-2"><a href="" aria-label="2"></a>  </span>
-<span id="cb3-3"><a href="" aria-label="3"></a>  domain_data_model <span class="ot">&lt;-</span> <span class="fu">read_data_model</span>(domain_name)</span>
-<span id="cb3-4"><a href="" aria-label="4"></a>  domain_config <span class="ot">&lt;-</span> <span class="fu">read_harmonization_config</span>(domain_name)</span>
-<span id="cb3-5"><a href="" aria-label="5"></a>  </span>
-<span id="cb3-6"><a href="" aria-label="6"></a>  <span class="co"># Get the harmonized columns from each source file</span></span>
-<span id="cb3-7"><a href="" aria-label="7"></a>  get_harmonized_source_data <span class="ot">&lt;-</span> <span class="cf">function</span>(source_file){</span>
-<span id="cb3-8"><a href="" aria-label="8"></a>    source <span class="ot">&lt;-</span> <span class="fu">read_study_file</span>(source_file)</span>
-<span id="cb3-9"><a href="" aria-label="9"></a>    <span class="co"># Select columns</span></span>
-<span id="cb3-10"><a href="" aria-label="10"></a>    <span class="co"># Rename columns</span></span>
-<span id="cb3-11"><a href="" aria-label="11"></a>    <span class="co"># Convert data types</span></span>
-<span id="cb3-12"><a href="" aria-label="12"></a>    <span class="co"># Convert units of measure</span></span>
-<span id="cb3-13"><a href="" aria-label="13"></a>    <span class="co"># Convert missing value codes</span></span>
-<span id="cb3-14"><a href="" aria-label="14"></a>    <span class="co"># Convert categorical values</span></span>
-<span id="cb3-15"><a href="" aria-label="15"></a>  }</span>
-<span id="cb3-16"><a href="" aria-label="16"></a>  harmonized_domain <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(<span class="fu">unique</span>(domain_config_df<span class="sc">$</span>preferred_file), <span class="at">.f=</span>get_harmonized_source_data)</span>
-<span id="cb3-17"><a href="" aria-label="17"></a>  harmonized_domain <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">reduce</span>(harmonized_domain, <span class="at">.f=</span>full_join)</span>
-<span id="cb3-18"><a href="" aria-label="18"></a></span>
-<span id="cb3-19"><a href="" aria-label="19"></a>  <span class="fu">return</span>(harmonized_domain)</span>
-<span id="cb3-20"><a href="" aria-label="20"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="harmonizing-a-single-dataset-with-modular-code-configs" class="slide level2">
+<h2>Harmonizing a single dataset with modular code + configs</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="width: 80%; margin: 0 auto; font-size: 1.2em;" data-code-line-numbers="1,2,3|4-6|7-10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-label="1"></a>harmonize_trial_file <span class="ot">&lt;-</span> <span class="cf">function</span>(source_file,</span>
+<span id="cb4-2"><a href="" aria-label="2"></a>                                 config){</span>
+<span id="cb4-3"><a href="" aria-label="3"></a>  source_df <span class="ot">&lt;-</span> <span class="fu">read_trial_data_file</span>(source_file)</span>
+<span id="cb4-4"><a href="" aria-label="4"></a>  harmonized_domain <span class="ot">&lt;-</span> source_df <span class="sc">|&gt;</span> </span>
+<span id="cb4-5"><a href="" aria-label="5"></a>    <span class="fu">select</span>(<span class="fu">all_of</span>(<span class="fu">c</span>(config<span class="sc">$</span>model_colname, config<span class="sc">$</span>primary_keys))) <span class="sc">|&gt;</span> </span>
+<span id="cb4-6"><a href="" aria-label="6"></a>    <span class="fu">rename</span>(<span class="fu">setNames</span>(config<span class="sc">$</span>source_colname, config<span class="sc">$</span>model_colname)) <span class="sc">|&gt;</span> </span>
+<span id="cb4-7"><a href="" aria-label="7"></a>    <span class="fu">harmonize_data_types</span>(config) <span class="sc">|&gt;</span> </span>
+<span id="cb4-8"><a href="" aria-label="8"></a>    <span class="fu">harmonize_units</span>(config) <span class="sc">|&gt;</span> </span>
+<span id="cb4-9"><a href="" aria-label="9"></a>    <span class="fu">harmonize_missing</span>(config) <span class="sc">|&gt;</span> </span>
+<span id="cb4-10"><a href="" aria-label="10"></a>    <span class="fu">harmonize_factor_values</span>(config)</span>
+<span id="cb4-11"><a href="" aria-label="11"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="harmonizing-a-single-dataset-with-modular-code-configs-1" class="slide level2">
+<h2>Harmonizing a single dataset with modular code + configs</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="width: 80%; margin: 0 auto; font-size: 1.2em;" data-code-line-numbers="1,2|3,4|6-8|9-12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-label="1"></a>harmonize_trial_domain <span class="ot">&lt;-</span> <span class="cf">function</span>(domain_name,</span>
+<span id="cb5-2"><a href="" aria-label="2"></a>                                   domain_source_files){</span>
+<span id="cb5-3"><a href="" aria-label="3"></a>  domain_data_model <span class="ot">&lt;-</span> <span class="fu">read_data_model</span>(domain_name)</span>
+<span id="cb5-4"><a href="" aria-label="4"></a>  domain_config <span class="ot">&lt;-</span> <span class="fu">read_harmonization_config</span>(domain_name)</span>
+<span id="cb5-5"><a href="" aria-label="5"></a>  </span>
+<span id="cb5-6"><a href="" aria-label="6"></a>  harmonized_domain_files <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(</span>
+<span id="cb5-7"><a href="" aria-label="7"></a>    domain_source_files,</span>
+<span id="cb5-8"><a href="" aria-label="8"></a>    \(x) <span class="fu">harmonize_trial_file</span>(x, domain_config))</span>
+<span id="cb5-9"><a href="" aria-label="9"></a>  <span class="co"># Because primary keys are always included,</span></span>
+<span id="cb5-10"><a href="" aria-label="10"></a>  <span class="co"># we can use a full_join to combine the files</span></span>
+<span id="cb5-11"><a href="" aria-label="11"></a>  harmonized_domain <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">reduce</span>(</span>
+<span id="cb5-12"><a href="" aria-label="12"></a>    harmonized_domain_files, full_join)</span>
+<span id="cb5-13"><a href="" aria-label="13"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="harmonizing-all-datasets-in-a-trial" class="slide level2">
+<h2>Harmonizing all datasets in a trial</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="width: 80%; margin: 0 auto; font-size: 1.2em;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-label="1"></a>trialX_source_files <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb6-2"><a href="" aria-label="2"></a>  <span class="at">demographics =</span> <span class="fu">c</span>(<span class="st">"dm.csv"</span>, <span class="st">"adsl.csv"</span>),</span>
+<span id="cb6-3"><a href="" aria-label="3"></a>  <span class="at">lab_tests =</span> <span class="st">"lb.csv"</span>,</span>
+<span id="cb6-4"><a href="" aria-label="4"></a>  <span class="at">medications =</span> <span class="st">"cm.csv"</span>,</span>
+<span id="cb6-5"><a href="" aria-label="5"></a>  <span class="at">response =</span> <span class="st">"adrs.csv"</span></span>
+<span id="cb6-6"><a href="" aria-label="6"></a>)</span>
+<span id="cb6-7"><a href="" aria-label="7"></a>trialX_harmonized <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">imap</span>(</span>
+<span id="cb6-8"><a href="" aria-label="8"></a>  trialX_source_files,</span>
+<span id="cb6-9"><a href="" aria-label="9"></a>  \<span class="fu">x</span>(f, d) <span class="fu">harmonize_trial_domain</span>(<span class="at">domain =</span> d, <span class="at">domain_source_files =</span> f)</span>
+<span id="cb6-10"><a href="" aria-label="10"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>Config-based harmonization code</p>
 <ul>
@@ -715,8 +749,37 @@ black border and gain a fragment purple-border overlay to fake a color change.
           display:block!important;
       }</style></aside>
 </section>
-<section id="the-harmonization-config-files-maximize-human-attentiontime-spent-reviewing-llm-output" class="slide level2">
-<h2>The harmonization config files maximize human attention/time spent reviewing LLM output</h2>
+<section id="much-easier-to-reason-about-than-old-code" class="slide level2">
+<h2>Much easier to reason about than old code</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Before update</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="font-size: 1.2em;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-label="1"></a>demographics <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb7-2"><a href="" aria-label="2"></a>  dm <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a href="" aria-label="3"></a>    <span class="fu">select</span>(subject_id, DIAGDTC) <span class="sc">|&gt;</span> </span>
+<span id="cb7-4"><a href="" aria-label="4"></a>    <span class="fu">rename</span>(<span class="at">unique_subject_id =</span> subject_id,</span>
+<span id="cb7-5"><a href="" aria-label="5"></a>           <span class="at">diagnosis_date =</span> DIAGDTC) <span class="sc">|&gt;</span> </span>
+<span id="cb7-6"><a href="" aria-label="6"></a>    <span class="fu">mutate</span>(<span class="at">diagnosis_date =</span> lubridate<span class="sc">::</span><span class="fu">ymd</span>(diagnosis_date)),</span>
+<span id="cb7-7"><a href="" aria-label="7"></a>  adsl <span class="sc">|&gt;</span> </span>
+<span id="cb7-8"><a href="" aria-label="8"></a>    <span class="fu">select</span>(USUBJID, SITE, HEIGHTBL, ACTARM) <span class="sc">|&gt;</span> </span>
+<span id="cb7-9"><a href="" aria-label="9"></a>    <span class="fu">rename</span>(<span class="at">unique_subject_id =</span> USUBJID,</span>
+<span id="cb7-10"><a href="" aria-label="10"></a>           <span class="at">site_id =</span> SITE,</span>
+<span id="cb7-11"><a href="" aria-label="11"></a>           <span class="at">baseline_height_cm =</span> HEIGHTBL,</span>
+<span id="cb7-12"><a href="" aria-label="12"></a>           <span class="at">actual_arm =</span> ACTARM) <span class="sc">|&gt;</span> </span>
+<span id="cb7-13"><a href="" aria-label="13"></a>    <span class="fu">mutate</span>(<span class="at">baseline_height_cm =</span> <span class="fu">in_to_cm</span>(<span class="fu">as.numeric</span>(baseline_height_cm)),</span>
+<span id="cb7-14"><a href="" aria-label="14"></a>           <span class="at">actual_arm =</span> forcats<span class="sc">::</span><span class="fu">fct_recode</span>(actual_arm,</span>
+<span id="cb7-15"><a href="" aria-label="15"></a>             <span class="st">"Arm A: 10M cells"</span> <span class="ot">=</span> <span class="st">"Arm A"</span>,</span>
+<span id="cb7-16"><a href="" aria-label="16"></a>             <span class="st">"Arm B: 25M cells"</span> <span class="ot">=</span> <span class="st">"Arm B"</span>,</span>
+<span id="cb7-17"><a href="" aria-label="17"></a>             <span class="st">"Standard of care"</span> <span class="ot">=</span> <span class="st">"Control"</span></span>
+<span id="cb7-18"><a href="" aria-label="18"></a>           ))</span>
+<span id="cb7-19"><a href="" aria-label="19"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<p>After update</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="font-size: 1.2em;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-label="1"></a>xxx</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</section>
+<section id="and" class="slide level2">
+<h2>And</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p>Tidyverse code before update Tidyverse code after update</p>
@@ -749,7 +812,7 @@ black border and gain a fragment purple-border overlay to fake a color change.
   <div style="padding: 10px 16px; text-align: center; border: 1px solid #000; border-radius: 8px;">Harmonized demographics data dictionary with definition, data type, units, data sources</div>
 </div>
 </div><div class="column" style="width:60%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 <aside class="notes">
 <p>You get a great data dictionary for your output basically for free with the harmonization configs + data model</p>
@@ -837,7 +900,7 @@ black border and gain a fragment purple-border overlay to fake a color change.
 <h3 id="other-harmonization-projects">Other harmonization projects</h3>
 <ul>
 <li>COVID data from multiple health authorities</li>
-<li>Published data sets from different research groups</li>
+<li>Published datasets from different research groups</li>
 <li>eCommerce data from acquired companies</li>
 <li>…</li>
 </ul>
@@ -882,7 +945,13 @@ black border and gain a fragment purple-border overlay to fake a color change.
 <h4 id="intern">2025 intern</h4>
 <p>Eslam Abousamra, MPH</p>
 <p>PhD student at CUNY Graduate School of Public Health and Public Policy</p>
-</div></div>
+</div><div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="assets/KSR-TDS-pikeplace-2025-cropped.jpg" class="" style="width:50.0%"></p>
+<figcaption>2025 Translational Data Science team meeting</figcaption>
+</figure>
+</div>
+</div>
 
 </section>
     </div>
