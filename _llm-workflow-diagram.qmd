@@ -4,15 +4,15 @@ with a fragment build. Included with:  {{< include _llm-workflow-diagram.qmd >}}
 Must stay inside a ```{=html} fence so Pandoc passes it through verbatim.
 
 Build order (data-fragment-index):
-  base : bottom-left emoji + the 3 stage title boxes + connectors
+  base : the 3 stage title boxes + connectors
   1 : "One time setup" box outline + title
   2 : Pipeline code details
   3 : Data model details
   4 : Data model purple border overlay + "LLM-drafted" badge
-  5 : "For each study" box outline + title
+  5 : "For each trial dataset" box outline + title
   6 : Harmonization configs details
   7 : Harmonization configs purple border overlay + "LLM-drafted" badge
-  8 : bottom-left emoji swaps (woman technologist -> star-struck)
+  8 : (bottom-left emoji swap lives on the slide that includes this diagram)
 
 Techniques: group borders/titles are fragment OVERLAYS over a relative wrapper so
 the stage boxes show from the start; the highlighted boxes start with a plain
@@ -21,10 +21,10 @@ black border and gain a fragment purple-border overlay to fake a color change.
 ```{=html}
 <div style="display: flex; align-items: flex-start; justify-content: center; gap: 24px; color: #4F4A4A; font-size: 34px; margin-top: 20px;">
 
-  <!-- Group 1: For each study (border + title are fragments at step 3) -->
+  <!-- Group 1: For each trial dataset (border + title are fragments at step 3) -->
   <div style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 24px 28px 28px;">
     <div class="fragment" data-fragment-index="5" style="position: absolute; inset: 0; border: 2px solid #4F4A4A; border-radius: 24px; pointer-events: none;"></div>
-    <div class="fragment" data-fragment-index="5" style="align-self: flex-start; font-size: 34px; color: #4F4A4A;">For each study</div>
+    <div class="fragment" data-fragment-index="5" style="align-self: flex-start; font-size: 34px; color: #4F4A4A;">For each trial dataset</div>
 
     <!-- Stage: Harmonization configs (starts plain; turns purple + badge at step 4) -->
     <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
@@ -35,7 +35,7 @@ black border and gain a fragment purple-border overlay to fake a color change.
       </div>
       <div class="fragment" data-fragment-index="6" style="font-size: 28px; line-height: 1.5; text-align: center; color: #ADA599;">
         <div>📄 .yaml</div>
-        <div>x output dataset x study</div>
+        <div>x output dataset x trial</div>
       </div>
     </div>
 
@@ -72,7 +72,7 @@ black border and gain a fragment purple-border overlay to fake a color change.
         <div style="padding: 10px 16px; white-space: nowrap; border: 1px solid #000; border-radius: 8px;">Pipeline code</div>
         <div class="fragment" data-fragment-index="2" style="font-size: 28px; line-height: 1.5; text-align: center; color: #ADA599;">
           <div>Read data model</div>
-          <div>Read study configs</div>
+          <div>Read trial configs</div>
           <div>Harmonization logic</div>
         </div>
       </div>
@@ -81,7 +81,4 @@ black border and gain a fragment purple-border overlay to fake a color change.
   </div>
 
 </div>
-
-<div class="fragment fade-out" data-fragment-index="8" style="position: absolute; left: 330px; bottom: 30px; font-size: 150px; line-height: 1;">👩🏻‍💻</div>
-<div class="fragment fade-in"  data-fragment-index="8" style="position: absolute; left: 330px; bottom: 30px; font-size: 150px; line-height: 1;">🎉</div>
 ```

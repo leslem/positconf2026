@@ -2,15 +2,20 @@
 Whole-trial harmonization code for the "Harmonizing all datasets in a trial"
 slide. Pulled into the deck with an include shortcode pointing at this file.
 -->
-```{.r style="width: 80%; margin: 0 auto; font-size: 1.2em;"}
-trialX_source_files <- list(
-  demographics = c("dm.csv", "adsl.csv"),
-  lab_tests = "lb.csv",
-  medications = "cm.csv",
-  response = "adrs.csv"
+```{.r .fragment style="width: 80%; margin: 0 auto; font-size: 1.2em;" code-line-numbers="1-4|6-9|11-16|"}
+trialX_configs <- purrr::map(
+  list("adverse_events", "demographics", "medications"),
+  \x(dataset) read_config_file(get_study_config(dataset, "trialX"))
 )
-trialX_harmonized <- purrr::imap(
-  trialX_source_files,
-  \x(f, d) harmonize_trial_dataset(dataset = d, dataset_source_files = f)
+
+data_models <- purrr::map(
+  list("adverse_events", "demographics", "medications"),
+  get_data_model
+)
+
+trialX_harmonized <- purrr::map2(
+  trialX_configs,
+  data_models,
+  \x(c, m) harmonize_trial_dataset(config = c, model = m)
 )
 ```

@@ -17,15 +17,6 @@ format:
 ::: {.title-author}
 Leslie Emery
 :::
-
-<!-- ::: {.title-affiliation}
-Senior Principal Data Scientist
-:::
-
-::: {.title-affiliation}
-Informatics & Predictive Sciences
-:::
- -->
 ::::
 
 <!-- 
@@ -41,8 +32,8 @@ exiftool -gps:all= -overwrite_original assets/IMG_6706_2039.jpg
 
 ## Clinical trial data is precious {.flip-bg background-image="assets/content-central/AdobeStock_158958915.jpeg" background-size="cover" background-opacity="0.75"}
 
-::: {.absolute top="120" left="60" width="600" style="background: rgba(255, 255, 255, 0.7); padding: 8px 16px; border-radius: 12px;"}
-[*How do a patient's pre-treatment biomarker levels affect the CAR-T therapy manufactured from their T cells?*]{style="font-size: 1.25em"}
+::: {.absolute top="120" left="60" width="600" style="background: rgba(255, 255, 255, 0.7); padding: 8px 16px; border-radius: 12px; text-align: center;" .fragment}
+[*How do a patient's pre-treatment biomarker levels affect their response to treatment?*]{style="font-size: 1.25em"}
 :::
 
 ::: footer
@@ -51,8 +42,11 @@ Stock image
 
 ::: {.notes}
 - The data I work with is from clinical trials, mostly for cancer treatments
-- The patients participating go through grueling treatments, visits that can be hours long, extra procedures that are sometimes painful, sometimes years of follow up visits
-- Their time is precious so it's important to get every insight we can from this data for the benefit of these patients and other patients to come
+- The patients participating go through grueling treatments, visits that can be hours long, extra procedures that are sometimes painful, sometimes years of follow up visits 
+- So this data is extremely precious and it's important to get every insight we can from this data for the benefit of these participants and other patients to come
+- One way is to answer research questions to better understand treatments
+- To answer this question we need to put together data from multiple trials
+- And here's where things get difficult because the data from these trials is not in the same format, we need to harmonize it to use it together
 :::
 
 
@@ -61,51 +55,41 @@ Stock image
 {{< include _manual-workflow-diagram.qmd >}}
 
 ::: {.notes}
-- One way we do this is to do cross-trial analysis, combining multiple studies together for additional research to improve on these treatments and look for new ones
-- You would think this would be easy, but it's not
+- Fancy way to say reformatting from multiple sources to be compatible
 - Different subject ID formats, measurement units, date formats, inconsistent categorical values, synonyms for the same laboratory test
-- Harmonize, which is just a fancy way to say reformatting from multiple sources to be compatible
-- And historically this has been a very complicated and involved process, with lots of manual QC
-    - big, complicated diagram
 - Many files from many studies, custom code for each input file to output transformation, lots of variation in the code, lots of repeating the same kinds of things over and over again
-- Choices of common format might not be the same from harmonization project to harmonization project
-- "I'm going to tell you about how I went from this [complicated diagram] to this [simple diagram]"
-
-LLMs are good at "tedious & repetitive"
+- I'm going to tell you about using LLMs to simplify this in a way that's still reproducible
 :::
 
 
-## Config-based data harmonization pipeline
+## LLM-assisted data harmonization pipeline
 
 {{< include _llm-workflow-diagram.qmd >}}
 
+```{=html}
+<div class="fragment fade-out" data-fragment-index="8" style="position: absolute; left: 330px; bottom: 30px; font-size: 150px; line-height: 1;">👩🏻‍💻</div>
+<div class="fragment fade-in"  data-fragment-index="8" style="position: absolute; left: 330px; bottom: 30px; font-size: 150px; line-height: 1;">🎉</div>
+```
+
 ::: {.notes}
-I built out this workflow based on my deep expertise in data harmonization
+- There are 3 big pieces to this ...
 
-- match input columns to desired output columns
-- figure out what format it's in
-- convert it to the format you want it to be
-- Overview of some example data from 3 studies (real column names, but not real data)
+- "runs harmonization logic to produce output datasets"
 
-Data model:
+- Now only one set of steps that needs to be repeated for each dataset
+- data model is a set of yaml format files that specificy exactly what your output should look like, variable names, definitions, data types, units, etc.
 
-- 🏛️ Columns to include
-- 🔑 Primary key(s)
-- 📖 Data definition
-- 🔢 Data type
-- 🏷️ Categorical values
-- ❓ Missing value codes
-- 📏 Unit of measure
+- harm configs ALSO a set of yaml files, one PER DATASET PER TRIAL, defining in detail the format of the original dataset so pipeline code can compare to data model and carry out appropriate transformations
 
-Harmonization configs:
+- I've gone from complicated workflow with custom code for every dataset in every trial to a simplified workflow with repetitive work done by LLM
 
-- observed data type, categorical values, missing value codes, units of measure
+- While this project is very specific to my use case for clinical trial data, there are approaches you can use in other work and I'll call those out
 
-- I've done a version of this config-based setup before, but it just pushed the tedium and repetition into writing config files by hand -- only marginally better
+- I'm going to go over the LLM-drafted steps and then show you how the pipeline code brings it together
 :::
 
 
-## One time setup: data model per output dataset
+## Data model defines output format
 
 ::::: {.columns}
 
@@ -117,21 +101,20 @@ Harmonization configs:
 
 :::: {.column width="45%" .fragment}
 
-### Demographics data model
+Demographics data model
 
 {{< include _data-model-example.qmd >}}
 ::::
 
 :::::
 
-<!-- Build this out to highlight all variable names, then all data types, then all type-specific values, then the inputs, etc. -->
 ::: {.notes}
-- I've tried a few different tools but right now I'm using Posit Assistant to make the data model based on a group of studies and an example yaml file written by hand
-- Show example data model
-    - Structure:
-        - _structure.yaml file; dataset.yaml for each dataset included
-    - Datasets: adverse_events, exposure, subjects, lab_tests, time_to_event, response
-- Future: add mapping to existing terminologies for data definitions so we're not writing new data definitions from scratch
+- To produce one data model file, for example demographics
+- I give PA explicit instructions for how to fill in fields of yaml based on 15 dataframes in R session
+- Excerpt of the demographics data model produced this way
+- Each object in the yaml is a variable in the output dataset
+- Each variable has a set of required and optional attributes
+- Use existing defintiions, not writing our own from scratch
 :::
 
 
@@ -145,7 +128,7 @@ Harmonization configs:
 :::
 
 
-## Configs map a trial's data to the data model
+## Harmonization configs map trial data to data model
 
 :::: {.columns}
 
@@ -163,16 +146,11 @@ Harmonization configs:
 ::::
 
 ::: {.notes}
-Harmonization configs (input)
+- ... configs, which map original trial data to the output format described in data model
 
-- Show example from subjects dataset for 3 different studies
-- Include baseline height since it will include unit conversion and type conversion
-- For each desired output column:
-    - Which dataset & column to get it from
-    - What data type is it
-    - What units is it already in
-    - What categorical values exist
-- Mention relation to data dictionary? (of recent interest in field)
+- Each object in the config yaml file is a variable from our data model and specifies which column from which input file to use
+- And the the data type observed in our original data so we can compare that to the desired data type in our model in later steps
+
 :::
 
 ## Pilot project insights
@@ -192,49 +170,39 @@ Harmonization configs (input)
 ::::
 
 ::: {.notes}
+- Now introduce Eslam, who did excellent work on a pilot project during internship
+- Key things we found as a result of his work
+- Data dictionaries -- simplification that makes it easier to have LLM work on these sometimes-large data files, reduces context requirements
+- 
 
-- Side story here about me telling Eslam to start with dm file, but it turned out to be most difficult
 :::
 
 
 ## Harmonize a dataset with modular code + configs
 
-1. Transformations on one dataset file
+[1. Transformations on one dataset file]{style="display: block; margin-left: 10%;"}
 {{< include _harmonize-file-code.qmd >}}
 
+::: {.notes}
+- We have data model, we have config files, now we put it together
+- Modular harmonization code
+- Some can be plain tidyverse code
+- Some is in customized functions for performing more complex transformations
+- These functions can be unit tested and reused without repeatedly re-writing code
+:::
+
 
 ## Harmonize a dataset with modular code + configs
 
-2. Repeat for all source files for one dataset
-{{< include _harmonize-dataset-code.qmd >}}
-
-
-## Harmonize a dataset with modular code + configs
-
-3. Repeat for all datasets in the trial
+[2. Repeat for all datasets in the trial]{style="display: block; margin-left: 10%;"}
 {{< include _harmonize-trial-code.qmd >}}
 
-::: {.notes}
-Config-based harmonization code
+[3. Repeat for all trials]{style="display: block; margin-left: 10%; margin-top: 5%;" .fragment}
 
+::: {.notes}
 - Same harmonization code for every dataset
-- Show code snippets from subjects dataset
-- Fully working for simple case of just renaming columns and converting data types
-- Still to handle (should I mention this or not?):
-    - Converting units
-    - Harmonizing categorical values
 :::
 
-
-## Much easier to reason about than old code
-
-{{< include _old-harmonization-code.qmd >}}
-
-::: {.notes}
-The harmonization config files maximize human attention/time spent reviewing LLM output
-- The configs capture the most important parts of the harmonization decisions -- which inputs map to which outputs, and what data transformations happen
-- Screenshot of the review app Burak has built
-:::
 
 ## Harmonized data dictionary for free
 
@@ -262,7 +230,36 @@ You get a great data dictionary for your output basically for free with the harm
 :::
 
 
-## Building a Claude Code harmonization plugin
+## LLM-assisted data harmonization pipeline recap
+
+{{< include _llm-workflow-diagram-static.qmd >}}
+
+::: {.notes}
+- Now I've finished showing you the entire LLM-assisted harmonization workflow
+- Now 2 things we're doing next to make it even better
+:::
+
+
+## Next: a Shiny app* for review
+
+[\* internal only]{style="font-size: 0.7em; display: block; text-align: right;"}
+
+::: {.absolute top="100" left="0" width="1280"}
+![](assets/sme-eval-screenshot.png){.nostretch width="100%" fig-align="left"}
+:::
+
+::: {.absolute top="450" right="30" width="190"}
+![Burak Kutlu](assets/burak-kutlu.jpeg){.nostretch width="100%" style="border: 4px solid #fff; border-radius: 6px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);"}
+:::
+
+::: {.notes}
+- Make it easy for subject matter experts to help us review the config files and data model to make sure we're getting things right
+
+
+:::
+
+
+## Next: a Claude Code harmonization plugin*
 
 :::: {.columns}
 
@@ -273,17 +270,21 @@ You get a great data dictionary for your output basically for free with the harm
 :::
 
 ::: {.column width="25%"}
+[\* internal only]{style="font-size: 0.7em;"}
+
 ![Jason Moore<br>Data engineer](assets/jason-moore.jpeg){.nostretch fig-align="center" style="display: inline-block; margin: 0.5em;"}
 :::
 
 ::::
 
-::: {.notes}
-We are building out a Claude Code plugin using our daapr framework
+::: {.absolute bottom="-70" right="140" width="600" style="background: rgba(255, 255, 255); padding: 8px 16px; border-radius: 12px; text-align: center; border: 2px solid #4F4A4A;" .fragment}
+[*How do a patient's pre-treatment biomarker levels affect their response to treatment?*]{style="font-size: 1.25em"}
+:::
 
-- Mention Jason for plugin
-- Show plugin workflow design
-- Mention things are moving so fast we've had several different plans for this -- AWS Bedrock agent, then langchain agent, now Claude Code plugin
+::: {.notes}
+- working on taking this out of the coding assistant back and forth and making it into a Claude Code plugin that more computational scientists can use
+
+- So it will be easy, even for a scientist who can't write a whole data pipeline on their own, to get back to our cross-trial research question to help patients
 :::
 
 
@@ -342,5 +343,16 @@ We are building out a Claude Code plugin using our daapr framework
 
 ![2025 Translational Data Science team meeting](assets/KSR-TDS-pikeplace-2025-cropped.jpg){.nostretch width="40%" fig-align="center"}
 
+::::
 
+## Questions? {style="font-size: 100px;"}
+
+:::: {.title-byline style="font-size: 40px;"}
+::: {.title-author}
+Leslie Emery
+:::
+
+::: {.title-affiliation}
+linkedin.com/in/leslie-emery/
+:::
 ::::

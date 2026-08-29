@@ -3,16 +3,20 @@ harmonize_trial_file() code for the "Harmonizing a single dataset" slide.
 Pulled into the deck with an include shortcode pointing at this file.
 code-line-numbers drives the incremental reveal.
 -->
-```{.r style="width: 80%; margin: 0 auto; font-size: 1.2em;" code-line-numbers="1,2,3|4-6|7-10"}
-harmonize_trial_file <- function(source_file,
-                                 config){
-  source_df <- read_trial_data_file(source_file)
+```{.r .fragment style="width: 80%; margin: 0 auto; font-size: 1.2em;" code-line-numbers="1,2|3-5|6-9|12-15"}
+harmonize_trial_dataset <- function(config, model){
+  source_df <- read_trial_data_file(config)
   harmonized_dataset <- source_df |>
     select(all_of(c(config$model_colname, config$primary_keys))) |>
     rename(setNames(config$source_colname, config$model_colname)) |>
-    harmonize_data_types(config) |>
-    harmonize_units(config) |>
-    harmonize_missing(config) |>
-    harmonize_factor_values(config)
+    harmonize_data_types(config, model) |>
+    harmonize_units(config, model) |>
+    harmonize_missing(config, model) |>
+    harmonize_factor_values(config, model)
 }
+
+harmonize_trial_dataset(
+  config = read_config_file("trialX_demographics_config.yaml"),
+  model = get_data_model("demographics")
+)
 ```
