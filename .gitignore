@@ -1,3 +1,4 @@
 bms-resources/
 *.heic
 /.quarto/
+*.pdf

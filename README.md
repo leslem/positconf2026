@@ -11,3 +11,32 @@ My talk is about developing a way to automate the repetitive task of data harmon
 ## Abstract
 
 Clinical trial data formats differ across studies and over time, even within an organization. After years of writing bespoke R code to harmonize data for cross-study analysis, my team is developing LLM-assisted automation. First, we use an LLM to develop a data model for the output, describing a format and content that accommodates all input studies. Then an LLM evaluates each study’s data files and documentation to determine how to wrangle each input file to fit the data model. The LLM generates yaml configuration files for programmatically transforming each study into an interoperable format for combined analysis. Our LLM prompts, data model, configuration files, and pipeline code are all version controlled and reproducible.
+
+## Rendering and pdf export
+
+```
+# Live preview that updates when any partials or the .scss are updated
+./preview.sh
+
+# Render the slides
+quarto render configurable-harmonization-LLMs.qmd
+
+# Export the slides with one page per build
+
+```
+
+### `decktape` pdf export
+
+Install [`decktape`](https://github.com/astefanutti/decktape) to export all appropriate build steps as pdf pages
+
+```
+npm install -g decktape
+
+# Every build step a new page
+decktape --size '2560x1440' generic file:///Users/emeryl1/devel/positconf2026/configurable-harmonization-LLMs.html exports/decktape-export-generic.pdf
+
+# Just the first step of every build
+decktape --size '2560x1440' automatic file:///Users/emeryl1/devel/positconf2026/configurable-harmonization-LLMs.html exports/decktape-export.pdf
+```
+
+You'll want to go through and delete extra pages from the exported pdf

@@ -27,7 +27,7 @@ system("mmdc -i data-model-directory-treeView.mmd -o assets/data-model-directory
 
 <div style="position: relative; display: inline-block; margin: -40px 0 0 200px; color: #4F4A4A;">
 
-  <img src="assets/data-model-directory-treeView.svg" style="height: 720px; width: auto; display: block;">
+  <img src="assets/data-model-directory-treeView.svg" style="height: 680px; width: auto; display: block;">
 
   <!-- Row-pair highlight boxes (BMS theme colors, not purple) -->
   <div class="fragment" data-fragment-index="1" style="position: absolute; top: 35.8%; left: 3%; width: 95%; height: 13.4%; border: 2px solid #3312AF; border-radius: 4px; background: rgba(73, 111, 227, 0.15);"></div>

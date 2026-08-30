@@ -204,7 +204,7 @@ Demographics data model
 :::
 
 
-## Harmonized data dictionary for free
+## Effortless harmonized data dictionary
 
 :::: {.r-stack}
 
@@ -240,7 +240,7 @@ You get a great data dictionary for your output basically for free with the harm
 :::
 
 
-## Next: a Shiny app* for review
+## Next: human review Shiny app*
 
 [\* internal only]{style="font-size: 0.7em; display: block; text-align: right;"}
 
@@ -255,7 +255,9 @@ You get a great data dictionary for your output basically for free with the harm
 ::: {.notes}
 - Make it easy for subject matter experts to help us review the config files and data model to make sure we're getting things right
 
+- Screenshot of shiny app my colleage Burak has built for subject matter experts to review harmonized lab test names for flow cytometry assay with very complicated test names
 
+- Extending for rest of configs and data model itself
 :::
 
 
@@ -277,12 +279,13 @@ You get a great data dictionary for your output basically for free with the harm
 
 ::::
 
-::: {.absolute bottom="-70" right="140" width="600" style="background: rgba(255, 255, 255); padding: 8px 16px; border-radius: 12px; text-align: center; border: 2px solid #4F4A4A;" .fragment}
+::: {.absolute bottom="10" right="80" style="max-width: 550px; background: rgba(255, 255, 255); padding: 8px 16px; border-radius: 12px; text-align: center; border: 2px solid #4F4A4A;" .fragment}
 [*How do a patient's pre-treatment biomarker levels affect their response to treatment?*]{style="font-size: 1.25em"}
 :::
 
 ::: {.notes}
 - working on taking this out of the coding assistant back and forth and making it into a Claude Code plugin that more computational scientists can use
+- repeated steps of a coding assistant conversation encapsulated into a plugin
 
 - So it will be easy, even for a scientist who can't write a whole data pipeline on their own, to get back to our cross-trial research question to help patients
 :::
