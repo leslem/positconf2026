@@ -41,8 +41,8 @@ Stock image
 :::
 
 ::: {.notes}
-- The data I work with is from clinical trials, mostly for cancer treatments
-- The patients participating go through grueling treatments, visits that can be hours long, extra procedures that are sometimes painful, sometimes years of follow up visits 
+- The data I work with is from clinical trials for cancer treatments
+- The patients participating go through grueling treatments, visits that can be hours long, extra procedures that are sometimes painful, years of follow up visits 
 - So this data is extremely precious and it's important to get every insight we can from this data for the benefit of these participants and other patients to come
 - One way is to answer research questions to better understand treatments
 - To answer this question we need to put together data from multiple trials
@@ -56,8 +56,10 @@ Stock image
 
 ::: {.notes}
 - Fancy way to say reformatting from multiple sources to be compatible
-- Different subject ID formats, measurement units, date formats, inconsistent categorical values, synonyms for the same laboratory test
-- Many files from many studies, custom code for each input file to output transformation, lots of variation in the code, lots of repeating the same kinds of things over and over again
+- Different ID formats, measurement units, date formats, inconsistent categorical values, synonyms for the same laboratory test
+- Seems straightforward, but as the DS doing this I have to write custom R code for every single data transformation on every single data set in every trial
+- Lots of variation in the code, lots of repeating the same kinds of things over and over again
+- It gets very complicated and involved very fast
 - I'm going to tell you about using LLMs to simplify this in a way that's still reproducible
 :::
 
@@ -72,19 +74,15 @@ Stock image
 ```
 
 ::: {.notes}
+- I've been working with a team to develop an automated workflow incorporating LLMs
 - There are 3 big pieces to this ...
-
 - "runs harmonization logic to produce output datasets"
-
-- Now only one set of steps that needs to be repeated for each dataset
+- Now only one set of steps that needs to be repeated for each dataset in each trial
 - data model is a set of yaml format files that specificy exactly what your output should look like, variable names, definitions, data types, units, etc.
-
 - harm configs ALSO a set of yaml files, one PER DATASET PER TRIAL, defining in detail the format of the original dataset so pipeline code can compare to data model and carry out appropriate transformations
-
 - I've gone from complicated workflow with custom code for every dataset in every trial to a simplified workflow with repetitive work done by LLM
-
-- While this project is very specific to my use case for clinical trial data, there are approaches you can use in other work and I'll call those out
-
+- Save months of work and increase research questions we can work on
+- This project is very specific to my use case for clinical trial data but I'll also call out approaches you can use in your own work
 - I'm going to go over the LLM-drafted steps and then show you how the pipeline code brings it together
 :::
 
@@ -113,18 +111,24 @@ Demographics data model
 - I give PA explicit instructions for how to fill in fields of yaml based on 15 dataframes in R session
 - Excerpt of the demographics data model produced this way
 - Each object in the yaml is a variable in the output dataset
-- Each variable has a set of required and optional attributes
-- Use existing defintiions, not writing our own from scratch
+- Each variable has a set of required attributes - pk and data type
+- Also optional attributes that depend on data type
 :::
 
 
 ## Data model tracked in a GitHub repo
 
-{{< include _data-model-directory.qmd >}}
+```{r}
+#| include: false
+# Render the TreeView diagram to SVG with mermaid-cli.
+# Requires mmdc (@mermaid-js/mermaid-cli) with bundled mermaid >= 11.14.0 for treeView-beta.
+system("mmdc -i data-model-directory-treeView.mmd -o assets/data-model-directory-treeView.svg -b transparent")
+```
+
+<img src="assets/data-model-directory-treeView.svg" style="height: 600px; width: auto; display: block; margin: 0 auto;">
 
 ::: {.notes}
 - Can be updated for adding datasets or adding/removing variables in datasets
-- Also accommodates more complex datasets like my favorite, labs
 :::
 
 
@@ -146,8 +150,7 @@ Demographics data model
 ::::
 
 ::: {.notes}
-- ... configs, which map original trial data to the output format described in data model
-
+- Next we build our harmonization configs, which map original trial data to the output format described in data model
 - Each object in the config yaml file is a variable from our data model and specifies which column from which input file to use
 - And the the data type observed in our original data so we can compare that to the desired data type in our model in later steps
 
@@ -170,11 +173,11 @@ Demographics data model
 ::::
 
 ::: {.notes}
-- Now introduce Eslam, who did excellent work on a pilot project during internship
+- Now introduce Eslam, who did excellent work on a pilot project during internship to work out building the data model and configs as I've just described
 - Key things we found as a result of his work
 - Data dictionaries -- simplification that makes it easier to have LLM work on these sometimes-large data files, reduces context requirements
-- 
-
+- Using my years of experience, I told Eslam to work through the whole workflow with demographics, "easy" data set with one row per subject
+- but it has dozens to hundreds of columns and he immediately ran into trouble and had to come up with a strategy to split the dataset into 50-column chunks to not run out the context of the LLM
 :::
 
 
@@ -184,8 +187,7 @@ Demographics data model
 {{< include _harmonize-file-code.qmd >}}
 
 ::: {.notes}
-- We have data model, we have config files, now we put it together
-- Modular harmonization code
+- Now I'll show you how I've been working on pipeline code that brings Eslam's work on the data model and configs together- Modular harmonization code
 - Some can be plain tidyverse code
 - Some is in customized functions for performing more complex transformations
 - These functions can be unit tested and reused without repeatedly re-writing code
@@ -201,6 +203,7 @@ Demographics data model
 
 ::: {.notes}
 - Same harmonization code for every dataset
+- Easy to repeat with purrr
 :::
 
 
@@ -240,9 +243,7 @@ You get a great data dictionary for your output basically for free with the harm
 :::
 
 
-## Next: human review Shiny app*
-
-[\* internal only]{style="font-size: 0.7em; display: block; text-align: right;"}
+## Next: BMS human review Shiny app
 
 ::: {.absolute top="100" left="0" width="1280"}
 ![](assets/sme-eval-screenshot.png){.nostretch width="100%" fig-align="left"}
@@ -261,7 +262,7 @@ You get a great data dictionary for your output basically for free with the harm
 :::
 
 
-## Next: a Claude Code harmonization plugin*
+## Next: BMS Claude Code harmonization plugin
 
 :::: {.columns}
 
@@ -272,7 +273,6 @@ You get a great data dictionary for your output basically for free with the harm
 :::
 
 ::: {.column width="25%"}
-[\* internal only]{style="font-size: 0.7em;"}
 
 ![Jason Moore<br>Data engineer](assets/jason-moore.jpeg){.nostretch fig-align="center" style="display: inline-block; margin: 0.5em;"}
 :::
@@ -295,23 +295,22 @@ You get a great data dictionary for your output basically for free with the harm
 
 ::: {style="width: 80%; margin-left:3em;"}
 [Be flexible to rapid change]{.fragment style="font-size: 2em; display: inline-block; margin-top: 0.75em; margin-bottom: 0em;"}
-[AWS Bedrock agent → langchain agent → Claude Code plugin]{.fragment style="font-size: 1em; display: inline-block; margin-top: 0.5em; margin-bottom: 0em; margin-left: 3em; color: #ADA599;"}
+[AWS Bedrock agent → langchain agent → Claude Code plugin]{.fragment style="font-size: 1em; display: inline-block; margin-top: 0.5em; margin-bottom: 0em; margin-left: 3em; color: #79736E;"}
 
 [Design with structured files]{.fragment style="font-size: 2em; display: inline-block; margin-top: 0.75em; margin-bottom: 0em;"}
-[.yaml or .json or even .xml]{.fragment style="font-size: 1em; display: inline-block; margin-top: 0.5em; margin-bottom: 0em; margin-left: 3em; color: #ADA599;"}
+[.yaml or .json or even .xml]{.fragment style="font-size: 1em; display: inline-block; margin-top: 0.5em; margin-bottom: 0em; margin-left: 3em; color: #79736E;"}
 
 [Look for data wrangling patterns]{.fragment style="font-size: 2em; display: inline-block; margin-top: 0.75em; margin-bottom: 0em;"}
 :::
 
 ::: {.notes}
 - Any project where you're combining data from multiple sources (e.g. COVID data from different health authorities, published datasets from different research groups, eCommerce data from acquired companies, etc.)
-
 - Use data model .yaml to instruct LLM to make the output format you want
 - Use a config file that describes all of your inputs (makes it easier for LLM to reason about your data)
-- Specification-driven development
-- See [`data-dict.yaml`](https://data-dict.tidyverse.org) from Tidyverse
-
+  - Specification-driven development
+  - See [`data-dict.yaml`](https://data-dict.tidyverse.org) from Tidyverse
 - If you can make it into a function, you make it into a tool call an LLM can use and you can make it reproducible with a structured file
+- These approaches can apply to any LLM-assisted data project
 :::
 
 
@@ -345,8 +344,12 @@ You get a great data dictionary for your output basically for free with the harm
 :::
 
 ![2025 Translational Data Science team meeting](assets/KSR-TDS-pikeplace-2025-cropped.jpg){.nostretch width="40%" fig-align="center"}
-
 ::::
+
+::: {.notes}
+Thank you to my amazing colleagues at BMS
+:::
+
 
 ## Questions? {style="font-size: 100px;"}
 
@@ -359,3 +362,7 @@ Leslie Emery
 linkedin.com/in/leslie-emery/
 :::
 ::::
+
+::: {.notes}
+Thank you for your attention and I'm happy to take questions
+:::

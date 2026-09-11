@@ -33,7 +33,7 @@ black border and gain a fragment purple-border overlay to fake a color change.
         <div class="fragment" data-fragment-index="7" style="position: absolute; inset: -1px; border: 2px solid #BE2BBB; border-radius: 8px; pointer-events: none;"></div>
         <div class="fragment" data-fragment-index="7" style="position: absolute; top: 0; right: -0.6em; transform: translateY(-50%); padding: 0.15em 0.7em; background: #BE2BBB; color: #fff; border-radius: 999px; font-size: 0.6em; font-weight: bold; line-height: 1.2; letter-spacing: 0.05em; white-space: nowrap; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);">🤖 LLM-drafted</div>
       </div>
-      <div class="fragment" data-fragment-index="6" style="font-size: 28px; line-height: 1.5; text-align: center; color: #ADA599;">
+      <div class="fragment" data-fragment-index="6" style="font-size: 28px; line-height: 1.5; text-align: center; color: #79736E;">
         <div>📄 .yaml</div>
         <div>x output dataset x trial</div>
       </div>
@@ -58,7 +58,7 @@ black border and gain a fragment purple-border overlay to fake a color change.
           <div class="fragment" data-fragment-index="4" style="position: absolute; inset: -1px; border: 2px solid #BE2BBB; border-radius: 8px; pointer-events: none;"></div>
           <div class="fragment" data-fragment-index="4" style="position: absolute; top: 0; right: -0.6em; transform: translateY(-50%); padding: 0.15em 0.7em; background: #BE2BBB; color: #fff; border-radius: 999px; font-size: 0.6em; font-weight: bold; line-height: 1.2; letter-spacing: 0.05em; white-space: nowrap; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);">🤖 LLM-drafted</div>
         </div>
-        <div class="fragment" data-fragment-index="3" style="font-size: 28px; line-height: 1.5; text-align: center; color: #ADA599;">
+        <div class="fragment" data-fragment-index="3" style="font-size: 28px; line-height: 1.5; text-align: center; color: #79736E;">
           <div>📄 .yaml</div>
           <div>x output dataset</div>
         </div>
@@ -70,7 +70,7 @@ black border and gain a fragment purple-border overlay to fake a color change.
       <!-- Stage: Pipeline code (details appear at step 1) -->
       <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
         <div style="padding: 10px 16px; white-space: nowrap; border: 1px solid #000; border-radius: 8px;">Pipeline code</div>
-        <div class="fragment" data-fragment-index="2" style="font-size: 28px; line-height: 1.5; text-align: center; color: #ADA599;">
+        <div class="fragment" data-fragment-index="2" style="font-size: 28px; line-height: 1.5; text-align: center; color: #79736E;">
           <div>Read data model</div>
           <div>Read trial configs</div>
           <div>Harmonization logic</div>

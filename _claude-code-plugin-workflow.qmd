@@ -2,8 +2,9 @@
 User <-> Claude Code back-and-forth for the "Building a Claude Code
 harmonization plugin" slide. Pulled into the deck with an include
 shortcode pointing at this file.
-Left-aligned rows are the user, right-aligned rows are Claude Code; each
-step appears on its own fragment.
+Left-aligned rows are the user, right-aligned rows are Claude Code. Four
+fragment steps (data-fragment-index 1-4): each user prompt and Claude Code's
+responses to it share an index, so they appear together.
 Must stay inside a ```{=html} fence so Pandoc passes it through verbatim.
 -->
 ```{=html}
@@ -14,23 +15,23 @@ Must stay inside a ```{=html} fence so Pandoc passes it through verbatim.
     <span style="color: #4F4A4A; display: inline-flex; align-items: center; gap: 0.3em;">Claude Code<img src="assets/claude-spark.svg" alt="Claude Code" style="height: 0.9em; width: auto;"></span>
   </div>
 
-  <div class="fragment" style="text-align: left; color: #005AB5;">“Harmonize clinical trial X”</div>
+  <div class="fragment" data-fragment-index="1" style="text-align: left; color: #005AB5;">“Harmonize clinical trial X”</div>
 
-  <div class="fragment" style="text-align: right; color: #4F4A4A;">Create GitHub repo project template</div>
+  <div class="fragment" data-fragment-index="1" style="text-align: right; color: #4F4A4A;">Create GitHub repo project template</div>
 
-  <div class="fragment" style="text-align: left; color: #005AB5;">Provide data source and datasets</div>
+  <div class="fragment" data-fragment-index="2" style="text-align: left; color: #005AB5;">Provide data source and datasets</div>
 
-  <div class="fragment" style="text-align: right; color: #4F4A4A;">Compare source datasets ↔ Data model</div>
-  <div class="fragment" style="text-align: right; color: #4F4A4A;">Draft trial harmonization configs</div>
+  <div class="fragment" data-fragment-index="2" style="text-align: right; color: #4F4A4A;">Compare source datasets ↔ Data model</div>
+  <div class="fragment" data-fragment-index="2" style="text-align: right; color: #4F4A4A;">Draft trial harmonization configs</div>
 
-  <div class="fragment" style="text-align: left; color: #005AB5;">Review, edit, & approve configs</div>
+  <div class="fragment" data-fragment-index="3" style="text-align: left; color: #005AB5;">Review, edit, & approve configs</div>
 
-  <div class="fragment" style="text-align: right; color: #4F4A4A;">Push configs + pipeline code to GitHub repo</div>
-  <div class="fragment" style="text-align: right; color: #4F4A4A;">Run pipeline</div>
+  <div class="fragment" data-fragment-index="3" style="text-align: right; color: #4F4A4A;">Push configs + pipeline code to GitHub repo</div>
+  <div class="fragment" data-fragment-index="3" style="text-align: right; color: #4F4A4A;">Run pipeline</div>
 
-  <div class="fragment" style="text-align: left; color: #005AB5;">Review harmonized output</div>
+  <div class="fragment" data-fragment-index="4" style="text-align: left; color: #005AB5;">Review harmonized output</div>
 
-  <div class="fragment" style="text-align: right; color: #4F4A4A;">Deploy harmonized dataset</div>
+  <div class="fragment" data-fragment-index="4" style="text-align: right; color: #4F4A4A;">Deploy harmonized dataset</div>
 
 </div>
 ```

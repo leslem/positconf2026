@@ -4,7 +4,7 @@ for free" slide. Pulled into the deck with an include shortcode pointing
 at this file.
 code-line-numbers drives the incremental highlight build.
 -->
-```{.yaml style="margin: 0 auto; font-size: 1.2em;" code-line-numbers="|1-7|3-5|6-7"}
+```{.yaml style="margin: 0 auto; font-size: 1.2em;" code-line-numbers="|1-7"}
 unique_subject_id:
   definition: Unique identifier for each subject across trials
   model: {data_type: character,

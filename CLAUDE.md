@@ -12,6 +12,15 @@ around a **data model** (output format, YAML), **harmonization configs** (per-st
 descriptions, YAML), and **generalized config-driven code**, all version-controlled with
 space for human review.
 
+## Division of labor
+
+**Leslie writes all slide content.** The words, narrative, code examples, and speaker
+notes are hers. Claude's role on this repo is strictly **HTML formatting and slide
+styling/layout** — reveal.js structure, CSS/inline styles, fragment builds, positioning,
+the SCSS theme, and the `_*.qmd` partials. Do not write, rewrite, or reword the substance
+of slide copy or speaker notes unless explicitly asked; when a task is about wording, limit
+the change to exactly what's requested and leave the rest of the prose alone.
+
 ## Files
 
 - `outline.qmd` → renders to `outline.html`. The initial planning document: the talk
@@ -20,9 +29,13 @@ space for human review.
   the slides, and the outline is not kept in sync with the real talk. Read it for original
   intent, but don't update it to match the deck.
 - `configurable-harmonization-LLMs.qmd` → renders to `configurable-harmonization-LLMs.html`.
-  The reveal.js slide deck. Currently a scaffold: one slide per section with the talk content
-  living in `::: {.notes}` speaker-note blocks. Fleshing these out into real slide bodies is
-  the main ongoing work.
+  The reveal.js slide deck and single source of truth for the talk. Slide bodies are built
+  out, with much of the visual content factored into `_*.qmd` partials (diagrams, code
+  blocks, YAML examples) pulled in via `{{< include >}}`. The content is Leslie's; the
+  ongoing work here is formatting, styling, and layout.
+- `_*.qmd` partials and `bms-reveal.scss` hold most of the layout/styling work: HTML
+  diagrams and overlays, code/YAML blocks, and the theme. This is where Claude's edits
+  usually land.
 - Rendered `.html` files and their `*_files/` asset directories are committed to git
   intentionally — keep them in sync with the `.qmd` sources.
 - `bms-resources/` (gitignored) holds BMS branding/style references: PowerPoint template,
@@ -48,7 +61,11 @@ by the user, not by Claude. Do NOT suggest or offer to run `quarto preview` (or
 
 ## Conventions
 
-- Slide content is drafted inside `::: {.notes}` blocks keyed to each `##` section heading.
-  When converting notes to slide bodies, preserve the section headings — they define the deck's structure.
+- Speaker notes live in `::: {.notes}` blocks keyed to each `##` section heading. Preserve
+  the section headings — they define the deck's structure — and don't rewrite note or slide
+  prose except when explicitly asked (see Division of labor).
+- Reusable/visual slide content is factored into `_*.qmd` partials included with
+  `{{< include _name.qmd >}}`. Each partial opens with a short comment header describing its
+  purpose; keep raw HTML inside a ```{=html} fence.
 - The slide deck is the single source of truth for the talk. `outline.qmd` is a frozen
   planning artifact; don't sync changes back into it.

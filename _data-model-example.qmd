@@ -4,7 +4,7 @@ Pulled into the deck with an include shortcode pointing at this file.
 code-line-numbers drives the incremental highlight build (names / keys /
 types / type-specific values).
 -->
-```{.yaml code-line-numbers="1,5,8,14,17|2|3,6,9,15,18|4,7,10,16,19,20,21,22|11-13"}
+```{.yaml code-line-numbers="1,5,8,11,14|2|3,6,9,12,15|4,7,10,13,16,17,18,19"}
 unique_subject_id:
   key: true
   data_type: character
@@ -15,9 +15,6 @@ site_id:
 baseline_height_cm:
   data_type: numeric
   numeric_units: centimeter
-  terms:
-    loinc: 8302-2
-    snomed: C0005890
 diagnosis_date:
   data_type: Date
   date_format: "%Y-%m-%d"

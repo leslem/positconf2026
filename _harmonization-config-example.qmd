@@ -6,8 +6,8 @@ shortcode pointing at this file.
 :::: {.r-stack}
 
 ::: {.harmonization-config}
-Demographics config for trial X
-```{.yaml code-line-numbers="1,2|5-7|" style="font-size: 1.2em;"}
+Demographics config for [trial X]{style="background-color: #A9FA17; padding: 0 0.25em; border-radius: 4px;"}
+```{.yaml code-line-numbers="|1,2|5-7" style="font-size: 1.2em; border: 3px solid #A9FA17; border-radius: 6px;"}
 unique_subject_id:
   - {file: adsl.csv, column: USUBJID, data_type: character}
 site_id:
@@ -23,8 +23,8 @@ actual_arm:
 :::
 
 ::: {.harmonization-config .config-cover .fragment}
-Demographics config for trial Y
-```{.yaml style="font-size: 1.2em;"}
+Demographics config for [trial Y]{style="background-color: #2CF1B1; padding: 0 0.25em; border-radius: 4px;"}
+```{.yaml style="font-size: 1.2em; border: 3px solid #2CF1B1; border-radius: 6px;"}
 unique_subject_id:
   - {file: dm.csv, column: subject_id, data_type: character}
 site_id:

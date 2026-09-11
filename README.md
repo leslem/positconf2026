@@ -1,6 +1,6 @@
 # 2026 posit::conf talk
 
-# Configurable clinical data harmonization with help from LLMs
+# Clinical data harmonization with LLMs
 
 ## Talk pitch
 
@@ -20,9 +20,6 @@ Clinical trial data formats differ across studies and over time, even within an 
 
 # Render the slides
 quarto render configurable-harmonization-LLMs.qmd
-
-# Export the slides with one page per build
-
 ```
 
 ### `decktape` pdf export
@@ -39,4 +36,4 @@ decktape --size '2560x1440' generic file:///Users/emeryl1/devel/positconf2026/co
 decktape --size '2560x1440' automatic file:///Users/emeryl1/devel/positconf2026/configurable-harmonization-LLMs.html exports/decktape-export.pdf
 ```
 
-You'll want to go through and delete extra pages from the exported pdf
+I had to do the generic export to get every build stage and then delete the repeitious slides to get something to submit to disclosure.

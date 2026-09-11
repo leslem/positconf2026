@@ -2,7 +2,7 @@
 Whole-trial harmonization code for the "Harmonizing all datasets in a trial"
 slide. Pulled into the deck with an include shortcode pointing at this file.
 -->
-```{.r .fragment style="width: 80%; margin: 0 auto; font-size: 1.2em;" code-line-numbers="1-4|6-9|11-16|"}
+```{.r .fragment style="width: 80%; margin: 0 auto; font-size: 1.2em;"}
 trialX_configs <- purrr::map(
   list("adverse_events", "demographics", "medications"),
   \x(dataset) read_config_file(get_study_config(dataset, "trialX"))
