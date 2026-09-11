@@ -5,7 +5,7 @@ slide. Pulled into the deck with an include shortcode pointing at this file.
 ```{.r .fragment style="width: 80%; margin: 0 auto; font-size: 1.2em;"}
 trialX_configs <- purrr::map(
   list("adverse_events", "demographics", "medications"),
-  \x(dataset) read_config_file(get_study_config(dataset, "trialX"))
+  \(dataset) read_config_file(get_study_config(dataset, "trialX"))
 )
 
 data_models <- purrr::map(
@@ -16,6 +16,6 @@ data_models <- purrr::map(
 trialX_harmonized <- purrr::map2(
   trialX_configs,
   data_models,
-  \x(c, m) harmonize_trial_dataset(config = c, model = m)
+  \(c, m) harmonize_trial_dataset(config = c, model = m)
 )
 ```

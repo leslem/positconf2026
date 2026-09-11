@@ -78,7 +78,7 @@ Stock image
 - There are 3 big pieces to this ...
 - "runs harmonization logic to produce output datasets"
 - Now only one set of steps that needs to be repeated for each dataset in each trial
-- data model is a set of yaml format files that specificy exactly what your output should look like, variable names, definitions, data types, units, etc.
+- data model is a set of yaml format files that specify exactly what your output should look like, variable names, definitions, data types, units, etc.
 - harm configs ALSO a set of yaml files, one PER DATASET PER TRIAL, defining in detail the format of the original dataset so pipeline code can compare to data model and carry out appropriate transformations
 - I've gone from complicated workflow with custom code for every dataset in every trial to a simplified workflow with repetitive work done by LLM
 - Save months of work and increase research questions we can work on
@@ -152,7 +152,7 @@ system("mmdc -i data-model-directory-treeView.mmd -o assets/data-model-directory
 ::: {.notes}
 - Next we build our harmonization configs, which map original trial data to the output format described in data model
 - Each object in the config yaml file is a variable from our data model and specifies which column from which input file to use
-- And the the data type observed in our original data so we can compare that to the desired data type in our model in later steps
+- And the data type observed in our original data so we can compare that to the desired data type in our model in later steps
 
 :::
 
@@ -187,7 +187,7 @@ system("mmdc -i data-model-directory-treeView.mmd -o assets/data-model-directory
 {{< include _harmonize-file-code.qmd >}}
 
 ::: {.notes}
-- Now I'll show you how I've been working on pipeline code that brings Eslam's work on the data model and configs together- Modular harmonization code
+- Now I'll show you how I've been working on pipeline code that brings Eslam's work on the data model and configs together
 - Some can be plain tidyverse code
 - Some is in customized functions for performing more complex transformations
 - These functions can be unit tested and reused without repeatedly re-writing code
@@ -256,7 +256,7 @@ You get a great data dictionary for your output basically for free with the harm
 ::: {.notes}
 - Make it easy for subject matter experts to help us review the config files and data model to make sure we're getting things right
 
-- Screenshot of shiny app my colleage Burak has built for subject matter experts to review harmonized lab test names for flow cytometry assay with very complicated test names
+- Screenshot of shiny app my colleague Burak has built for subject matter experts to review harmonized lab test names for flow cytometry assay with very complicated test names
 
 - Extending for rest of configs and data model itself
 :::

@@ -451,7 +451,7 @@ black border and gain a fragment purple-border overlay to fake a color change.
 <li>There are 3 big pieces to this …</li>
 <li>“runs harmonization logic to produce output datasets”</li>
 <li>Now only one set of steps that needs to be repeated for each dataset in each trial</li>
-<li>data model is a set of yaml format files that specificy exactly what your output should look like, variable names, definitions, data types, units, etc.</li>
+<li>data model is a set of yaml format files that specify exactly what your output should look like, variable names, definitions, data types, units, etc.</li>
 <li>harm configs ALSO a set of yaml files, one PER DATASET PER TRIAL, defining in detail the format of the original dataset so pipeline code can compare to data model and carry out appropriate transformations</li>
 <li>I’ve gone from complicated workflow with custom code for every dataset in every trial to a simplified workflow with repetitive work done by LLM</li>
 <li>Save months of work and increase research questions we can work on</li>
@@ -612,7 +612,7 @@ shortcode pointing at this file.
 <ul>
 <li>Next we build our harmonization configs, which map original trial data to the output format described in data model</li>
 <li>Each object in the config yaml file is a variable from our data model and specifies which column from which input file to use</li>
-<li>And the the data type observed in our original data so we can compare that to the desired data type in our model in later steps</li>
+<li>And the data type observed in our original data so we can compare that to the desired data type in our model in later steps</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -685,7 +685,8 @@ code-line-numbers drives the incremental reveal.
 <span id="cb4-15"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
 <ul>
-<li>Now I’ll show you how I’ve been working on pipeline code that brings Eslam’s work on the data model and configs together- Modular harmonization code</li>
+<li>Now I’ll show you how I’ve been working on pipeline code that brings Eslam’s work on the data model and configs together</li>
+<li>Modular harmonization code</li>
 <li>Some can be plain tidyverse code</li>
 <li>Some is in customized functions for performing more complex transformations</li>
 <li>These functions can be unit tested and reused without repeatedly re-writing code</li>
@@ -711,7 +712,7 @@ slide. Pulled into the deck with an include shortcode pointing at this file.
 -->
 <div class="sourceCode" id="cb5" style="width: 80%; margin: 0 auto; font-size: 1.2em;"><pre class="sourceCode numberSource r fragment number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>trialX_configs <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(</span>
 <span id="cb5-2"><a href=""></a>  <span class="fu">list</span>(<span class="st">"adverse_events"</span>, <span class="st">"demographics"</span>, <span class="st">"medications"</span>),</span>
-<span id="cb5-3"><a href=""></a>  \<span class="fu">x</span>(dataset) <span class="fu">read_config_file</span>(<span class="fu">get_study_config</span>(dataset, <span class="st">"trialX"</span>))</span>
+<span id="cb5-3"><a href=""></a>  \(dataset) <span class="fu">read_config_file</span>(<span class="fu">get_study_config</span>(dataset, <span class="st">"trialX"</span>))</span>
 <span id="cb5-4"><a href=""></a>)</span>
 <span id="cb5-5"><a href=""></a></span>
 <span id="cb5-6"><a href=""></a>data_models <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(</span>
@@ -722,7 +723,7 @@ slide. Pulled into the deck with an include shortcode pointing at this file.
 <span id="cb5-11"><a href=""></a>trialX_harmonized <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map2</span>(</span>
 <span id="cb5-12"><a href=""></a>  trialX_configs,</span>
 <span id="cb5-13"><a href=""></a>  data_models,</span>
-<span id="cb5-14"><a href=""></a>  \<span class="fu">x</span>(c, m) <span class="fu">harmonize_trial_dataset</span>(<span class="at">config =</span> c, <span class="at">model =</span> m)</span>
+<span id="cb5-14"><a href=""></a>  \(c, m) <span class="fu">harmonize_trial_dataset</span>(<span class="at">config =</span> c, <span class="at">model =</span> m)</span>
 <span id="cb5-15"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><span class="fragment" style="display: block; margin-left: 10%; margin-top: 5%;">3. Repeat for all trials</span></p>
 <aside class="notes">
@@ -913,7 +914,7 @@ Must stay inside a ```{=html} fence so Pandoc passes it through verbatim.
 <aside class="notes">
 <ul>
 <li><p>Make it easy for subject matter experts to help us review the config files and data model to make sure we’re getting things right</p></li>
-<li><p>Screenshot of shiny app my colleage Burak has built for subject matter experts to review harmonized lab test names for flow cytometry assay with very complicated test names</p></li>
+<li><p>Screenshot of shiny app my colleague Burak has built for subject matter experts to review harmonized lab test names for flow cytometry assay with very complicated test names</p></li>
 <li><p>Extending for rest of configs and data model itself</p></li>
 </ul>
 <style type="text/css">

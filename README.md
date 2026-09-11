@@ -36,4 +36,4 @@ decktape --size '2560x1440' generic file:///Users/emeryl1/devel/positconf2026/co
 decktape --size '2560x1440' automatic file:///Users/emeryl1/devel/positconf2026/configurable-harmonization-LLMs.html exports/decktape-export.pdf
 ```
 
-I had to do the generic export to get every build stage and then delete the repeitious slides to get something to submit to disclosure.
+I had to do the generic export to get every build stage and then delete the repetitious slides to get something to submit to disclosure.
