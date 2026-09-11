@@ -8,7 +8,7 @@ Must stay inside a ```{=html} fence so Pandoc passes it through verbatim.
 <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; color: #4F4A4A; font-size: 34px; margin: 100px;">
   <div style="padding: 10px 16px; white-space: nowrap; border: 1px solid #000; border-radius: 8px;">Posit Assistant</div>
   <div style="font-size: 44px; font-weight: bold;">+</div>
-  <div style="padding: 10px 16px; white-space: nowrap; border: 1px solid #000; border-radius: 8px;">Demographics from 15 trials</div>
+  <div style="padding: 10px 16px; white-space: nowrap; border: 1px solid #000; border-radius: 8px;">Demographics from 10 seed trials</div>
   <div style="font-size: 44px; font-weight: bold;">+</div>
   <div style="padding: 10px 16px; white-space: nowrap; border: 1px solid #000; border-radius: 8px;">Example .yaml file</div>
 </div>

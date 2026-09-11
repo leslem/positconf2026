@@ -26,7 +26,8 @@ exiftool -gps:all= -Make= -Model= -DateTimeOriginal= -CreateDate= -ModifyDate= -
 -->
 
 ::: {.notes}
-- I'm a data scientist at the Seattle office of pharma co Bristol Myers Squibb (or BMS)
+- Hi I'm Leslie
+- Really fortunate, not just in working in the beautiful location at the BMS Seattle office, but...
 :::
 
 
@@ -41,7 +42,8 @@ Stock image
 :::
 
 ::: {.notes}
-- The data I work with is from clinical trials for cancer treatments
+- fortunate that I get to talk to you about the incredibly meaningful work I get to do
+- The data I work with day to day is from clinical trials for cancer treatments
 - The patients participating go through grueling treatments, visits that can be hours long, extra procedures that are sometimes painful, years of follow up visits 
 - So this data is extremely precious and it's important to get every insight we can from this data for the benefit of these participants and other patients to come
 - One way is to answer research questions to better understand treatments
@@ -56,11 +58,13 @@ Stock image
 
 ::: {.notes}
 - Fancy way to say reformatting from multiple sources to be compatible
-- Different ID formats, measurement units, date formats, inconsistent categorical values, synonyms for the same laboratory test
-- Seems straightforward, but as the DS doing this I have to write custom R code for every single data transformation on every single data set in every trial
-- Lots of variation in the code, lots of repeating the same kinds of things over and over again
+- Seems straightforward, but as the DS doing this for >10 years, it's way more complicated than that
+- Imagine that I'm working on harmonizing data from 15 different trials and they're all in different formats
+- I have to write custom R code for every one of these trial datasets for many different kinds of data transformations
+- Lots of variation in the code, lots of repeating the same kinds of things over and over again to get nice harmonized output
+- AND there are many datasets for all the types of data we collect
 - It gets very complicated and involved very fast
-- I'm going to tell you about using LLMs to simplify this in a way that's still reproducible
+- I'm going to tell you about the workflow me and my team have been working on, using LLMs and reproducible pipeline code to automate and simplify this process
 :::
 
 
@@ -74,7 +78,6 @@ Stock image
 ```
 
 ::: {.notes}
-- I've been working with a team to develop an automated workflow incorporating LLMs
 - There are 3 big pieces to this ...
 - "runs harmonization logic to produce output datasets"
 - Now only one set of steps that needs to be repeated for each dataset in each trial
@@ -108,7 +111,7 @@ Demographics data model
 
 ::: {.notes}
 - To produce one data model file, for example demographics
-- I give PA explicit instructions for how to fill in fields of yaml based on 15 dataframes in R session
+- I give PA explicit instructions for how to fill in fields of yaml based on 10 dataframes in R session
 - Excerpt of the demographics data model produced this way
 - Each object in the yaml is a variable in the output dataset
 - Each variable has a set of required attributes - pk and data type
@@ -254,10 +257,9 @@ You get a great data dictionary for your output basically for free with the harm
 :::
 
 ::: {.notes}
+- Shiny app for human review
 - Make it easy for subject matter experts to help us review the config files and data model to make sure we're getting things right
-
 - Screenshot of shiny app my colleague Burak has built for subject matter experts to review harmonized lab test names for flow cytometry assay with very complicated test names
-
 - Extending for rest of configs and data model itself
 :::
 
@@ -304,19 +306,32 @@ You get a great data dictionary for your output basically for free with the harm
 :::
 
 ::: {.notes}
-- Any project where you're combining data from multiple sources (e.g. COVID data from different health authorities, published datasets from different research groups, eCommerce data from acquired companies, etc.)
-- Use data model .yaml to instruct LLM to make the output format you want
-- Use a config file that describes all of your inputs (makes it easier for LLM to reason about your data)
-  - Specification-driven development
-  - See [`data-dict.yaml`](https://data-dict.tidyverse.org) from Tidyverse
-- If you can make it into a function, you make it into a tool call an LLM can use and you can make it reproducible with a structured file
-- These approaches can apply to any LLM-assisted data project
+- Now I want to point out some approaches you can use, whether you're working on data harmonization or not
+- Flexible approach not locked into any one tech allowed quick pivots as company recommendations changed
+- Part of the flexibility was using structured files (makes it easier for LLM to reason about your data)
+  - Specification-driven development is based on this
+  - e.g. Hadley W's data dictionary talk yesterday
+  - popular now because it's so useful
+- It's still important to break out your repetitive code into functions
+  - If you can make it into a function, you make it into a tool call an LLM can use
 :::
 
 
 ## Acknowledgements {.no-bullets .no-title}
 
 :::: {.columns}
+
+::: {.column style="width: 25%; text-align: center;"}
+#### 2025 intern
+- Eslam Abousamra
+:::
+
+::: {.column style="width: 25%; text-align: center;"}
+#### Subject matter experts
+- Begüm Topcuoglu
+- José Malagon-Lopez
+- Julie Rytlewski
+:::
 
 ::: {.column style="width: 25%; text-align: center;"}
 #### Managers
@@ -331,23 +346,11 @@ You get a great data dictionary for your output basically for free with the harm
 - Mandeep Takhar
 :::
 
-::: {.column style="width: 25%; text-align: center;"}
-#### Subject matter experts
-- Begüm Topcuoglu
-- José Malagon-Lopez
-- Julie Rytlewski
-:::
-
-::: {.column style="width: 25%; text-align: center;"}
-#### 2025 intern
-- Eslam Abousamra
-:::
-
-![2025 Translational Data Science team meeting](assets/KSR-TDS-pikeplace-2025-cropped.jpg){.nostretch width="40%" fig-align="center"}
+![2025 Translational Data Science team meeting](assets/KSR-TDS-pikeplace-2025-cropped.jpg){.nostretch width="40%" fig-align="right" style="margin-right: 100px;"}
 ::::
 
 ::: {.notes}
-Thank you to my amazing colleagues at BMS
+Finally, I'll acknowledge the work of all my amazing colleagues at BMS that contributed to this project
 :::
 
 
