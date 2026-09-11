@@ -4,7 +4,7 @@ for free" slide. Pulled into the deck with an include shortcode pointing
 at this file.
 code-line-numbers drives the incremental highlight build.
 -->
-```{.yaml style="margin: 0 auto; font-size: 1.2em;" code-line-numbers="|1-7"}
+```{.yaml .no-scroll-code style="margin: 0 auto; font-size: 1.2em;" code-line-numbers="|8-13"}
 unique_subject_id:
   definition: Unique identifier for each subject across trials
   model: {data_type: character,
@@ -12,29 +12,10 @@ unique_subject_id:
           key: true}
   inputs: [{trial: X, file: adsl.csv, column: USUBJID},
            {trial: Y, file: dm.csv, column: subject_id}]
-site_id:
-  definition: Study site where the subject was enrolled
-  model: {data_type: character,
-          character_pattern: '^\d+$'}
-  inputs: [{trial: X, file: adsl.csv, column: SITE},
-           {trial: Y, file: dm.csv, column: SITE_ID}]
 baseline_height_cm:
   definition: Subject height at baseline
   model: {data_type: numeric,
-          numeric_units: centimeter,
-          terms: {loinc: 8302-2, snomed: C0005890}}
+          numeric_units: centimeter}
   inputs: [{trial: X, file: adsl.csv, column: HEIGHTBL,
             numeric_units: inch}]
-diagnosis_date:
-  definition: Date of the subject's initial diagnosis
-  model: {data_type: Date,
-          date_format: "%Y-%m-%d"}
-  inputs: [{trial: X, file: adsl.csv, column: DIAGDTC},
-           {trial: Y, file: dm.csv, column: DIAGDTC}]
-actual_arm:
-  definition: Treatment arm the subject actually received
-  model: {data_type: factor,
-          factor_allowed_values: [Arm A, Arm B, Arm C]}
-  inputs: [{trial: X, file: adsl.csv, column: ACTARM},
-           {trial: Y, file: dm.csv, column: study_arm}]
 ```
