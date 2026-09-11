@@ -20,9 +20,9 @@ Leslie Emery
 ::::
 
 <!-- 
-To convert image from HEIC and strip location:
-sips -s format jpeg -Z 3840 assets/IMG_6706_2039.heic --out assets/IMG_6706_2039.jpg && 
-exiftool -gps:all= -overwrite_original assets/IMG_6706_2039.jpg
+To convert image from HEIC and strip location, camera model & date:
+sips -s format jpeg -Z 3840 assets/IMG_6706_2039.heic --out assets/IMG_6706_2039.jpg &&
+exiftool -gps:all= -Make= -Model= -DateTimeOriginal= -CreateDate= -ModifyDate= -overwrite_original assets/IMG_6706_2039.jpg
 -->
 
 ::: {.notes}
