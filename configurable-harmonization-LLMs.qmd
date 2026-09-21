@@ -26,8 +26,9 @@ exiftool -gps:all= -Make= -Model= -DateTimeOriginal= -CreateDate= -ModifyDate= -
 -->
 
 ::: {.notes}
+- (Deep breath)
 - Hi I'm Leslie
-- Really fortunate, not just in working in the beautiful location at the BMS Seattle office, but...
+- I work at this beautiful Seattle office of BMS, a pharma co
 :::
 
 
@@ -42,13 +43,13 @@ Stock image
 :::
 
 ::: {.notes}
-- fortunate that I get to talk to you about the incredibly meaningful work I get to do
 - The data I work with day to day is from clinical trials for cancer treatments
-- The patients participating go through grueling treatments, visits that can be hours long, extra procedures that are sometimes painful, years of follow up visits 
-- So this data is extremely precious and it's important to get every insight we can from this data for the benefit of these participants and other patients to come
-- One way is to answer research questions to better understand treatments
-- To answer this question we need to put together data from multiple trials
-- And here's where things get difficult because the data from these trials is not in the same format, we need to harmonize it to use it together
+- pts participating go through a lot 
+- this data is extremely precious, get every insight
+- one way is answer research questions to understand
+- biomarker: lab test measured during trial
+- to answer, need to combine many trials
+- And here's where things get difficult because the data from these trials is not in the same format, need to harmonize it
 :::
 
 
@@ -57,14 +58,14 @@ Stock image
 {{< include _manual-workflow-diagram.qmd >}}
 
 ::: {.notes}
-- Fancy way to say reformatting from multiple sources to be compatible
-- Seems straightforward, but as the DS doing this for >10 years, it's way more complicated than that
-- Imagine that I'm working on harmonizing data from 15 different trials and they're all in different formats
-- I have to write custom R code for every one of these trial datasets for many different kinds of data transformations
-- Lots of variation in the code, lots of repeating the same kinds of things over and over again to get nice harmonized output
-- AND there are many datasets for all the types of data we collect
-- It gets very complicated and involved very fast
-- I'm going to tell you about the workflow me and my team have been working on, using LLMs and reproducible pipeline code to automate and simplify this process
+- Harmonization is fancy way to say reformatting from multiple sources to be compatible
+- Seems straightforward, but 10 years, way more complicated
+- Imagine that I'm working on harmonizing data from 15 different trials, 15 datasets all different
+- write custom R code for every data set, transform every column
+- and there are many types of data collected
+- 😱 
+- project explodes, very complicated very fast
+- tell you about the workflow, using LLMs and reproducible pipeline code to automate and simplify this process
 :::
 
 
@@ -78,15 +79,15 @@ Stock image
 ```
 
 ::: {.notes}
-- There are 3 big pieces to this ...
-- "runs harmonization logic to produce output datasets"
-- Now only one set of steps that needs to be repeated for each dataset in each trial
-- data model is a set of yaml format files that specify exactly what your output should look like, variable names, definitions, data types, units, etc.
-- harm configs ALSO a set of yaml files, one PER DATASET PER TRIAL, defining in detail the format of the original dataset so pipeline code can compare to data model and carry out appropriate transformations
-- I've gone from complicated workflow with custom code for every dataset in every trial to a simplified workflow with repetitive work done by LLM
-- Save months of work and increase research questions we can work on
-- This project is very specific to my use case for clinical trial data but I'll also call out approaches you can use in your own work
-- I'm going to go over the LLM-drafted steps and then show you how the pipeline code brings it together
+- 3 big pieces, data model + pipeline one time
+- pipeline: runs harmonization logic to produce harmonized output
+- data model: set of yaml, specify what output should look like, variable names, definitions, data types, units, etc.; LLMs
+- configs: yamls, map format of original dataset to data model, so pipeline code can compare and do appropriate transformations
+  - one PER DATASET PER TRIAL; LLMs
+- complicated workflow with custom code for every dataset x trial -> simplified workflow with repetitive work done by LLM
+- 🎉
+- Save months of work, more questions
+- I'll go over LLM-drafted, then how pipeline code brings together; specific to my use case but call out broadly useful approaches
 :::
 
 
@@ -110,11 +111,12 @@ Demographics data model
 :::::
 
 ::: {.notes}
-- To produce one data model file, for example demographics
-- I give PA explicit instructions for how to fill in fields of yaml based on 10 dataframes in R session
-- Excerpt of the demographics data model produced this way
-- Each object in the yaml is a variable in the output dataset
-- Each variable has a set of required attributes - pk and data type
+- To make one data model file, e.g. demographics
+- PA + "seed" with real datasets that represent data kinds to include + example format file
+- explicit instructions to fill out fields based on data
+- Excerpt of the demographics data model
+- Each object a variable in the harmonized output dataset
+- Required attributes - pk and data type
 - Also optional attributes that depend on data type
 :::
 
@@ -131,7 +133,8 @@ system("mmdc -i data-model-directory-treeView.mmd -o assets/data-model-directory
 <img src="assets/data-model-directory-treeView.svg" style="height: 600px; width: auto; display: block; margin: 0 auto;">
 
 ::: {.notes}
-- Can be updated for adding datasets or adding/removing variables in datasets
+- Keep the demographics yaml and others in a GH repo
+- Can add more, modify, use specific version
 :::
 
 
@@ -153,10 +156,10 @@ system("mmdc -i data-model-directory-treeView.mmd -o assets/data-model-directory
 ::::
 
 ::: {.notes}
-- Next we build our harmonization configs, which map original trial data to the output format described in data model
-- Each object in the config yaml file is a variable from our data model and specifies which column from which input file to use
-- And the data type observed in our original data so we can compare that to the desired data type in our model in later steps
-
+- Next: harmonization configs: map original trial data to output format described in data model
+- Each object a var from data model where to get it from dataset in this trial
+- baseline_height_cm units
+- another trial too
 :::
 
 ## Pilot project insights
@@ -176,11 +179,13 @@ system("mmdc -i data-model-directory-treeView.mmd -o assets/data-model-directory
 ::::
 
 ::: {.notes}
-- Now introduce Eslam, who did excellent work on a pilot project during internship to work out building the data model and configs as I've just described
-- Key things we found as a result of his work
-- Data dictionaries -- simplification that makes it easier to have LLM work on these sometimes-large data files, reduces context requirements
-- Using my years of experience, I told Eslam to work through the whole workflow with demographics, "easy" data set with one row per subject
-- but it has dozens to hundreds of columns and he immediately ran into trouble and had to come up with a strategy to split the dataset into 50-column chunks to not run out the context of the LLM
+- Work so far building model + configs started during pilot project, internship by Eslam, exceptional, CUNY School of Public Health Phd student, highlight some insights
+- 1 Data dictionaries: simpler file describing the data, easier for LLM to work on, fewer tokens, less context than sometimes-large files
+  - HW talk yesterday saw how useful these files can be with LLMs
+  - Looking into using data-dict.yaml spec later
+- 2 Design for LLMs, not humans
+  - Years of experience, do it all on demographics, simplest, one row per patient, easy to understand like age, height
+  - Ran into trouble -- too many columns, had to pivot to another dataset and then come back and develop chunking approach
 :::
 
 
@@ -190,10 +195,14 @@ system("mmdc -i data-model-directory-treeView.mmd -o assets/data-model-directory
 {{< include _harmonize-file-code.qmd >}}
 
 ::: {.notes}
-- Now I'll show you how I've been working on pipeline code that brings Eslam's work on the data model and configs together
-- Some can be plain tidyverse code
-- Some is in customized functions for performing more complex transformations
-- These functions can be unit tested and reused without repeatedly re-writing code
+- Now I'll show pipeline code that brings Eslam's work on the data model and configs together
+- 1 transform one dataset from one trial
+  - Simplified code, inputs, read orig dataset
+  - Plain tidyverse for select, rename
+  - Customized functions for complex transforms like data types, units of measure
+    - baseline_height_cm example
+    - These functions can be unit tested and reused without repeatedly re-writing code
+- Now one function call for one dataset in one trial
 :::
 
 
@@ -207,32 +216,7 @@ system("mmdc -i data-model-directory-treeView.mmd -o assets/data-model-directory
 ::: {.notes}
 - Same harmonization code for every dataset
 - Easy to repeat with purrr
-:::
-
-
-## Effortless harmonized data dictionary
-
-:::: {.r-stack}
-
-::: {.fragment .fade-out fragment-index="1"}
-
-{{< include _harmonized-data-dictionary-inputs.qmd >}}
-
-:::
-
-::: {.fragment fragment-index="1"}
-
-{{< include _harmonized-data-dictionary-example.qmd >}}
-
-:::
-
-::::
-
-::: {.notes}
-You get a great data dictionary for your output basically for free with the harmonization configs + data model
-
-- Clear definition of final output data
-- Links back to the input dataset + columns that were used
+- Repeat for trials, then easyily row bind harmonized datasets across trials to mix and match the trials depending on research question
 :::
 
 
@@ -241,8 +225,8 @@ You get a great data dictionary for your output basically for free with the harm
 {{< include _llm-workflow-diagram-static.qmd >}}
 
 ::: {.notes}
-- Now I've finished showing you the entire LLM-assisted harmonization workflow
-- Now 2 things we're doing next to make it even better
+- Now I've finished showing you the entire LLM-assisted harmonization workflow that produces modular datasets for trials harmonized to the same data model
+- Now show 2 things we're doing next to make workflow even better
 :::
 
 
@@ -257,10 +241,11 @@ You get a great data dictionary for your output basically for free with the harm
 :::
 
 ::: {.notes}
-- Shiny app for human review
-- Make it easy for subject matter experts to help us review the config files and data model to make sure we're getting things right
-- Screenshot of shiny app my colleague Burak has built for subject matter experts to review harmonized lab test names for flow cytometry assay with very complicated test names
-- Extending for rest of configs and data model itself
+- 1 Shiny app built by Burak to help review the LLM drafted parts of the workflow
+- Screenshot, flow cytometry: complicated assay measuring 100s of different cell type with complicated lab test names
+- LLM drafted Harmonized lab test name
+- Easy for flow cyt expert to review the LLM Harmonized lab test and approve or correct, and keep this for later reference in future trials
+- Extending this for review of harmonization configs and data model
 :::
 
 
@@ -286,10 +271,9 @@ You get a great data dictionary for your output basically for free with the harm
 :::
 
 ::: {.notes}
-- working on taking this out of the coding assistant back and forth and making it into a Claude Code plugin that more computational scientists can use
-- repeated steps of a coding assistant conversation encapsulated into a plugin
-
-- So it will be easy, even for a scientist who can't write a whole data pipeline on their own, to get back to our cross-trial research question to help patients
+- take process out of one-time LLM back and forth to make it reproducible, encapsulated in Claude Code plugin
+- user harmonize trial, get help with ... (result of each step)
+- So it will be easy, even for a scientist who can't write a whole data pipeline on their own, to build a modular harmonized dataset and get back to their cross-trial research question to help patients
 :::
 
 
@@ -306,12 +290,11 @@ You get a great data dictionary for your output basically for free with the harm
 :::
 
 ::: {.notes}
-- Now I want to point out some approaches you can use, whether you're working on data harmonization or not
-- Flexible approach not locked into any one tech allowed quick pivots as company recommendations changed
+- point out approaches you can use, whether working on data harmonization or not
+- Flexible, not locked into any one tech allowed quick pivots as company recommendations changed
 - Part of the flexibility was using structured files (makes it easier for LLM to reason about your data)
-  - Specification-driven development is based on this
-  - e.g. Hadley W's data dictionary talk yesterday
-  - popular now because it's so useful
+  - Seeing more and more cause so useful for LLMs
+  - e.g. specification-driven development, HW data-dict.yaml
 - It's still important to break out your repetitive code into functions
   - If you can make it into a function, you make it into a tool call an LLM can use
 :::
